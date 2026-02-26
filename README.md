@@ -12,18 +12,14 @@ Binary classification on H3 spatial hexagons to identify underserved locations f
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/<your-username>/GeoSpatial-Project.git
-cd GeoSpatial-Project
+git clone https://github.com/daththeanalyst/geospatial-site-selection.git
+cd geospatial-site-selection
 
 # 2. Create environment and install dependencies
 pip install -r requirements.txt
 
-# 3. Run the notebook pipeline in order
-#    (Jupyter, VS Code, or any .ipynb-compatible environment)
-01_ingest_and_clean.ipynb       # ETL: fetch POIs, load raster metadata, merge census
-02_spatial_indexing_and_enrichment.ipynb  # H3 grid, zonal stats, census spatial join
-03_analytics_and_vision.ipynb   # Graph centrality, heuristic scoring, 3D Pydeck map
-camden_predictive_model.ipynb   # ML pipeline: LR → RF → XGBoost, spatial CV, recommendations
+# 3. Run the unified notebook (Jupyter, VS Code, or any .ipynb-compatible environment)
+camden_synergy_index.ipynb   # End-to-end: ETL → H3 grid → graph analytics → ML → recommendations
 
 # 4. Launch the interactive dashboard
 streamlit run streamlit_app.py
@@ -39,7 +35,7 @@ The pipeline requires three external datasets. OSM data is fetched programmatica
 |---------|--------|--------|-------------------|
 | **LandScan Global Population** | Oak Ridge National Laboratory (ORNL) | [landscan.ornl.gov](https://landscan.ornl.gov/) — free registration required | `landscan-mosaic-unitedkingdom-v1.tif` (project root) |
 | **ONS Census 2021** (3 tables) | EDINA Digimap / ONS Nomis | [digimap.edina.ac.uk](https://digimap.edina.ac.uk/) or [nomis.co.uk](https://www.nomisweb.co.uk/) | `ons-age-ew-2021_*/`, `ons-economic-ew-2021_*/`, `ons-qualifications-ew-2021_*/` |
-| **OpenStreetMap POIs** | OSMnx (programmatic) | Auto-fetched in Notebook 01 via `ox.features_from_place()` | No manual download needed |
+| **OpenStreetMap POIs** | OSMnx (programmatic) | Auto-fetched via `ox.features_from_place()` | No manual download needed |
 
 **Census tables required** (Output Area level, England & Wales):
 - TS007 — Age by single year (we extract `age_16_to_34_perc`, `age_65_plus_perc`)
@@ -52,15 +48,11 @@ The pipeline requires three external datasets. OSM data is fetched programmatica
 
 ```
 GeoSpatial Project/
-├── 01_ingest_and_clean.ipynb           # Step 1: Multi-modal ETL pipeline
-├── 02_spatial_indexing_and_enrichment.ipynb  # Step 2: H3 grid + spatial enrichment
-├── 03_analytics_and_vision.ipynb       # Step 3: Graph analytics + heuristic scoring
-├── camden_predictive_model.ipynb       # Step 4: ML pipeline (LR/RF/XGB + spatial CV)
+├── camden_synergy_index.ipynb          # Unified end-to-end notebook (ETL → H3 → Graph → ML)
 ├── streamlit_app.py                    # Interactive 4-tab dashboard
 ├── requirements.txt                    # Python dependencies
 ├── agent_collaboration_log.md          # AI-Human collaboration audit (Appendix)
-├── report_structure.md                 # Academic report outline
-├── claude.md                           # Agent runbook (spatial verification rules)
+├── CLAUDE.md                           # Agent runbook (spatial verification rules)
 ├── docs/
 │   └── index.html                      # GitHub Pages portfolio site
 ├── data/
@@ -80,28 +72,26 @@ GeoSpatial Project/
   OSM POIs          LandScan Raster       ONS Census 2021
      │                    │                      │
      ▼                    ▼                      ▼
- ┌─────────┐      ┌────────────┐         ┌────────────┐
- │ Notebook │      │ Notebook   │         │ Notebook   │
- │ 01: ETL  │─────▶│ 02: H3     │◀────────│ 01: Merge  │
- │ (fetch,  │      │ Grid +     │         │ (3 CSVs)   │
- │ classify)│      │ Enrich     │         └────────────┘
- └─────────┘      └─────┬──────┘
-                         │
-                         ▼
-                  ┌────────────┐
-                  │ Notebook   │
-                  │ 03: Graph  │
-                  │ Analytics  │
-                  └─────┬──────┘
-                         │
-                         ▼
-                  ┌────────────────────┐
-                  │ camden_predictive  │
-                  │ _model.ipynb       │
-                  │ (LR → RF → XGB)   │
-                  │ (Spatial Block CV) │
-                  │ (FP Extraction)    │
-                  └─────┬──────────────┘
+ ┌──────────────────────────────────────────────────────┐
+ │           camden_synergy_index.ipynb                 │
+ │                                                      │
+ │  Section 1: ETL ─── fetch POIs, load raster/census   │
+ │       │                                              │
+ │       ▼                                              │
+ │  Section 1.4: H3 Grid ─── hexagonal indexing         │
+ │       │                                              │
+ │       ▼                                              │
+ │  Section 1.6: Graph Analytics ─── centrality metrics  │
+ │       │                                              │
+ │       ▼                                              │
+ │  Section 2–4: Target + EDA + Spatial CV              │
+ │       │                                              │
+ │       ▼                                              │
+ │  Section 5–8: LR → RF → XGBoost + Evaluation        │
+ │       │                                              │
+ │       ▼                                              │
+ │  Section 9–11: Recommendations + Model Card          │
+ └──────────────────────┬───────────────────────────────┘
                          │
               ┌──────────┼──────────┐
               ▼          ▼          ▼
@@ -143,7 +133,7 @@ GeoSpatial Project/
 **GitHub Pages** (static portfolio):
 1. Go to repo Settings > Pages
 2. Source: Deploy from branch > Branch: `main`, Folder: `/docs`
-3. Site will be available at `https://<username>.github.io/GeoSpatial-Project/`
+3. Site will be available at `https://daththeanalyst.github.io/geospatial-site-selection/`
 
 ---
 
