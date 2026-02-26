@@ -1,0 +1,77 @@
+# ========================
+# Large Data Files
+# ========================
+*.tif
+*.geojson
+*.parquet
+
+# Raw Census CSVs (too large for Git; documented in Data Access cell)
+ons-age-ew-2021_*/
+ons-economic-ew-2021_*/
+ons-qualifications-ew-2021_*/
+
+# Data folders (raw + intermediate)
+data/raw/
+data/processed/
+
+# ========================
+# Allow specific output files for deployment
+# ========================
+data/outputs/
+!data/outputs/camden_ml_scored.parquet
+!data/outputs/fp_recommendations.csv
+!data/outputs/model_comparison.csv
+!data/outputs/roc_curves.png
+!data/outputs/confusion_matrix.png
+!data/outputs/feature_importance.png
+!data/outputs/eda_correlations.png
+!data/outputs/eda_boxplots.png
+!data/outputs/camden_ml_recommendations.html
+
+# ========================
+# Redundant / temporary files
+# ========================
+cache/
+15_min_city_exploration.ipynb
+02_spatial_indexing_and_enrichment.ipynb
+03_analytics_and_vision.ipynb
+camden_predictive_model.ipynb
+citations_orders_2928645.txt
+contents_order_2928645.txt
+skills.md
+report_structure.md
+landscan-mosaic-unitedkingdom-v1-colorized.tif
+landscan-mosaic-unitedkingdom-v1-confidence-intervals.tif
+
+# Coursework PDF (academic integrity — do not publish)
+*.pdf
+
+# ========================
+# Python
+# ========================
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# ========================
+# Jupyter
+# ========================
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# ========================
+# IDE / OS
+# ========================
+.claude/
+.vscode/
+*.swp
+Thumbs.db
+.DS_Store
+
+# ========================
+# Portfolio site — ALLOW
+# ========================
+!docs/
+!docs/**

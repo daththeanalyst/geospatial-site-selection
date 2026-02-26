@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camden Coffee Site Selection | MSc Business Analytics</title>
+    <style>
+        :root {
+            --primary: #e94560;
+            --dark: #1a1a2e;
+            --dark2: #16213e;
+            --accent: #0f3460;
+            --green: #27ae60;
+            --red: #e74c3c;
+            --orange: #f39c12;
+            --grey: #95a5a6;
+            --light: #f8f9fa;
+            --text: #2c3e50;
+            --text-light: #666;
+            --radius: 10px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: var(--text);
+            background: #fff;
+            line-height: 1.7;
+        }
+
+        /* ── Hero ─────────────────────────────────── */
+        .hero {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 60%, var(--accent) 100%);
+            color: #fff;
+            padding: 4rem 2rem 3rem;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 2.4rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .hero .subtitle {
+            font-size: 1.15rem;
+            color: #aab;
+            margin-bottom: 1.5rem;
+        }
+        .hero .badges {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .badge {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #ccc;
+        }
+
+        /* ── Nav Tabs ─────────────────────────────── */
+        .tab-nav {
+            background: var(--dark);
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 2px solid var(--primary);
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #aaa;
+            padding: 1rem 1.5rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            white-space: nowrap;
+        }
+        .tab-btn:hover { color: #fff; background: rgba(255,255,255,0.05); }
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom: 3px solid var(--primary);
+            font-weight: 600;
+        }
+
+        /* ── Sections ─────────────────────────────── */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+            border-bottom: 3px solid var(--primary);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        h3 {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin: 1.5rem 0 0.5rem;
+        }
+        p { margin-bottom: 1rem; }
+
+        /* ── Cards ─────────────────────────────────── */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.2rem;
+            margin: 1.5rem 0;
+        }
+        .card {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary);
+        }
+        .card h4 {
+            color: var(--dark);
+            margin-bottom: 0.3rem;
+            font-size: 1rem;
+        }
+        .card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        .card .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* ── Pipeline Flow ─────────────────────────── */
+        .pipeline {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .pipeline-step {
+            background: var(--dark);
+            color: #fff;
+            padding: 0.8rem 1.4rem;
+            border-radius: var(--radius);
+            text-align: center;
+            font-size: 0.85rem;
+            min-width: 140px;
+        }
+        .pipeline-step strong { display: block; color: var(--primary); font-size: 0.95rem; }
+        .pipeline-arrow {
+            font-size: 1.5rem;
+            color: var(--primary);
+            padding: 0 0.3rem;
+        }
+
+        /* ── Tables ────────────────────────────────── */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        th {
+            background: var(--dark);
+            color: #fff;
+            padding: 0.7rem 1rem;
+            text-align: left;
+        }
+        td {
+            padding: 0.6rem 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        tr:nth-child(even) { background: var(--light); }
+
+        /* ── Formula ───────────────────────────────── */
+        .formula {
+            background: var(--light);
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            padding: 1.2rem 1.5rem;
+            text-align: center;
+            font-size: 1.1rem;
+            margin: 1.5rem 0;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+        }
+
+        /* ── Image Containers ──────────────────────── */
+        .img-container {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 1rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+        .img-container img {
+            max-width: 100%;
+            border-radius: 6px;
+        }
+        .img-container .caption {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+        .img-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        /* ── Map Embed ─────────────────────────────── */
+        .map-embed {
+            width: 100%;
+            height: 500px;
+            border: 2px solid #ddd;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+        }
+
+        /* ── Highlight Boxes ───────────────────────── */
+        .insight {
+            background: linear-gradient(135deg, #e8f8f0, #d5f5e3);
+            border-left: 4px solid var(--green);
+            border-radius: var(--radius);
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .insight strong { color: var(--green); }
+
+        .warning {
+            background: #fff9e6;
+            border-left: 4px solid var(--orange);
+            border-radius: var(--radius);
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        /* ── CTA Buttons ───────────────────────────── */
+        .cta-row {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        .cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: transform 0.2s;
+        }
+        .cta:hover { transform: translateY(-2px); }
+        .cta-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+        .cta-secondary {
+            background: var(--dark);
+            color: #fff;
+        }
+
+        /* ── Footer ────────────────────────────────── */
+        footer {
+            background: var(--dark);
+            color: #888;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.85rem;
+        }
+        footer a { color: var(--primary); text-decoration: none; }
+
+        /* ── Responsive ────────────────────────────── */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.6rem; }
+            .tab-btn { padding: 0.7rem 0.8rem; font-size: 0.8rem; }
+            section { padding: 2rem 1rem; }
+            .pipeline { flex-direction: column; }
+            .pipeline-arrow { transform: rotate(90deg); }
+            .img-grid { grid-template-columns: 1fr; }
+        }
+
+        code {
+            background: #f0f0f0;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.88rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- HERO -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="hero">
+    <h1>Predictive Site Selection for Specialty Coffee</h1>
+    <p class="subtitle">Binary Classification on H3 Hexagonal Spatial Units &mdash; London Borough of Camden</p>
+    <div class="badges">
+        <span class="badge">MSc Business Analytics 2026</span>
+        <span class="badge">H3 Hexagonal Grid</span>
+        <span class="badge">Spatial Block CV</span>
+        <span class="badge">XGBoost</span>
+        <span class="badge">Burt's Structural Holes</span>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- NAVIGATION -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<nav class="tab-nav">
+    <button class="tab-btn active" data-tab="overview">Overview</button>
+    <button class="tab-btn" data-tab="data">Data Pipeline</button>
+    <button class="tab-btn" data-tab="grid">Spatial Indexing</button>
+    <button class="tab-btn" data-tab="graph">Graph Analytics</button>
+    <button class="tab-btn" data-tab="model">ML Model</button>
+    <button class="tab-btn" data-tab="results">Results</button>
+    <button class="tab-btn" data-tab="dashboard">Live Dashboard</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAB 1: OVERVIEW -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="tab-content active" id="overview">
+<section>
+    <h2>Project Overview</h2>
+    <p>
+        This project identifies <strong>optimal locations for a new specialty coffee shop</strong>
+        in the London Borough of Camden using multi-modal geospatial data and supervised machine learning.
+        The core insight: a binary classifier's <strong>False Positives</strong> &mdash; locations the model
+        predicts <em>should</em> have a coffee shop but currently don't &mdash; represent untapped market opportunities.
+    </p>
+    <p>
+        In the language of network theory, these are <strong>Burt's Structural Holes</strong> (1992):
+        positions in a spatial network with high demand signals but no existing supply,
+        now identified by data-driven learning rather than heuristic scoring.
+    </p>
+
+    <div class="pipeline">
+        <div class="pipeline-step"><strong>Step 01</strong>ETL &amp; Cleaning</div>
+        <span class="pipeline-arrow">&rarr;</span>
+        <div class="pipeline-step"><strong>Step 02</strong>H3 Grid &amp; Enrichment</div>
+        <span class="pipeline-arrow">&rarr;</span>
+        <div class="pipeline-step"><strong>Step 03</strong>Graph Analytics</div>
+        <span class="pipeline-arrow">&rarr;</span>
+        <div class="pipeline-step"><strong>ML Model</strong>Classification &amp; Tuning</div>
+        <span class="pipeline-arrow">&rarr;</span>
+        <div class="pipeline-step"><strong>Output</strong>Site Recommendations</div>
+    </div>
+
+    <h3>Research Question</h3>
+    <p>
+        <em>"Can a binary classification model, trained on geospatial features derived from population rasters,
+        census demographics, and graph centrality metrics, identify underserved locations (structural holes)
+        for specialty coffee in Camden?"</em>
+    </p>
+
+    <h3>Key Results</h3>
+    <div class="card-grid">
+        <div class="card">
+            <div class="number">~600</div>
+            <h4>H3 Hexagons</h4>
+            <p>Resolution 9 (~174m edge) covering Camden</p>
+        </div>
+        <div class="card">
+            <div class="number">12</div>
+            <h4>Engineered Features</h4>
+            <p>Across 4 modalities: footfall, demographics, graph, POI</p>
+        </div>
+        <div class="card">
+            <div class="number">3</div>
+            <h4>Models Compared</h4>
+            <p>LR vs Random Forest vs XGBoost with Spatial CV</p>
+        </div>
+        <div class="card">
+            <div class="number">FP</div>
+            <h4>Site Recommendations</h4>
+            <p>False Positives = Structural Holes in the coffee market</p>
+        </div>
+    </div>
+
+    <h3>Data Sources</h3>
+    <table>
+        <tr><th>Source</th><th>Type</th><th>What It Provides</th></tr>
+        <tr><td>LandScan (ORNL, 2023)</td><td>Raster (~1km)</td><td>Population density as a footfall proxy</td></tr>
+        <tr><td>ONS Census 2021 (Digimap)</td><td>Tabular (OA level)</td><td>Demographics: education, age, employment</td></tr>
+        <tr><td>OpenStreetMap (OSMnx)</td><td>Vector (Points)</td><td>POIs: cafes, gyms, stations, offices</td></tr>
+        <tr><td>H3 Adjacency Graph</td><td>Computed (NetworkX)</td><td>Centrality: degree, betweenness, closeness, clustering</td></tr>
+    </table>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAB 2: DATA PIPELINE -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="data">
+<section>
+    <h2>Step 01: Data Pipeline (ETL)</h2>
+    <p>
+        The first notebook acquires source datasets from three geospatial modalities and harmonises
+        them into a common coordinate reference system (EPSG:27700, British National Grid).
+    </p>
+
+    <h3>Three Data Modalities</h3>
+    <table>
+        <tr><th>Modality</th><th>Representation</th><th>Example</th><th>Precision</th></tr>
+        <tr>
+            <td><strong>Vector</strong></td>
+            <td>Discrete geometric primitives with exact coordinate pairs</td>
+            <td>OSM cafe locations (Points), building footprints (Polygons)</td>
+            <td>Sub-metre</td>
+        </tr>
+        <tr>
+            <td><strong>Raster</strong></td>
+            <td>Regular grid of cells, each storing a numeric value</td>
+            <td>LandScan population grid &mdash; each pixel holds a count</td>
+            <td>~1 km per pixel</td>
+        </tr>
+        <tr>
+            <td><strong>Tabular</strong></td>
+            <td>Attribute records keyed by a spatial identifier</td>
+            <td>ONS Census CSVs &mdash; percentages per Output Area</td>
+            <td>OA centroid</td>
+        </tr>
+    </table>
+
+    <h3>POI Categorisation</h3>
+    <p>Each Point of Interest is classified into a <strong>business role</strong>:</p>
+    <table>
+        <tr><th>Role</th><th>OSM Tags</th><th>Effect on Score</th></tr>
+        <tr><td><strong style="color: var(--red);">Competitor</strong></td><td>cafe, coffee_shop</td><td>Reduces site score (direct competition)</td></tr>
+        <tr><td><strong style="color: var(--green);">Synergy</strong></td><td>gym, university, office, library</td><td>Increases score (complementary foot traffic)</td></tr>
+        <tr><td><strong style="color: #3498db;">Anchor</strong></td><td>station (public transport)</td><td>Increases score (transit node)</td></tr>
+        <tr><td><strong style="color: var(--grey);">Other</strong></td><td>bakery, supermarket</td><td>Contextual enrichment</td></tr>
+    </table>
+
+    <div class="warning">
+        <strong>CRS Fix Applied:</strong> The original code computed centroids in EPSG:4326 (degrees).
+        At 51&deg;N, 1&deg; longitude spans ~69 km while 1&deg; latitude spans ~111 km &mdash; a 60% distortion.
+        All geometric operations now use EPSG:27700 (metres) to eliminate this anisotropic error.
+    </div>
+
+    <h3>Census Merge</h3>
+    <p>
+        Three ONS Census 2021 CSVs (Economic Activity, Age Structure, Qualifications) are merged
+        on <code>geog_code</code> (Output Area identifier), producing 846 OAs with 7 demographic columns.
+        Missing values are imputed with the column median (not zero, which would falsely imply "0% employed").
+    </p>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAB 3: SPATIAL INDEXING -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="grid">
+<section>
+    <h2>Step 02: H3 Hexagonal Grid &amp; Enrichment</h2>
+    <p>
+        Uber's <strong>H3</strong> library partitions Camden into hierarchical hexagonal cells.
+        Unlike square grids (which have ambiguous adjacency at corners), hexagons have
+        6 equidistant neighbours &mdash; ideal for walking-distance analysis.
+    </p>
+
+    <h3>Why Resolution 9?</h3>
+    <table>
+        <tr><th>Resolution</th><th>Edge Length</th><th>Hex Area</th><th>Use Case</th></tr>
+        <tr><td>7</td><td>~1.2 km</td><td>~5.16 km&sup2;</td><td>District-level</td></tr>
+        <tr><td>8</td><td>~460 m</td><td>~0.74 km&sup2;</td><td>Neighbourhood</td></tr>
+        <tr style="background: #d5f5e3; font-weight: bold;"><td>9</td><td>~174 m</td><td>~0.105 km&sup2;</td><td>Walking-scale (our choice)</td></tr>
+        <tr><td>10</td><td>~66 m</td><td>~0.015 km&sup2;</td><td>Street-level</td></tr>
+    </table>
+
+    <p>
+        At Resolution 9, each hexagon covers roughly the area a person walks in 2 minutes &mdash;
+        the micro-unit of the <strong>15-minute city</strong> (Moreno et al., 2021).
+    </p>
+
+    <h3>Enrichment Pipeline</h3>
+    <div class="pipeline">
+        <div class="pipeline-step"><strong>H3 Grid</strong>~600 hexagons</div>
+        <span class="pipeline-arrow">&rarr;</span>
+        <div class="pipeline-step"><strong>Zonal Stats</strong>LandScan population</div>
+        <span class="pipeline-arrow">&rarr;</span>
+        <div class="pipeline-step"><strong>Spatial Join</strong>Census demographics</div>
+        <span class="pipeline-arrow">&rarr;</span>
+        <div class="pipeline-step"><strong>Master Grid</strong>9 columns per hex</div>
+    </div>
+
+    <p>
+        Census demographics are joined via <code>sjoin_nearest</code> with <strong>population-weighted mean</strong>
+        aggregation: larger Output Areas contribute proportionally more to each hex's demographic profile.
+        Hexes with no OA match receive the borough median (conservative imputation).
+    </p>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAB 4: GRAPH ANALYTICS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="graph">
+<section>
+    <h2>Step 03: Graph Analytics &amp; Heuristic Scoring</h2>
+    <p>
+        The enriched H3 grid becomes a <strong>spatial graph</strong> where hexagons are nodes
+        and edges connect adjacent hexes, weighted by inverse distance in metres.
+    </p>
+
+    <h3>Four Centrality Metrics</h3>
+    <table>
+        <tr><th>Metric</th><th>What It Measures</th><th>Business Meaning</th></tr>
+        <tr><td><strong>Degree</strong></td><td>Number of neighbours</td><td>Interior (6) vs boundary (&lt;6) connectivity</td></tr>
+        <tr><td><strong>Betweenness</strong></td><td>Frequency on shortest paths</td><td>Transit corridor importance</td></tr>
+        <tr><td><strong>Closeness</strong></td><td>Average distance to all nodes</td><td>Central vs peripheral location</td></tr>
+        <tr><td><strong>Clustering</strong></td><td>Neighbour interconnection</td><td>Neighbourhood cohesion</td></tr>
+    </table>
+
+    <div class="warning">
+        <strong>Weight Semantics:</strong> NetworkX treats the <code>weight</code> parameter differently
+        across algorithms. Path-based metrics (betweenness, closeness) interpret weight as <em>cost to minimise</em>,
+        so we use actual Euclidean distance. Clustering interprets weight as <em>connection strength</em>,
+        so we use the IDW value (1/(d+1)).
+    </div>
+
+    <h3>Heuristic Site Score</h3>
+    <div class="formula">
+        Score<sub>H</sub> = Pop<sub>H</sub> &times; D<sub>H</sub> + 5 &middot; S<sub>H</sub> + 3 &middot; A<sub>H</sub> &minus; 15 &middot; C<sub>H</sub>
+    </div>
+    <p>
+        Where <em>D<sub>H</sub></em> = Level 4 qualification % / 100 (demand proxy),
+        <em>S</em> = synergy count, <em>A</em> = anchor count, <em>C</em> = competitor count.
+        This is an interpretable heuristic &mdash; the ML model learns optimal weights from data.
+    </p>
+
+    <h3>3D Visualisation</h3>
+    <p>
+        Scores are normalised to [0, 1] using min-max scaling, then mapped to a green (high) &rarr; red (low)
+        colour gradient. Extrusion height is proportional to the normalised score.
+    </p>
+    <div class="img-container">
+        <img src="assets/camden_site_potential_preview.png" alt="Pydeck 3D hex map of heuristic site scores"
+             onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:3rem;&quot;>Run Notebook 03 to generate the heuristic map, then take a screenshot and save as <code>docs/assets/camden_site_potential_preview.png</code></p>'">
+        <p class="caption">Fig. 3 &mdash; Heuristic site scores across Camden. Green = high opportunity, Red = saturated.</p>
+    </div>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAB 5: ML MODEL -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="model">
+<section>
+    <h2>Machine Learning Model</h2>
+
+    <h3>Problem Formulation</h3>
+    <p>
+        Binary classification: predict whether a hexagon <em>should</em> contain a coffee shop
+        based on its geospatial features. The commercially valuable output is the
+        <strong>False Positives</strong> &mdash; locations predicted as suitable that have no current supply.
+    </p>
+
+    <h3>Feature Matrix (12 Features)</h3>
+    <table>
+        <tr><th>Modality</th><th>Features</th></tr>
+        <tr><td>Footfall</td><td><code>population</code> (LandScan zonal sum)</td></tr>
+        <tr><td>Demographics</td><td><code>employed_total_perc</code>, <code>age_16_to_34_perc</code>, <code>level4_perc</code>, <code>retired_perc</code>, <code>no_qualifications_perc</code></td></tr>
+        <tr><td>Graph Centrality</td><td><code>degree_centrality</code>, <code>betweenness_centrality</code>, <code>closeness_centrality</code>, <code>clustering_coeff</code></td></tr>
+        <tr><td>POI Ecosystem</td><td><code>n_synergy</code>, <code>n_anchors</code> (competitors excluded &mdash; they encode the target)</td></tr>
+    </table>
+
+    <div class="insight">
+        <strong>Leakage Guard:</strong> The <code>n_competitors</code> column directly encodes the target
+        (<code>has_coffee_shop</code>) and is excluded from the feature matrix. Synergy and anchor counts
+        are retained as legitimate upstream predictors.
+    </div>
+
+    <h3>Spatial Cross-Validation</h3>
+    <p>
+        Standard k-fold CV violates spatial independence (Tobler's First Law). Adjacent hexes
+        leak similar features into both train and test sets, inflating AUC by 5&ndash;15%.
+    </p>
+    <p>
+        <strong>Solution:</strong> Group Resolution-9 hexes by their Resolution-5 parent cell (~10 km&sup2; blocks).
+        All hexes sharing a parent are assigned to the same fold, preserving spatial integrity across 5 folds.
+    </p>
+
+    <h3>Model Comparison</h3>
+    <table>
+        <tr><th>Model</th><th>Type</th><th>Imbalance Handling</th><th>Rationale</th></tr>
+        <tr><td>Logistic Regression</td><td>Linear</td><td><code>class_weight='balanced'</code></td><td>Interpretable baseline</td></tr>
+        <tr><td>Random Forest</td><td>Bagged ensemble</td><td><code>class_weight='balanced'</code></td><td>Non-linear, robust</td></tr>
+        <tr><td>XGBoost</td><td>Boosted ensemble</td><td><code>scale_pos_weight</code></td><td>State-of-the-art tabular</td></tr>
+    </table>
+    <p>
+        The best model is tuned via <code>GridSearchCV</code> with the spatial CV splitter,
+        searching over tree depth, learning rate, subsampling, and column sampling.
+    </p>
+
+    <div class="img-grid">
+        <div class="img-container">
+            <img src="assets/roc_curves.png" alt="ROC curves for all models"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the ML notebook, then copy <code>data/outputs/roc_curves.png</code> to <code>docs/assets/</code></p>'">
+            <p class="caption">Fig. 4 &mdash; ROC curves (out-of-fold, spatial CV)</p>
+        </div>
+        <div class="img-container">
+            <img src="assets/confusion_matrix.png" alt="Confusion matrix"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the ML notebook, then copy <code>data/outputs/confusion_matrix.png</code> to <code>docs/assets/</code></p>'">
+            <p class="caption">Fig. 5 &mdash; Confusion matrix (out-of-fold)</p>
+        </div>
+    </div>
+
+    <div class="img-container" style="max-width: 600px; margin: 1.5rem auto;">
+        <img src="assets/feature_importance.png" alt="Feature importance"
+             onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the ML notebook, then copy <code>data/outputs/feature_importance.png</code> to <code>docs/assets/</code></p>'">
+        <p class="caption">Fig. 6 &mdash; XGBoost feature importance (gain-based)</p>
+    </div>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAB 6: RESULTS -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="results">
+<section>
+    <h2>Results &amp; Recommendations</h2>
+
+    <h3>The False Positive Thesis</h3>
+    <div class="insight">
+        <strong>Key Insight:</strong> False Positive hexagons possess all the learned features of
+        successful coffee shop locations &mdash; high footfall, educated demographics, strong transit
+        connectivity, synergy with gyms and offices &mdash; but <strong>no one has opened a shop there yet</strong>.
+        These are Burt's Structural Holes, validated by supervised learning.
+    </div>
+
+    <h3>Confusion Matrix Interpretation</h3>
+    <table>
+        <tr><th>Quadrant</th><th>Meaning</th><th>Business Value</th></tr>
+        <tr>
+            <td><span style="color: var(--green); font-weight: bold;">False Positive</span></td>
+            <td>Model says YES, reality is NO</td>
+            <td>Site recommendation &mdash; highest commercial value</td>
+        </tr>
+        <tr>
+            <td><span style="color: var(--red); font-weight: bold;">True Positive</span></td>
+            <td>Model says YES, reality is YES</td>
+            <td>Validates model &mdash; correctly identifies existing shops</td>
+        </tr>
+        <tr>
+            <td><span style="color: var(--grey); font-weight: bold;">True Negative</span></td>
+            <td>Model says NO, reality is NO</td>
+            <td>Correctly rejects unsuitable locations</td>
+        </tr>
+        <tr>
+            <td><span style="color: var(--orange); font-weight: bold;">False Negative</span></td>
+            <td>Model says NO, reality is YES</td>
+            <td>Niche shops not captured by feature set</td>
+        </tr>
+    </table>
+
+    <h3>Interactive Recommendation Map</h3>
+    <p>
+        Green extruded hexagons represent recommended sites (False Positives), with height proportional
+        to model confidence. Hover for details.
+    </p>
+    <iframe class="map-embed" src="../data/outputs/camden_ml_recommendations.html"
+            title="ML Recommendations Map"
+            onerror="this.outerHTML='<p style=&quot;color:#999;padding:2rem;text-align:center;&quot;>Run the ML notebook to generate the interactive map.</p>'">
+    </iframe>
+
+    <h3>Limitations</h3>
+    <table>
+        <tr><th>Limitation</th><th>Impact</th></tr>
+        <tr><td>Single-borough scope</td><td>Results specific to Camden; transferability untested</td></tr>
+        <tr><td>Temporal snapshot</td><td>2021 Census + 2023 LandScan; openings/closings since not captured</td></tr>
+        <tr><td>No revenue ground truth</td><td>Target is presence/absence, not profitability</td></tr>
+        <tr><td>No real-time footfall</td><td>LandScan is an estimate; no mobile signal data</td></tr>
+        <tr><td>No rental cost data</td><td>Commercial viability depends on rent, which is not modelled</td></tr>
+    </table>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAB 7: DASHBOARD -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="dashboard">
+<section>
+    <h2>Live Interactive Dashboard</h2>
+    <p>
+        The Streamlit dashboard provides interactive exploration of the ML results,
+        including filterable maps, demographic comparisons, and feature analysis.
+    </p>
+
+    <div class="cta-row">
+        <a class="cta cta-primary" href="#" id="streamlit-link">
+            Open Live Dashboard &rarr;
+        </a>
+        <a class="cta cta-secondary" href="https://github.com/daththeanalyst/Spatio-Temporal-Graph-Synthesis" target="_blank">
+            View Source Code on GitHub &rarr;
+        </a>
+    </div>
+
+    <h3>Dashboard Features</h3>
+    <div class="card-grid">
+        <div class="card">
+            <h4>Overview Tab</h4>
+            <p>KPI cards, model comparison table, confusion matrix, outcome distribution chart</p>
+        </div>
+        <div class="card">
+            <h4>Interactive Map</h4>
+            <p>Pydeck 3D hex map with filters for outcome type, confidence, and population</p>
+        </div>
+        <div class="card">
+            <h4>Recommendations</h4>
+            <p>Top 20 FP sites ranked by confidence, demographic comparison, radar chart</p>
+        </div>
+        <div class="card">
+            <h4>Feature Analysis</h4>
+            <p>Correlation heatmap, feature importance, distribution explorer by target class</p>
+        </div>
+    </div>
+
+    <h3>Running Locally</h3>
+    <p>To launch the dashboard on your machine:</p>
+    <div class="formula" style="text-align: left; font-family: monospace; font-style: normal; font-size: 0.95rem;">
+        pip install -r requirements.txt<br>
+        streamlit run streamlit_app.py
+    </div>
+    <p>
+        <strong>Prerequisite:</strong> Run all 4 notebooks first (01 &rarr; 02 &rarr; 03 &rarr; ML)
+        to generate the output files in <code>data/outputs/</code>.
+    </p>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- FOOTER -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<footer>
+    <p>
+        Camden Specialty Coffee Site Selection &bull; MSc Business Analytics 2026<br>
+        Built with Python, H3, NetworkX, XGBoost, Streamlit, Pydeck<br>
+        <a href="https://github.com/daththeanalyst/Spatio-Temporal-Graph-Synthesis" target="_blank">GitHub Repository</a>
+    </p>
+</footer>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAB SWITCHING SCRIPT -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<script>
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Deactivate all
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            // Activate clicked
+            btn.classList.add('active');
+            document.getElementById(btn.dataset.tab).classList.add('active');
+        });
+    });
+</script>
+
+</body>
+</html>

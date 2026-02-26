@@ -1,0 +1,25 @@
+# Camden Specialty Coffee Site Selection — Dependencies
+# =====================================================
+# Install: pip install -r requirements.txt
+
+# Notebook pipeline (run 01 → 02 → 03 → ML)
+pandas>=2.0
+numpy>=1.24
+geopandas>=0.14
+shapely>=2.0
+h3>=4.0
+networkx>=3.0
+osmnx>=1.7
+rasterio>=1.3
+rasterstats>=0.19
+scikit-learn>=1.3
+xgboost>=2.0
+statsmodels>=0.14
+matplotlib>=3.7
+seaborn>=0.13
+pydeck>=0.8.1
+pyarrow>=14.0
+
+# Streamlit dashboard (streamlit run streamlit_app.py)
+streamlit>=1.28
+plotly>=5.17
