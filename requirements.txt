@@ -1,8 +1,8 @@
-# Camden Specialty Coffee Site Selection — Dependencies
+# London Specialty Coffee Site Selection — Dependencies
 # =====================================================
 # Install: pip install -r requirements.txt
 
-# Notebook pipeline (run 01 → 02 → 03 → ML)
+# Notebook pipeline (camden_synergy_index.ipynb)
 pandas>=2.0
 numpy>=1.24
 geopandas>=0.14
@@ -23,3 +23,4 @@ pyarrow>=14.0
 # Streamlit dashboard (streamlit run streamlit_app.py)
 streamlit>=1.28
 plotly>=5.17
+geopy>=2.4           # Postcode geocoding for area search

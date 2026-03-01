@@ -9,6 +9,8 @@
 ons-age-ew-2021_*/
 ons-economic-ew-2021_*/
 ons-qualifications-ew-2021_*/
+Extra Data Full london/
+Extra Data Qualifications/
 
 # Data folders (raw + intermediate)
 data/raw/
@@ -18,7 +20,7 @@ data/processed/
 # Allow specific output files for deployment
 # ========================
 data/outputs/
-!data/outputs/camden_ml_scored.parquet
+!data/outputs/london_ml_scored.parquet
 !data/outputs/fp_recommendations.csv
 !data/outputs/model_comparison.csv
 !data/outputs/roc_curves.png
@@ -26,7 +28,9 @@ data/outputs/
 !data/outputs/feature_importance.png
 !data/outputs/eda_correlations.png
 !data/outputs/eda_boxplots.png
-!data/outputs/camden_ml_recommendations.html
+!data/outputs/london_ml_recommendations.html
+!data/outputs/feature_importances.csv
+!data/outputs/fp_recommendations_*.csv
 
 # ========================
 # Redundant / temporary files

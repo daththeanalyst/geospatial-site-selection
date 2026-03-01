@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camden Coffee Site Selection | MSc Business Analytics</title>
+    <title>London Predictive Site Selection | MSc Business Analytics</title>
     <style>
         :root {
             --primary: #e94560;
@@ -315,8 +315,8 @@
 <!-- HERO -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div class="hero">
-    <h1>Predictive Site Selection for Specialty Coffee</h1>
-    <p class="subtitle">Binary Classification on H3 Hexagonal Spatial Units &mdash; London Borough of Camden</p>
+    <h1>Predictive Site Selection Model</h1>
+    <p class="subtitle">Binary Classification on H3 Hexagonal Spatial Units &mdash; Greater London (33 Boroughs)</p>
     <div class="badges">
         <span class="badge">MSc Business Analytics 2026</span>
         <span class="badge">H3 Hexagonal Grid</span>
@@ -346,10 +346,11 @@
 <section>
     <h2>Project Overview</h2>
     <p>
-        This project identifies <strong>optimal locations for a new specialty coffee shop</strong>
-        in the London Borough of Camden using multi-modal geospatial data and supervised machine learning.
+        This project identifies <strong>optimal locations for new retail businesses</strong>
+        across all 33 boroughs of Greater London using multi-modal geospatial data and supervised machine learning.
+        The model supports 6 business types (cafe, restaurant, pub, fast food, gym, bakery).
         The core insight: a binary classifier's <strong>False Positives</strong> &mdash; locations the model
-        predicts <em>should</em> have a coffee shop but currently don't &mdash; represent untapped market opportunities.
+        predicts <em>should</em> have a given business but currently don't &mdash; represent untapped market opportunities.
     </p>
     <p>
         In the language of network theory, these are <strong>Burt's Structural Holes</strong> (1992):
@@ -373,30 +374,30 @@
     <p>
         <em>"Can a binary classification model, trained on geospatial features derived from population rasters,
         census demographics, and graph centrality metrics, identify underserved locations (structural holes)
-        for specialty coffee in Camden?"</em>
+        for retail businesses across Greater London?"</em>
     </p>
 
     <h3>Key Results</h3>
     <div class="card-grid">
         <div class="card">
-            <div class="number">~600</div>
+            <div class="number">16,889</div>
             <h4>H3 Hexagons</h4>
-            <p>Resolution 9 (~174m edge) covering Camden</p>
+            <p>Resolution 9 (~174m edge) covering 33 London boroughs</p>
         </div>
         <div class="card">
-            <div class="number">12</div>
+            <div class="number">23</div>
             <h4>Engineered Features</h4>
-            <p>Across 4 modalities: footfall, demographics, graph, POI</p>
+            <p>Per type: 6 demographic, 6 graph centrality, 10 POI co-occurrence, 1 competition density</p>
         </div>
         <div class="card">
-            <div class="number">3</div>
-            <h4>Models Compared</h4>
-            <p>LR vs Random Forest vs XGBoost with Spatial CV</p>
+            <div class="number">6</div>
+            <h4>Business Types</h4>
+            <p>Cafe, restaurant, pub, fast food, gym, bakery</p>
         </div>
         <div class="card">
             <div class="number">FP</div>
             <h4>Site Recommendations</h4>
-            <p>False Positives = Structural Holes in the coffee market</p>
+            <p>False Positives = Structural Holes in the market</p>
         </div>
     </div>
 
@@ -446,13 +447,13 @@
     </table>
 
     <h3>POI Categorisation</h3>
-    <p>Each Point of Interest is classified into a <strong>business role</strong>:</p>
+    <p>Each Point of Interest is classified into a <strong>business role</strong> relative to the target business type:</p>
     <table>
-        <tr><th>Role</th><th>OSM Tags</th><th>Effect on Score</th></tr>
-        <tr><td><strong style="color: var(--red);">Competitor</strong></td><td>cafe, coffee_shop</td><td>Reduces site score (direct competition)</td></tr>
-        <tr><td><strong style="color: var(--green);">Synergy</strong></td><td>gym, university, office, library</td><td>Increases score (complementary foot traffic)</td></tr>
+        <tr><th>Role</th><th>OSM Tags (examples)</th><th>Effect on Score</th></tr>
+        <tr><td><strong style="color: var(--red);">Competitor</strong></td><td>Same type as target (e.g. cafes for cafe model)</td><td>Excluded from features (encodes the target)</td></tr>
+        <tr><td><strong style="color: var(--green);">Synergy</strong></td><td>gym, university, office, library, co-working</td><td>Increases score (complementary foot traffic)</td></tr>
         <tr><td><strong style="color: #3498db;">Anchor</strong></td><td>station (public transport)</td><td>Increases score (transit node)</td></tr>
-        <tr><td><strong style="color: var(--grey);">Other</strong></td><td>bakery, supermarket</td><td>Contextual enrichment</td></tr>
+        <tr><td><strong style="color: var(--grey);">Other</strong></td><td>bakery, supermarket, restaurant</td><td>Contextual enrichment</td></tr>
     </table>
 
     <div class="warning">
@@ -461,12 +462,39 @@
         All geometric operations now use EPSG:27700 (metres) to eliminate this anisotropic error.
     </div>
 
+    <h3>Competition Density (k=2 Ring)</h3>
+    <p>
+        For each business type, a <strong>competition density</strong> feature counts same-type businesses
+        in a k=2 H3 ring (~18 neighboring hexagons, ~350m radius). This wider radius ensures
+        hexagons over open spaces (parks, railway corridors) can still "see" nearby businesses
+        on surrounding streets, preventing artificial dead zones in the feature matrix.
+    </p>
+
     <h3>Census Merge</h3>
     <p>
         Three ONS Census 2021 CSVs (Economic Activity, Age Structure, Qualifications) are merged
         on <code>geog_code</code> (Output Area identifier), producing 846 OAs with 7 demographic columns.
         Missing values are imputed with the column median (not zero, which would falsely imply "0% employed").
     </p>
+
+    <h3>Exploratory Data Analysis</h3>
+    <div class="img-container">
+        <img src="assets/missingness_class_balance.png" alt="Missingness audit and class balance"
+             onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+        <p class="caption">Fig. 1 &mdash; Feature missingness audit (left) and target class distribution (right).</p>
+    </div>
+    <div class="img-grid">
+        <div class="img-container">
+            <img src="assets/correlation_heatmap.png" alt="Feature correlation heatmap"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 2 &mdash; Feature correlation matrix (including target variable).</p>
+        </div>
+        <div class="img-container">
+            <img src="assets/feature_distributions.png" alt="Feature distributions by target class"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 3 &mdash; Feature distributions split by target class (cafe).</p>
+        </div>
+    </div>
 </section>
 </div>
 
@@ -477,7 +505,7 @@
 <section>
     <h2>Step 02: H3 Hexagonal Grid &amp; Enrichment</h2>
     <p>
-        Uber's <strong>H3</strong> library partitions Camden into hierarchical hexagonal cells.
+        Uber's <strong>H3</strong> library partitions Greater London into hierarchical hexagonal cells.
         Unlike square grids (which have ambiguous adjacency at corners), hexagons have
         6 equidistant neighbours &mdash; ideal for walking-distance analysis.
     </p>
@@ -498,7 +526,7 @@
 
     <h3>Enrichment Pipeline</h3>
     <div class="pipeline">
-        <div class="pipeline-step"><strong>H3 Grid</strong>~600 hexagons</div>
+        <div class="pipeline-step"><strong>H3 Grid</strong>~16,889 hexagons</div>
         <span class="pipeline-arrow">&rarr;</span>
         <div class="pipeline-step"><strong>Zonal Stats</strong>LandScan population</div>
         <span class="pipeline-arrow">&rarr;</span>
@@ -526,13 +554,15 @@
         and edges connect adjacent hexes, weighted by inverse distance in metres.
     </p>
 
-    <h3>Four Centrality Metrics</h3>
+    <h3>Six Centrality Metrics</h3>
     <table>
         <tr><th>Metric</th><th>What It Measures</th><th>Business Meaning</th></tr>
         <tr><td><strong>Degree</strong></td><td>Number of neighbours</td><td>Interior (6) vs boundary (&lt;6) connectivity</td></tr>
         <tr><td><strong>Betweenness</strong></td><td>Frequency on shortest paths</td><td>Transit corridor importance</td></tr>
         <tr><td><strong>Closeness</strong></td><td>Average distance to all nodes</td><td>Central vs peripheral location</td></tr>
         <tr><td><strong>Clustering</strong></td><td>Neighbour interconnection</td><td>Neighbourhood cohesion</td></tr>
+        <tr><td><strong>Eigenvector</strong></td><td>Influence via well-connected neighbours</td><td>Hub proximity (near other hubs)</td></tr>
+        <tr><td><strong>PageRank</strong></td><td>Damped random walk steady state</td><td>Foot-traffic accumulation potential</td></tr>
     </table>
 
     <div class="warning">
@@ -555,13 +585,9 @@
     <h3>3D Visualisation</h3>
     <p>
         Scores are normalised to [0, 1] using min-max scaling, then mapped to a green (high) &rarr; red (low)
-        colour gradient. Extrusion height is proportional to the normalised score.
+        colour gradient. Extrusion height is proportional to the normalised score. The final 3D map
+        is generated automatically by the notebook and embedded in the Results tab.
     </p>
-    <div class="img-container">
-        <img src="assets/camden_site_potential_preview.png" alt="Pydeck 3D hex map of heuristic site scores"
-             onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:3rem;&quot;>Run Notebook 03 to generate the heuristic map, then take a screenshot and save as <code>docs/assets/camden_site_potential_preview.png</code></p>'">
-        <p class="caption">Fig. 3 &mdash; Heuristic site scores across Camden. Green = high opportunity, Red = saturated.</p>
-    </div>
 </section>
 </div>
 
@@ -574,24 +600,26 @@
 
     <h3>Problem Formulation</h3>
     <p>
-        Binary classification: predict whether a hexagon <em>should</em> contain a coffee shop
-        based on its geospatial features. The commercially valuable output is the
+        Binary classification: for each of 6 business types, predict whether a hexagon <em>should</em> contain
+        that business based on its geospatial features. The commercially valuable output is the
         <strong>False Positives</strong> &mdash; locations predicted as suitable that have no current supply.
     </p>
 
-    <h3>Feature Matrix (12 Features)</h3>
+    <h3>Feature Matrix (23 Features per Business Type)</h3>
     <table>
-        <tr><th>Modality</th><th>Features</th></tr>
-        <tr><td>Footfall</td><td><code>population</code> (LandScan zonal sum)</td></tr>
-        <tr><td>Demographics</td><td><code>employed_total_perc</code>, <code>age_16_to_34_perc</code>, <code>level4_perc</code>, <code>retired_perc</code>, <code>no_qualifications_perc</code></td></tr>
-        <tr><td>Graph Centrality</td><td><code>degree_centrality</code>, <code>betweenness_centrality</code>, <code>closeness_centrality</code>, <code>clustering_coeff</code></td></tr>
-        <tr><td>POI Ecosystem</td><td><code>n_synergy</code>, <code>n_anchors</code> (competitors excluded &mdash; they encode the target)</td></tr>
+        <tr><th>Modality</th><th>Count</th><th>Features</th></tr>
+        <tr><td>Footfall</td><td>1</td><td><code>population</code> (LandScan zonal sum)</td></tr>
+        <tr><td>Demographics</td><td>5</td><td><code>employed_total_perc</code>, <code>age_16_to_34_perc</code>, <code>level4_perc</code>, <code>retired_perc</code>, <code>no_qualifications_perc</code></td></tr>
+        <tr><td>Graph Centrality</td><td>6</td><td><code>degree_centrality</code>, <code>betweenness_centrality</code>, <code>closeness_centrality</code>, <code>clustering_coeff</code>, <code>eigenvector_centrality</code>, <code>pagerank</code></td></tr>
+        <tr><td>POI Co-occurrence</td><td>10</td><td>Individual counts of all 11 POI types <em>except</em> the target type (e.g., for the cafe model: <code>n_restaurant</code>, <code>n_pub</code>, <code>n_gym</code>, <code>n_station</code>, etc.)</td></tr>
+        <tr><td>Competition Density</td><td>1</td><td><code>nearby_{type}</code> &mdash; count of same-type businesses in k=2 ring (~350m radius)</td></tr>
     </table>
 
     <div class="insight">
-        <strong>Leakage Guard:</strong> The <code>n_competitors</code> column directly encodes the target
-        (<code>has_coffee_shop</code>) and is excluded from the feature matrix. Synergy and anchor counts
-        are retained as legitimate upstream predictors.
+        <strong>Leakage Guard:</strong> For each business type model, <code>n_{type}</code> (the count of that
+        type) is <em>excluded</em> from the feature matrix because it directly encodes the target variable.
+        All other POI type counts are retained as co-occurrence features, enabling the model to learn
+        which business types tend to cluster together.
     </div>
 
     <h3>Spatial Cross-Validation</h3>
@@ -600,8 +628,9 @@
         leak similar features into both train and test sets, inflating AUC by 5&ndash;15%.
     </p>
     <p>
-        <strong>Solution:</strong> Group Resolution-9 hexes by their Resolution-5 parent cell (~10 km&sup2; blocks).
-        All hexes sharing a parent are assigned to the same fold, preserving spatial integrity across 5 folds.
+        <strong>Solution:</strong> Group Resolution-9 hexes by their Resolution-7 parent cell (~0.74 km&sup2; blocks).
+        All hexes sharing a parent are assigned to the same fold via greedy class-balanced assignment,
+        preserving spatial integrity and guaranteeing both classes in every fold across 5 folds.
     </p>
 
     <h3>Model Comparison</h3>
@@ -616,23 +645,64 @@
         searching over tree depth, learning rate, subsampling, and column sampling.
     </p>
 
+    <h3>Threshold Tuning (F<sub>0.3</sub>)</h3>
+    <p>
+        The default classification threshold of 0.5 is rarely optimal for imbalanced datasets.
+        We use <strong>Precision&ndash;Recall curves</strong> on honest out-of-fold predictions from spatial CV
+        to find the threshold that maximises <strong>F<sub>0.3</sub></strong> per business type.
+    </p>
+    <p>
+        F<sub>0.3</sub> weights precision ~11&times; more than recall, aggressively penalising false positives.
+        This produces <em>fewer but higher-confidence</em> site recommendations &mdash; each green hexagon
+        on the map represents a location the model is genuinely confident about, not a borderline prediction.
+    </p>
+
+    <div class="warning">
+        <strong>Why not 0.5?</strong> At the default threshold, the model over-predicts &mdash; producing
+        hundreds of False Positives including many borderline cases. The F<sub>0.3</sub>-optimal threshold
+        (typically 0.7&ndash;0.85) drastically reduces recommendations to only the highest-quality sites.
+    </div>
+
+    <h3>Evaluation Figures</h3>
+    <p>All figures below are <strong>auto-generated</strong> by the notebook on each run &mdash; no manual export needed.</p>
+
     <div class="img-grid">
         <div class="img-container">
             <img src="assets/roc_curves.png" alt="ROC curves for all models"
-                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the ML notebook, then copy <code>data/outputs/roc_curves.png</code> to <code>docs/assets/</code></p>'">
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
             <p class="caption">Fig. 4 &mdash; ROC curves (out-of-fold, spatial CV)</p>
         </div>
         <div class="img-container">
-            <img src="assets/confusion_matrix.png" alt="Confusion matrix"
-                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the ML notebook, then copy <code>data/outputs/confusion_matrix.png</code> to <code>docs/assets/</code></p>'">
-            <p class="caption">Fig. 5 &mdash; Confusion matrix (out-of-fold)</p>
+            <img src="assets/confusion_matrix.png" alt="Confusion matrices for all 6 business types"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 5 &mdash; Confusion matrices (out-of-fold, all 6 types)</p>
         </div>
     </div>
 
-    <div class="img-container" style="max-width: 600px; margin: 1.5rem auto;">
-        <img src="assets/feature_importance.png" alt="Feature importance"
-             onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the ML notebook, then copy <code>data/outputs/feature_importance.png</code> to <code>docs/assets/</code></p>'">
-        <p class="caption">Fig. 6 &mdash; XGBoost feature importance (gain-based)</p>
+    <div class="img-grid">
+        <div class="img-container">
+            <img src="assets/feature_importance.png" alt="Feature importance for all 6 business types"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 6 &mdash; Top 10 features by business type (XGBoost gain)</p>
+        </div>
+        <div class="img-container">
+            <img src="assets/precision_recall_thresholds.png" alt="Precision-Recall curves with F0.3 optimal thresholds"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 7 &mdash; Precision&ndash;Recall curves with F<sub>0.3</sub>-optimal thresholds</p>
+        </div>
+    </div>
+
+    <div class="img-grid">
+        <div class="img-container">
+            <img src="assets/calibration_curve.png" alt="Calibration curve"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 8 &mdash; Calibration curve (OOF predictions vs observed frequency)</p>
+        </div>
+        <div class="img-container">
+            <img src="assets/failure_mode_profiles.png" alt="Feature profiles by prediction outcome"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 9 &mdash; Failure mode analysis: feature profiles by outcome (FP/TP/FN/TN)</p>
+        </div>
     </div>
 </section>
 </div>
@@ -647,9 +717,10 @@
     <h3>The False Positive Thesis</h3>
     <div class="insight">
         <strong>Key Insight:</strong> False Positive hexagons possess all the learned features of
-        successful coffee shop locations &mdash; high footfall, educated demographics, strong transit
-        connectivity, synergy with gyms and offices &mdash; but <strong>no one has opened a shop there yet</strong>.
+        successful business locations &mdash; high footfall, educated demographics, strong transit
+        connectivity, co-located complementary businesses &mdash; but <strong>no one has opened that business there yet</strong>.
         These are Burt's Structural Holes, validated by supervised learning.
+        The F<sub>0.3</sub>-optimal threshold ensures only high-precision recommendations survive.
     </div>
 
     <h3>Confusion Matrix Interpretation</h3>
@@ -679,18 +750,23 @@
 
     <h3>Interactive Recommendation Map</h3>
     <p>
-        Green extruded hexagons represent recommended sites (False Positives), with height proportional
-        to model confidence. Hover for details.
+        The interactive 3D Pydeck map below shows model predictions across Greater London,
+        filtered by the F<sub>0.3</sub>-optimal threshold per business type.
+        <strong>Tall green</strong> hexagons = high-confidence recommended sites.
+        <strong>Faint green</strong> (flat) = borderline recommendations below the median confidence among FPs.
+        Red = existing shops (True Positives). Orange = model blind spots (False Negatives).
+        Height is proportional to model confidence. Hover for borough-level demographics.
     </p>
-    <iframe class="map-embed" src="../data/outputs/camden_ml_recommendations.html"
+    <iframe class="map-embed" src="../data/outputs/london_ml_recommendations.html"
             title="ML Recommendations Map"
+            style="height: 600px;"
             onerror="this.outerHTML='<p style=&quot;color:#999;padding:2rem;text-align:center;&quot;>Run the ML notebook to generate the interactive map.</p>'">
     </iframe>
 
     <h3>Limitations</h3>
     <table>
         <tr><th>Limitation</th><th>Impact</th></tr>
-        <tr><td>Single-borough scope</td><td>Results specific to Camden; transferability untested</td></tr>
+        <tr><td>Static POI snapshot</td><td>OSM data reflects current state; recent openings/closings not captured</td></tr>
         <tr><td>Temporal snapshot</td><td>2021 Census + 2023 LandScan; openings/closings since not captured</td></tr>
         <tr><td>No revenue ground truth</td><td>Target is presence/absence, not profitability</td></tr>
         <tr><td>No real-time footfall</td><td>LandScan is an estimate; no mobile signal data</td></tr>
@@ -743,10 +819,10 @@
     <p>To launch the dashboard on your machine:</p>
     <div class="formula" style="text-align: left; font-family: monospace; font-style: normal; font-size: 0.95rem;">
         pip install -r requirements.txt<br>
-        streamlit run streamlit_app.py
+        streamlit run streamlit_app.py --server.port 8501
     </div>
     <p>
-        <strong>Prerequisite:</strong> Run all 4 notebooks first (01 &rarr; 02 &rarr; 03 &rarr; ML)
+        <strong>Prerequisite:</strong> Run the unified notebook (<code>camden_synergy_index.ipynb</code>)
         to generate the output files in <code>data/outputs/</code>.
     </p>
 </section>
@@ -757,7 +833,7 @@
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <footer>
     <p>
-        Camden Specialty Coffee Site Selection &bull; MSc Business Analytics 2026<br>
+        London Predictive Site Selection &bull; MSc Business Analytics 2026<br>
         Built with Python, H3, NetworkX, XGBoost, Streamlit, Pydeck<br>
         <a href="https://github.com/daththeanalyst/Spatio-Temporal-Graph-Synthesis" target="_blank">GitHub Repository</a>
     </p>

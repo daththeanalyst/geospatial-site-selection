@@ -22,6 +22,12 @@ This document provides technical instructions for an AI agent to execute and mai
     - Calculate Site Scores: $Score = (\sum Synergy - 10 \times \sum Competitors) \times Pop\_Normalized$.
     - Export interactive HTML maps (Kepler/Pydeck).
 
+## 1b. Mandatory Change Logging
+**After EVERY code change** to the notebook or any project file, the agent MUST:
+1. Add a new entry to `agent_collaboration_log.md` documenting: what changed, why, root cause (if a fix), and user vs AI contribution.
+2. Use the next available entry number (check the last `### Entry #N` in the log).
+3. Do not batch multiple changes into one entry — log each change immediately after making it.
+
 ## 2. Spatial Verification Rules
 - **CRS Check**: Never calculate Euclidean distance in EPSG:4326. Always verify `crs.to_epsg() == 27700`.
 - **H3 Resolution**: Use Resolution 9 for walking-scale sites.
