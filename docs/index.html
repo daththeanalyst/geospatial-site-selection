@@ -96,7 +96,7 @@
         .tab-content.active { display: block; }
 
         section {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 3rem 2rem;
         }
@@ -211,6 +211,7 @@
             text-align: center;
         }
         .img-container img {
+            width: 100%;
             max-width: 100%;
             border-radius: 6px;
         }
@@ -221,7 +222,7 @@
         }
         .img-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: 1fr;
             gap: 1.5rem;
             margin: 1.5rem 0;
         }
@@ -229,7 +230,7 @@
         /* ── Map Embed ─────────────────────────────── */
         .map-embed {
             width: 100%;
-            height: 500px;
+            height: 700px;
             border: 2px solid #ddd;
             border-radius: var(--radius);
             margin: 1.5rem 0;
@@ -284,7 +285,7 @@
         /* ── Footer ────────────────────────────────── */
         footer {
             background: var(--dark);
-            color: #888;
+            color: #aaa;   /* was #888 → 4.8:1; now #aaa → 7.5:1 ✓ */
             text-align: center;
             padding: 2rem;
             font-size: 0.85rem;
@@ -307,7 +308,297 @@
             border-radius: 4px;
             font-size: 0.88rem;
         }
-    </style>
+    
+        /* ── Report Tab ─────────────────────────────────────── */
+        .report-section {
+            background: var(--light);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--primary);
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .report-section h3 {
+            margin-top: 0;
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+        .copy-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius);
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: opacity 0.2s;
+            margin-bottom: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .copy-btn:hover { opacity: 0.85; }
+        .copy-btn.copied { background: var(--green); }
+        .report-table { font-size: 0.88rem; }
+        .report-table th { background: var(--dark); color: #fff; }
+        .biz-block {
+            margin: 0.8rem 0;
+            padding: 0.6rem 1rem;
+            background: #fff;
+            border-radius: 6px;
+            border: 1px solid #e0e0e0;
+        }
+        .biz-block strong { color: var(--accent); font-size: 0.95rem; }
+        .biz-block ol { margin: 0.3rem 0 0 1.2rem; padding: 0; font-size: 0.88rem; color: var(--text); }
+        #report-loading { color: var(--text-light); font-style: italic; padding: 2rem 0; }
+        #report-error {
+            background: #fff3f3; border-left: 4px solid var(--red);
+            border-radius: var(--radius); padding: 1rem 1.5rem; display: none;
+        }
+
+        
+        /* ── Architecture Diagram ──────────────────────────────── */
+        .arch-diagram {
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0;
+        }
+        .arch-row {
+            display: grid;
+            gap: 0.8rem;
+            margin-bottom: 0;
+        }
+        .arch-sources { grid-template-columns: repeat(3, 1fr); }
+        .arch-outputs { grid-template-columns: repeat(3, 1fr); }
+        .arch-types   { grid-template-columns: repeat(6, 1fr); }
+
+        .arch-card {
+            border-radius: 8px;
+            padding: 0.9rem 1rem;
+            text-align: center;
+            font-size: 0.82rem;
+            line-height: 1.45;
+        }
+        .arch-card strong {
+            display: block;
+            font-size: 0.88rem;
+            margin-bottom: 0.25rem;
+        }
+        .arch-data {
+            background: #e8f4fd;
+            border: 2px solid #2e86c1;
+            color: #1a5276;
+        }
+        .arch-data strong { color: #1a5276; }
+
+        .arch-stage {
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid var(--dark2);
+        }
+        .arch-stage-header {
+            background: var(--dark);
+            color: #fff;
+            padding: 0.55rem 1rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .arch-stage-header .stage-num {
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            width: 22px; height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .arch-stage-body {
+            background: var(--light);
+            padding: 0.75rem 1rem;
+            display: grid;
+            gap: 0.5rem;
+        }
+        .arch-stage-body.cols2 { grid-template-columns: 1fr 1fr; }
+        .arch-stage-body.cols3 { grid-template-columns: 1fr 1fr 1fr; }
+        .arch-stage-body.cols4 { grid-template-columns: repeat(4, 1fr); }
+
+        .arch-chip {
+            background: #fff;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 0.45rem 0.7rem;
+            font-size: 0.8rem;
+            color: var(--text);
+            line-height: 1.4;
+        }
+        .arch-chip strong { display: block; color: var(--accent); font-size: 0.82rem; }
+        .arch-chip.highlight { border-color: var(--primary); background: #fff5f7; }
+        .arch-chip.highlight strong { color: var(--primary); }
+
+        .arch-arrow {
+            text-align: center;
+            font-size: 1.6rem;
+            color: var(--primary);
+            line-height: 1;
+            padding: 0.3rem 0;
+        }
+
+        .arch-type-card {
+            background: var(--dark2);
+            color: #fff;
+            border-radius: 8px;
+            padding: 0.65rem 0.4rem;
+            text-align: center;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            border: 2px solid var(--primary);
+        }
+        .arch-type-card span {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .arch-output-card {
+            border-radius: 8px;
+            padding: 0.9rem 1rem;
+            text-align: center;
+            font-size: 0.82rem;
+            line-height: 1.5;
+        }
+        .arch-output-card strong { display: block; font-size: 0.88rem; margin-bottom: 0.3rem; }
+        .arch-out-recs  { background: #eafaf1; border: 2px solid var(--green); color: #1a6b3a; }
+        .arch-out-recs  strong { color: #1a6b3a; }         /* was var(--green)=#27ae60 → 4.7:1; now #1a6b3a → 5.5:1 ✓ */
+        .arch-out-maps  { background: #fdf2fb; border: 2px solid #8e44ad; color: #5b2c6f; }
+        .arch-out-maps  strong { color: #8e44ad; }
+        .arch-out-port  { background: #fef9e7; border: 2px solid var(--orange); color: #784212; }
+        .arch-out-port  strong { color: #7d5a00; }         /* was var(--orange)=#f39c12 → 2.63:1; now #7d5a00 → 8.8:1 ✓ */
+
+        @media (max-width: 700px) {
+            .arch-sources, .arch-outputs { grid-template-columns: 1fr; }
+            .arch-types   { grid-template-columns: repeat(3, 1fr); }
+            .arch-stage-body.cols3, .arch-stage-body.cols4 { grid-template-columns: 1fr 1fr; }
+            .biz-btn-grid { grid-template-columns: repeat(3, 1fr); }
+            .tool-controls { grid-template-columns: 1fr; }
+        }
+
+        /* ── Site Finder Tool ─────────────────────────────────────── */
+        .tool-step  { margin: 2rem 0; }
+        .tool-hint  { color: var(--text-light); font-size: 0.88rem; margin-bottom: 0.8rem; }
+
+        .biz-btn-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.8rem;
+            margin: 1rem 0;
+        }
+        .biz-btn {
+            background: var(--light);
+            border: 2px solid #d0d7de;
+            border-radius: var(--radius);
+            padding: 1rem 0.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.2s;
+            line-height: 1.5;
+        }
+        .biz-btn:hover  { border-color: var(--primary); background: #fff5f7; }
+        .biz-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; }
+
+        .tool-controls {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            align-items: end;
+            margin: 1rem 0 1.5rem;
+        }
+        .tool-controls select {
+            width: 100%;
+            padding: 0.6rem 1rem;
+            border: 2px solid var(--primary);
+            border-radius: 6px;
+            background: var(--light);
+            color: var(--text);
+            font-size: 0.95rem;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 0.4rem;
+        }
+        .tool-controls label { display: block; font-weight: 600; }
+
+        .rec-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .rec-card {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 1rem;
+            border-left: 4px solid var(--primary);
+            position: relative;
+        }
+        .rec-rank    { position: absolute; top: 0.7rem; right: 0.8rem; font-size: 0.75rem; color: var(--text-light); }
+        .rec-borough { font-weight: 700; color: var(--dark); font-size: 1rem; margin-bottom: 0.3rem; }
+        .rec-conf    { margin-bottom: 0.5rem; }
+        .rec-conf strong { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
+        .rec-stats   { display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.82rem; color: var(--text-light); }
+
+        .tool-stats-bar {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            align-items: center;
+            background: var(--dark);
+            color: #ccc;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius);
+            font-size: 0.88rem;
+            margin-top: 1.5rem;
+        }
+        .tool-stats-bar strong { color: var(--primary); }
+
+        .dash-update-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.65rem 2.2rem;
+            border-radius: var(--radius);
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+        }
+        .dash-update-btn:hover  { background: #c0392b; }
+        .dash-update-btn:active { transform: scale(0.97); }
+        .dash-update-btn.pending {
+            background: #e67e22;
+            box-shadow: 0 0 0 3px rgba(230,126,34,0.4);
+            animation: pulse-btn 1.4s ease-in-out infinite;
+        }
+        @keyframes pulse-btn {
+            0%, 100% { box-shadow: 0 0 0 3px rgba(230,126,34,0.4); }
+            50%       { box-shadow: 0 0 0 6px rgba(230,126,34,0.15); }
+        }
+
+        </style>
+<!-- Load report data inline — works on file:// (no CORS block from Chrome null-origin policy) -->
+<script src="model_report_data.js" onerror="window._inlineReportData=null"></script>
 </head>
 <body>
 
@@ -336,7 +627,8 @@
     <button class="tab-btn" data-tab="graph">Graph Analytics</button>
     <button class="tab-btn" data-tab="model">ML Model</button>
     <button class="tab-btn" data-tab="results">Results</button>
-    <button class="tab-btn" data-tab="dashboard">Live Dashboard</button>
+    <button class="tab-btn" data-tab="claude-report">Report</button>
+    <button class="tab-btn" data-tab="dashboard">Site Finder</button>
 </nav>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
@@ -358,17 +650,156 @@
         now identified by data-driven learning rather than heuristic scoring.
     </p>
 
-    <div class="pipeline">
-        <div class="pipeline-step"><strong>Step 01</strong>ETL &amp; Cleaning</div>
-        <span class="pipeline-arrow">&rarr;</span>
-        <div class="pipeline-step"><strong>Step 02</strong>H3 Grid &amp; Enrichment</div>
-        <span class="pipeline-arrow">&rarr;</span>
-        <div class="pipeline-step"><strong>Step 03</strong>Graph Analytics</div>
-        <span class="pipeline-arrow">&rarr;</span>
-        <div class="pipeline-step"><strong>ML Model</strong>Classification &amp; Tuning</div>
-        <span class="pipeline-arrow">&rarr;</span>
-        <div class="pipeline-step"><strong>Output</strong>Site Recommendations</div>
+
+    <h3>Full Pipeline Architecture</h3>
+    <div class="arch-diagram">
+
+        <!-- ── DATA SOURCES ────────────────────────────────────── -->
+        <div class="arch-row arch-sources">
+            <div class="arch-card arch-data">
+                <strong>&#127757; LandScan Raster</strong>
+                Population density<br>
+                WGS84 &bull; ~1km resolution<br>
+                Zonal stats &rarr; H3 hexagons
+            </div>
+            <div class="arch-card arch-data">
+                <strong>&#128200; Digimap Census CSVs</strong>
+                Education &bull; Age &bull; Employment<br>
+                LSOA-level &bull; 2021 Census<br>
+                Areal interpolation &rarr; H3
+            </div>
+            <div class="arch-card arch-data">
+                <strong>&#128205; OSM / Overpass API</strong>
+                845k+ POIs across 33 boroughs<br>
+                19 tag categories &bull; 4&times;4 tile grid<br>
+                Deduplicated by H3 index
+            </div>
+        </div>
+
+        <div class="arch-arrow">&#8595;</div>
+
+        <!-- ── SPATIAL PREPROCESSING ───────────────────────────── -->
+        <div class="arch-stage">
+            <div class="arch-stage-header">
+                <span class="stage-num">1</span>
+                Spatial Preprocessing &amp; Grid Generation
+            </div>
+            <div class="arch-stage-body cols3">
+                <div class="arch-chip">
+                    <strong>Borough Boundaries</strong>
+                    osmnx geocoding &bull; 33 boroughs<br>
+                    Reprojected EPSG:4326 &rarr; EPSG:27700
+                </div>
+                <div class="arch-chip highlight">
+                    <strong>H3 Hexagonal Grid</strong>
+                    Resolution 9 &bull; ~174m edge<br>
+                    16,889 hexagons &bull; BNG clipped
+                </div>
+                <div class="arch-chip">
+                    <strong>CRS Normalisation</strong>
+                    All vectors &rarr; EPSG:27700<br>
+                    Raster clips in WGS84, results back to BNG
+                </div>
+            </div>
+        </div>
+
+        <div class="arch-arrow">&#8595;</div>
+
+        <!-- ── FEATURE ENGINEERING ─────────────────────────────── -->
+        <div class="arch-stage">
+            <div class="arch-stage-header">
+                <span class="stage-num">2</span>
+                Feature Engineering &mdash; 23 Features per Hexagon
+            </div>
+            <div class="arch-stage-body cols4">
+                <div class="arch-chip">
+                    <strong>POI Counts</strong>
+                    Synergy &bull; Competitor<br>
+                    Anchor &bull; Nearby (500m)
+                </div>
+                <div class="arch-chip highlight">
+                    <strong>Graph Centrality</strong>
+                    H3 adjacency &rarr; NetworkX<br>
+                    51k+ edges &bull; 4 metrics
+                </div>
+                <div class="arch-chip">
+                    <strong>Demographics</strong>
+                    Education (Level 4+)<br>
+                    Age 16&ndash;34 &bull; Employment
+                </div>
+                <div class="arch-chip">
+                    <strong>Population</strong>
+                    LandScan zonal stats<br>
+                    Daytime + residential
+                </div>
+            </div>
+        </div>
+
+        <div class="arch-arrow">&#8595;</div>
+
+        <!-- ── ML PIPELINE ─────────────────────────────────────── -->
+        <div class="arch-stage">
+            <div class="arch-stage-header">
+                <span class="stage-num">3</span>
+                Machine Learning Pipeline
+            </div>
+            <div class="arch-stage-body cols3">
+                <div class="arch-chip">
+                    <strong>Spatial Block CV</strong>
+                    H3 Res-7 parent grouping<br>
+                    5 folds &bull; no data leakage
+                </div>
+                <div class="arch-chip highlight">
+                    <strong>XGBoost (Tuned)</strong>
+                    GridSearchCV &bull; 6 params<br>
+                    LR &amp; RF baselines compared
+                </div>
+                <div class="arch-chip">
+                    <strong>F&#8321; Threshold Tuning</strong>
+                    Precision&ndash;Recall curves<br>
+                    OOF predictions &bull; per-type
+                </div>
+            </div>
+        </div>
+
+        <div class="arch-arrow">&#8595; One model per business type &#8595;</div>
+
+        <!-- ── 6 BUSINESS TYPES ────────────────────────────────── -->
+        <div class="arch-row arch-types">
+            <div class="arch-type-card"><span>&#9749;</span>Coffee<br>Shop</div>
+            <div class="arch-type-card"><span>&#127860;</span>Restau-<br>rant</div>
+            <div class="arch-type-card"><span>&#127866;</span>Pub /<br>Bar</div>
+            <div class="arch-type-card"><span>&#127839;</span>Fast<br>Food</div>
+            <div class="arch-type-card"><span>&#127947;</span>Gym /<br>Fitness</div>
+            <div class="arch-type-card"><span>&#129360;</span>Bakery</div>
+        </div>
+
+        <div class="arch-arrow">&#8595; Confusion matrix outcomes &rarr; False Positives = Recommendations &#8595;</div>
+
+        <!-- ── OUTPUTS ─────────────────────────────────────────── -->
+        <div class="arch-row arch-outputs">
+            <div class="arch-output-card arch-out-recs">
+                <strong>&#128197; Site Recommendations</strong>
+                False Positive hexagons<br>
+                Per-type CSV &bull; Ranked by confidence<br>
+                Structural holes in the market
+            </div>
+            <div class="arch-output-card arch-out-maps">
+                <strong>&#127757; Interactive 3D Maps</strong>
+                Pydeck H3HexagonLayer<br>
+                6 maps &bull; Colour = outcome<br>
+                Height = model confidence
+            </div>
+            <div class="arch-output-card arch-out-port">
+                <strong>&#128196; Portfolio &amp; Report</strong>
+                This site &bull; Report tab<br>
+                AUC &bull; Feature importance<br>
+                Threshold analysis
+            </div>
+        </div>
+
     </div>
+
 
     <h3>Research Question</h3>
     <p>
@@ -480,18 +911,18 @@
     <h3>Exploratory Data Analysis</h3>
     <div class="img-container">
         <img src="assets/missingness_class_balance.png" alt="Missingness audit and class balance"
-             onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+             onerror="this.parentElement.innerHTML='<p style=&quot;color:#666;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
         <p class="caption">Fig. 1 &mdash; Feature missingness audit (left) and target class distribution (right).</p>
     </div>
     <div class="img-grid">
         <div class="img-container">
             <img src="assets/correlation_heatmap.png" alt="Feature correlation heatmap"
-                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#666;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
             <p class="caption">Fig. 2 &mdash; Feature correlation matrix (including target variable).</p>
         </div>
         <div class="img-container">
             <img src="assets/feature_distributions.png" alt="Feature distributions by target class"
-                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#666;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
             <p class="caption">Fig. 3 &mdash; Feature distributions split by target class (cafe).</p>
         </div>
     </div>
@@ -645,22 +1076,22 @@
         searching over tree depth, learning rate, subsampling, and column sampling.
     </p>
 
-    <h3>Threshold Tuning (F<sub>0.3</sub>)</h3>
+    <h3>Threshold Tuning (F<sub>1</sub>)</h3>
     <p>
         The default classification threshold of 0.5 is rarely optimal for imbalanced datasets.
         We use <strong>Precision&ndash;Recall curves</strong> on honest out-of-fold predictions from spatial CV
-        to find the threshold that maximises <strong>F<sub>0.3</sub></strong> per business type.
+        to find the threshold that maximises <strong>F<sub>1</sub></strong> per business type.
     </p>
     <p>
-        F<sub>0.3</sub> weights precision ~11&times; more than recall, aggressively penalising false positives.
-        This produces <em>fewer but higher-confidence</em> site recommendations &mdash; each green hexagon
-        on the map represents a location the model is genuinely confident about, not a borderline prediction.
+        F<sub>1</sub> balances precision and recall equally, ensuring the model captures most existing businesses
+        while still maintaining high-confidence recommendations &mdash; each green hexagon
+        on the map represents a genuine opportunity, and the map avoids excessive blind spots.
     </p>
 
     <div class="warning">
         <strong>Why not 0.5?</strong> At the default threshold, the model over-predicts &mdash; producing
-        hundreds of False Positives including many borderline cases. The F<sub>0.3</sub>-optimal threshold
-        (typically 0.7&ndash;0.85) drastically reduces recommendations to only the highest-quality sites.
+        hundreds of False Positives including many borderline cases. The F<sub>1</sub>-optimal threshold
+        balances precision and recall for credible map coverage with fewer blind spots.
     </div>
 
     <h3>Evaluation Figures</h3>
@@ -669,12 +1100,12 @@
     <div class="img-grid">
         <div class="img-container">
             <img src="assets/roc_curves.png" alt="ROC curves for all models"
-                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#666;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
             <p class="caption">Fig. 4 &mdash; ROC curves (out-of-fold, spatial CV)</p>
         </div>
         <div class="img-container">
             <img src="assets/confusion_matrix.png" alt="Confusion matrices for all 6 business types"
-                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#666;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
             <p class="caption">Fig. 5 &mdash; Confusion matrices (out-of-fold, all 6 types)</p>
         </div>
     </div>
@@ -682,25 +1113,25 @@
     <div class="img-grid">
         <div class="img-container">
             <img src="assets/feature_importance.png" alt="Feature importance for all 6 business types"
-                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#666;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
             <p class="caption">Fig. 6 &mdash; Top 10 features by business type (XGBoost gain)</p>
         </div>
         <div class="img-container">
-            <img src="assets/precision_recall_thresholds.png" alt="Precision-Recall curves with F0.3 optimal thresholds"
-                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
-            <p class="caption">Fig. 7 &mdash; Precision&ndash;Recall curves with F<sub>0.3</sub>-optimal thresholds</p>
+            <img src="assets/precision_recall_thresholds.png" alt="Precision-Recall curves with F1 optimal thresholds"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#666;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 7 &mdash; Precision&ndash;Recall curves with F<sub>1</sub>-optimal thresholds</p>
         </div>
     </div>
 
     <div class="img-grid">
         <div class="img-container">
             <img src="assets/calibration_curve.png" alt="Calibration curve"
-                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#666;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
             <p class="caption">Fig. 8 &mdash; Calibration curve (OOF predictions vs observed frequency)</p>
         </div>
         <div class="img-container">
             <img src="assets/failure_mode_profiles.png" alt="Feature profiles by prediction outcome"
-                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#999;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:#666;padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
             <p class="caption">Fig. 9 &mdash; Failure mode analysis: feature profiles by outcome (FP/TP/FN/TN)</p>
         </div>
     </div>
@@ -720,7 +1151,7 @@
         successful business locations &mdash; high footfall, educated demographics, strong transit
         connectivity, co-located complementary businesses &mdash; but <strong>no one has opened that business there yet</strong>.
         These are Burt's Structural Holes, validated by supervised learning.
-        The F<sub>0.3</sub>-optimal threshold ensures only high-precision recommendations survive.
+        The F<sub>1</sub>-optimal threshold balances precision and recall for credible map coverage.
     </div>
 
     <h3>Confusion Matrix Interpretation</h3>
@@ -748,20 +1179,23 @@
         </tr>
     </table>
 
-    <h3>Interactive Recommendation Map</h3>
-    <p>
-        The interactive 3D Pydeck map below shows model predictions across Greater London,
-        filtered by the F<sub>0.3</sub>-optimal threshold per business type.
-        <strong>Tall green</strong> hexagons = high-confidence recommended sites.
-        <strong>Faint green</strong> (flat) = borderline recommendations below the median confidence among FPs.
-        Red = existing shops (True Positives). Orange = model blind spots (False Negatives).
-        Height is proportional to model confidence. Hover for borough-level demographics.
-    </p>
-    <iframe class="map-embed" src="../data/outputs/london_ml_recommendations.html"
-            title="ML Recommendations Map"
-            style="height: 600px;"
-            onerror="this.outerHTML='<p style=&quot;color:#999;padding:2rem;text-align:center;&quot;>Run the ML notebook to generate the interactive map.</p>'">
-    </iframe>
+    <div style="text-align:center; margin:2.5rem 0;">
+        <h3 style="margin-bottom:1rem;">Explore Recommendations Interactively</h3>
+        <p style="color:var(--text-light); margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto;">
+            Use the Site Finder tool to explore 3D recommendation maps with borough, business type,
+            and confidence filters.
+        </p>
+        <button onclick="document.querySelector('[data-tab=dashboard]').click()"
+                style="padding:0.8rem 2rem; font-size:1.1rem; font-weight:700; border:none;
+                       border-radius:8px; cursor:pointer; font-family:inherit;
+                       background:linear-gradient(135deg, var(--primary), var(--accent));
+                       color:#fff; box-shadow:0 4px 15px rgba(233,69,96,0.3);
+                       transition:transform 0.2s, box-shadow 0.2s;"
+                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(233,69,96,0.4)';"
+                onmouseout="this.style.transform=''; this.style.boxShadow='0 4px 15px rgba(233,69,96,0.3)';">
+            Open Site Finder Tool &rarr;
+        </button>
+    </div>
 
     <h3>Limitations</h3>
     <table>
@@ -775,56 +1209,207 @@
 </section>
 </div>
 
+
 <!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- TAB 7: DASHBOARD -->
+<!-- TAB: CLAUDE REPORT -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div class="tab-content" id="claude-report">
+<section>
+    <h2>Model Report</h2>
+    <p>All model metrics in one place &mdash; AUC scores, outcomes, top features, and recommendations. Copy a structured plain-text summary with the button below.</p>
+
+    <button class="copy-btn" id="copy-report-btn" onclick="copyReport()">
+        &#128203; Copy Report
+    </button>
+
+    <div id="report-loading" style="text-align:center; padding: 3rem 0; color: var(--text-light);">
+        <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#8987;</div>
+        Loading report data&hellip;
+    </div>
+    <div id="report-error" style="display:none;">
+        <div style="text-align:center; padding: 3rem 1rem; background: var(--light); border-radius: var(--radius); border: 2px dashed #ccc;">
+            <div style="font-size: 3rem; margin-bottom: 1rem;">&#128218;</div>
+            <h3 style="color: var(--text); margin-bottom: 0.5rem;">Report data not generated yet</h3>
+            <p style="color: var(--text-light); margin-bottom: 1rem;">
+                Run the full notebook to the last cell to generate <code>docs/model_report_data.json</code>,
+                then refresh this page.
+            </p>
+            <p style="color: var(--text-light); font-size: 0.9rem;">
+                The last notebook cell exports all metrics: AUC scores, thresholds, outcome counts,
+                feature importance, and top recommendations.
+            </p>
+        </div>
+    </div>
+    <div id="report-body" style="display:none;">
+
+        <!-- Overview -->
+        <div class="report-section">
+            <h3>Project Overview</h3>
+            <table class="report-table"><tbody id="overview-rows"></tbody></table>
+        </div>
+
+        <!-- Model AUC -->
+        <div class="report-section">
+            <h3>Model AUC (Spatial Block CV, Out-of-Fold)</h3>
+            <table class="report-table">
+                <thead><tr><th>Business Type</th><th>XGBoost Mean AUC</th><th>&plusmn; Std</th><th>F1 Threshold</th></tr></thead>
+                <tbody id="auc-rows"></tbody>
+            </table>
+        </div>
+
+        <!-- Outcome Counts -->
+        <div class="report-section">
+            <h3>Outcome Counts at F<sub>1</sub>-Optimal Threshold</h3>
+            <table class="report-table">
+                <thead><tr><th>Business Type</th><th>FP (Recommendations)</th><th>TP (Existing)</th><th>FN (Blind spots)</th><th>TN (Excluded)</th></tr></thead>
+                <tbody id="outcome-rows"></tbody>
+            </table>
+        </div>
+
+        <!-- Top Features -->
+        <div class="report-section">
+            <h3>Top 5 Features by Importance (XGBoost Gain)</h3>
+            <div id="feature-blocks"></div>
+        </div>
+
+        <!-- Top Recommendations -->
+        <div class="report-section">
+            <h3>Top 5 Recommendations per Business Type (Highest-Confidence FPs)</h3>
+            <div id="rec-blocks"></div>
+        </div>
+
+    </div>
+</section>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- TAB 7: SITE FINDER -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <div class="tab-content" id="dashboard">
 <section>
-    <h2>Live Interactive Dashboard</h2>
-    <p>
-        The Streamlit dashboard provides interactive exploration of the ML results,
-        including filterable maps, demographic comparisons, and feature analysis.
+    <h2>Site Finder</h2>
+    <p>Select your business type and borough to find high-opportunity locations across Greater London —
+    identified by a machine learning model trained on 15,430 micro-locations.</p>
+
+    <!-- Step 1: Business type -->
+    <div class="tool-step">
+        <h3>1. What type of business?</h3>
+        <p class="tool-hint">Each type has its own model trained on the demographics and footfall patterns of existing successful sites.</p>
+        <div class="biz-btn-grid">
+            <button class="biz-btn active" data-biz="cafe" onclick="setDashBiz('cafe')">
+                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto 4px;"><path d="M3 8h14v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M17 10h2a2 2 0 0 1 0 4h-2"/><path d="M7 5c0-1.5 2-1.5 2-3"/><path d="M11 5c0-1.5 2-1.5 2-3"/></svg>
+                Coffee Shop
+            </button>
+            <button class="biz-btn" data-biz="restaurant" onclick="setDashBiz('restaurant')">
+                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto 4px;"><line x1="2" y1="17" x2="22" y2="17"/><path d="M12 3a9 9 0 0 0-9 9h18a9 9 0 0 0-9-9z"/><line x1="6" y1="17" x2="6" y2="20"/><line x1="18" y1="17" x2="18" y2="20"/></svg>
+                Restaurant
+            </button>
+            <button class="biz-btn" data-biz="pub" onclick="setDashBiz('pub')">
+                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto 4px;"><path d="M5 2h14l-2 20H7z"/><line x1="5.5" y1="8" x2="18.5" y2="8"/></svg>
+                Pub / Bar
+            </button>
+            <button class="biz-btn" data-biz="fast_food" onclick="setDashBiz('fast_food')">
+                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto 4px;"><path d="M4 11a8 4.5 0 0 1 16 0"/><line x1="3" y1="11" x2="21" y2="11"/><line x1="3" y1="14" x2="21" y2="14"/><path d="M3 14v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2"/></svg>
+                Fast Food
+            </button>
+            <button class="biz-btn" data-biz="gym" onclick="setDashBiz('gym')">
+                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto 4px;"><line x1="7" y1="12" x2="17" y2="12"/><rect x="3.5" y="8.5" width="3.5" height="7" rx="1"/><rect x="17" y="8.5" width="3.5" height="7" rx="1"/><line x1="1.5" y1="10" x2="3.5" y2="10"/><line x1="1.5" y1="14" x2="3.5" y2="14"/><line x1="1.5" y1="10" x2="1.5" y2="14"/><line x1="20.5" y1="10" x2="22.5" y2="10"/><line x1="20.5" y1="14" x2="22.5" y2="14"/><line x1="22.5" y1="10" x2="22.5" y2="14"/></svg>
+                Gym
+            </button>
+            <button class="biz-btn" data-biz="bakery" onclick="setDashBiz('bakery')">
+                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto 4px;"><path d="M4 11a8 7 0 0 1 16 0"/><rect x="3" y="11" width="18" height="9" rx="2"/><line x1="8" y1="11" x2="7.5" y2="20"/><line x1="12" y1="11" x2="12" y2="20"/><line x1="16" y1="11" x2="16.5" y2="20"/></svg>
+                Bakery
+            </button>
+        </div>
+    </div>
+
+    <!-- Step 2: Controls -->
+    <div class="tool-controls">
+        <div>
+            <label for="dash-borough-sel">2. Borough (optional — leave as All London to see the full picture)</label>
+            <select id="dash-borough-sel" onchange="setDashBorough(this.value)">
+                <option value="All">All London (33 boroughs)</option>
+                <option>Barking and Dagenham</option>
+                <option>Barnet</option>
+                <option>Bexley</option>
+                <option>Brent</option>
+                <option>Bromley</option>
+                <option>Camden</option>
+                <option>City of London</option>
+                <option>Croydon</option>
+                <option>Ealing</option>
+                <option>Enfield</option>
+                <option>Greenwich</option>
+                <option>Hackney</option>
+                <option>Hammersmith and Fulham</option>
+                <option>Haringey</option>
+                <option>Harrow</option>
+                <option>Havering</option>
+                <option>Hillingdon</option>
+                <option>Hounslow</option>
+                <option>Islington</option>
+                <option>Kensington and Chelsea</option>
+                <option>Kingston upon Thames</option>
+                <option>Lambeth</option>
+                <option>Lewisham</option>
+                <option>Merton</option>
+                <option>Newham</option>
+                <option>Redbridge</option>
+                <option>Richmond upon Thames</option>
+                <option>Southwark</option>
+                <option>Sutton</option>
+                <option>Tower Hamlets</option>
+                <option>Waltham Forest</option>
+                <option>Wandsworth</option>
+                <option>City of Westminster</option>
+            </select>
+        </div>
+        <div>
+            <label>3. Min. confidence: <strong id="dash-thr-lbl">0%</strong></label>
+            <input type="range" id="dash-thr-sl" min="0" max="0.99" step="0.05" value="0"
+                   oninput="setDashThr(parseFloat(this.value))"
+                   style="width:100%; accent-color:var(--primary); margin-top:0.5rem;">
+        </div>
+    </div>
+
+    <!-- Update Map button -->
+    <div style="margin-bottom:1.5rem;">
+        <button id="dash-update-btn" class="dash-update-btn" onclick="applyFiltersAndUpdate()">
+            &#128249; Update Map
+        </button>
+        <span id="dash-pending-hint" style="margin-left:1rem; font-size:0.85rem; color:var(--text-light); display:none;">
+            Filters changed &mdash; click to apply
+        </span>
+    </div>
+
+    <!-- Map -->
+    <p class="tool-hint">
+        &#127776; <b>Green</b> = high-opportunity location (matches the profile of a successful site, no competitor there yet) &nbsp;|&nbsp;
+        &#128308; <b>Red</b> = existing business (proven demand) &nbsp;|&nbsp;
+        Height = model confidence &nbsp;|&nbsp;
+        Hover a hex for demographics
     </p>
+    <iframe class="map-embed" id="dash-map-iframe"
+            src="../data/outputs/london_recommendations_cafe.html"
+            title="Site Finder Map" style="height:520px;"></iframe>
 
-    <div class="cta-row">
-        <a class="cta cta-primary" href="#" id="streamlit-link">
-            Open Live Dashboard &rarr;
+    <!-- Recommendation cards -->
+    <h3 style="margin-top:2rem">Top recommended sites</h3>
+    <p class="tool-hint">These locations have all the learned characteristics of successful sites but no existing business of this type — unmet demand in the market.</p>
+    <div class="rec-cards-grid" id="dash-rec-cards">
+        <p style="color:var(--text-light)">Loading recommendations&hellip;</p>
+    </div>
+
+    <!-- Stats bar -->
+    <div class="tool-stats-bar">
+        <span>Market demand signal (AUC): <strong id="dash-auc">—</strong></span>
+        <span>Sites recommended: <strong id="dash-fp-count">—</strong></span>
+        <span>Confidence filter: <strong id="dash-threshold-val">—</strong></span>
+        <a href="https://github.com/daththeanalyst/Spatio-Temporal-Graph-Synthesis"
+           target="_blank" style="color:var(--primary); margin-left:auto; text-decoration:none; font-weight:600;">
+            View source on GitHub &rarr;
         </a>
-        <a class="cta cta-secondary" href="https://github.com/daththeanalyst/Spatio-Temporal-Graph-Synthesis" target="_blank">
-            View Source Code on GitHub &rarr;
-        </a>
     </div>
-
-    <h3>Dashboard Features</h3>
-    <div class="card-grid">
-        <div class="card">
-            <h4>Overview Tab</h4>
-            <p>KPI cards, model comparison table, confusion matrix, outcome distribution chart</p>
-        </div>
-        <div class="card">
-            <h4>Interactive Map</h4>
-            <p>Pydeck 3D hex map with filters for outcome type, confidence, and population</p>
-        </div>
-        <div class="card">
-            <h4>Recommendations</h4>
-            <p>Top 20 FP sites ranked by confidence, demographic comparison, radar chart</p>
-        </div>
-        <div class="card">
-            <h4>Feature Analysis</h4>
-            <p>Correlation heatmap, feature importance, distribution explorer by target class</p>
-        </div>
-    </div>
-
-    <h3>Running Locally</h3>
-    <p>To launch the dashboard on your machine:</p>
-    <div class="formula" style="text-align: left; font-family: monospace; font-style: normal; font-size: 0.95rem;">
-        pip install -r requirements.txt<br>
-        streamlit run streamlit_app.py --server.port 8501
-    </div>
-    <p>
-        <strong>Prerequisite:</strong> Run the unified notebook (<code>camden_synergy_index.ipynb</code>)
-        to generate the output files in <code>data/outputs/</code>.
-    </p>
 </section>
 </div>
 
@@ -855,5 +1440,366 @@
     });
 </script>
 
+    <script>
+    /* ── Report Tab Logic ──────────────────────────────────────── */
+    var _reportData = null;
+
+    function loadReport() {
+        var body    = document.getElementById('report-body');
+        if (body && body.style.display !== 'none') return; // already loaded
+        var loading = document.getElementById('report-loading');
+        var errDiv  = document.getElementById('report-error');
+
+        // Prefer inline data loaded via <script src> — works on file:// (no CORS restriction)
+        if (window._inlineReportData) {
+            _reportData = window._inlineReportData;
+            try { renderReport(_reportData); } catch(e) {
+                console.error('Report tab: render error (inline data)', e);
+                if (loading) loading.style.display = 'none';
+                if (errDiv)  errDiv.style.display  = 'block';
+                return;
+            }
+            if (loading) loading.style.display = 'none';
+            if (body)    body.style.display    = 'block';
+            if (errDiv)  errDiv.style.display  = 'none';
+            return;
+        }
+
+        // Fallback: fetch (works on http:// Live Server; may be blocked on file://)
+        var fetchPromise = fetch('model_report_data.json');
+        var timeoutPromise = new Promise(function(_, reject) {
+            setTimeout(function() { reject(new Error('timeout')); }, 6000);
+        });
+        Promise.race([fetchPromise, timeoutPromise])
+            .then(function(r) {
+                if (!r.ok) throw new Error('HTTP ' + r.status);
+                return r.json();
+            })
+            .then(function(data) {
+                _reportData = data;
+                try { renderReport(data); } catch(renderErr) {
+                    console.error('Report tab: renderReport failed', renderErr);
+                    if (loading) loading.style.display = 'none';
+                    if (errDiv)  errDiv.style.display  = 'block';
+                    return;
+                }
+                if (loading) loading.style.display = 'none';
+                if (body)    body.style.display    = 'block';
+                if (errDiv)  errDiv.style.display  = 'none';
+            })
+            .catch(function(e) {
+                console.warn('Report tab: could not load model_report_data.json', e);
+                if (loading) loading.style.display = 'none';
+                if (errDiv)  errDiv.style.display  = 'block';
+            });
+    }
+
+    function renderReport(d) {
+        // Overview
+        var ovRows = document.getElementById('overview-rows');
+        if (ovRows) {
+            ovRows.innerHTML = [
+                ['Generated', d.generated_at ? d.generated_at.replace('T', ' ').slice(0,19) : '—'],
+                ['Hexagons', d.grid.hexagons.toLocaleString()],
+                ['Boroughs', d.grid.boroughs],
+                ['H3 Resolution', d.grid.resolution],
+                ['CRS', d.grid.crs],
+                ['Features', d.grid.features || 23],
+                ['Business Types', Object.keys(d.auc_scores).length],
+                ['Threshold Method', 'F₁-optimal (balanced precision-recall)'],
+            ].map(function(r){ return '<tr><td><strong>'+r[0]+'</strong></td><td>'+r[1]+'</td></tr>'; }).join('');
+        }
+
+        // AUC table
+        var aucRows = document.getElementById('auc-rows');
+        if (aucRows) {
+            aucRows.innerHTML = Object.entries(d.auc_scores).map(function(entry) {
+                var k = entry[0], v = entry[1];
+                var t = d.thresholds[k] != null ? d.thresholds[k].toFixed(4) : '—';
+                return '<tr><td>'+v.label+'</td><td><strong>'+v.mean.toFixed(4)+'</strong></td><td>'+v.std.toFixed(4)+'</td><td>'+t+'</td></tr>';
+            }).join('');
+        }
+
+        // Outcome counts
+        var outRows = document.getElementById('outcome-rows');
+        if (outRows) {
+            outRows.innerHTML = Object.entries(d.outcomes).map(function(entry) {
+                var k = entry[0], v = entry[1];
+                var label = d.auc_scores[k] ? d.auc_scores[k].label : k;
+                return '<tr><td>'+label+'</td>'
+                    +'<td style="color:var(--green);font-weight:600;">'+v.fp+'</td>'
+                    +'<td style="color:var(--red);">'+v.tp+'</td>'
+                    +'<td style="color:var(--orange);">'+v.fn+'</td>'
+                    +'<td style="color:var(--grey);">'+v.tn+'</td></tr>';
+            }).join('');
+        }
+
+        // Top features
+        var featBlocks = document.getElementById('feature-blocks');
+        if (featBlocks) {
+            featBlocks.innerHTML = Object.entries(d.top_features).map(function(entry) {
+                var k = entry[0], feats = entry[1];
+                var label = d.auc_scores[k] ? d.auc_scores[k].label : k;
+                var items = feats.map(function(f, i) {
+                    return '<li>'+f.feature+' &mdash; '+(f.importance*100).toFixed(1)+'%</li>';
+                }).join('');
+                return '<div class="biz-block"><strong>'+label+'</strong><ol>'+items+'</ol></div>';
+            }).join('');
+        }
+
+        // Top recommendations
+        var recBlocks = document.getElementById('rec-blocks');
+        if (recBlocks) {
+            recBlocks.innerHTML = Object.entries(d.top_recommendations).map(function(entry) {
+                var k = entry[0], recs = entry[1];
+                var label = d.auc_scores[k] ? d.auc_scores[k].label : k;
+                if (!recs || recs.length === 0) {
+                    return '<div class="biz-block"><strong>'+label+'</strong><p style="color:var(--text-light);font-size:0.85rem;">No recommendations generated.</p></div>';
+                }
+                var items = recs.map(function(r, i) {
+                    return '<li>'+r.borough+' &mdash; '+(r.prob*100).toFixed(1)+'% confident'
+                        +' | Pop: '+r.population.toLocaleString()
+                        +(r.degree_pct > 0 ? ' | Degree-edu: '+r.degree_pct+'%' : '')
+                        +(r.age_pct    > 0 ? ' | Age 16-34: '+r.age_pct+'%'    : '')
+                        +'</li>';
+                }).join('');
+                return '<div class="biz-block"><strong>'+label+'</strong><ol>'+items+'</ol></div>';
+            }).join('');
+        }
+    }
+
+    function copyReport() {
+        if (!_reportData) {
+            alert('Report data not loaded yet. Please wait for the tab to finish loading.');
+            return;
+        }
+        var d = _reportData;
+        var lines = [];
+        lines.push('=== LONDON RETAIL SITE SELECTION — MODEL REPORT ===');
+        lines.push('Generated: ' + (d.generated_at || '—').replace('T',' ').slice(0,19));
+        lines.push('');
+        lines.push('GRID: ' + d.grid.hexagons.toLocaleString() + ' hexagons | '
+            + d.grid.boroughs + ' boroughs | H3 Resolution ' + d.grid.resolution
+            + ' | ' + d.grid.crs);
+        lines.push('Features: ' + (d.grid.features || 23) + ' | Business types: '
+            + Object.keys(d.auc_scores).length
+            + ' | Threshold method: F1-optimal (balanced precision-recall)');
+        lines.push('');
+        lines.push('--- MODEL AUC (Spatial Block CV, Out-of-Fold) ---');
+        Object.entries(d.auc_scores).forEach(function(e) {
+            var k = e[0], v = e[1];
+            lines.push(pad(v.label, 26) + v.mean.toFixed(4) + ' ± ' + v.std.toFixed(4));
+        });
+        lines.push('');
+        lines.push('--- OUTCOMES AT F1-OPTIMAL THRESHOLD ---');
+        lines.push(pad('Type',26) + pad('Threshold',10) + pad('FP(Recs)',10) + pad('TP',7) + pad('FN',7) + 'TN');
+        Object.entries(d.outcomes).forEach(function(e) {
+            var k = e[0], v = e[1];
+            var label = d.auc_scores[k] ? d.auc_scores[k].label : k;
+            var t = d.thresholds[k] != null ? d.thresholds[k].toFixed(4) : '—';
+            lines.push(pad(label,26)+pad(t,10)+pad(v.fp,10)+pad(v.tp,7)+pad(v.fn,7)+v.tn);
+        });
+        lines.push('');
+        lines.push('--- TOP 5 FEATURES BY IMPORTANCE ---');
+        Object.entries(d.top_features).forEach(function(e) {
+            var k = e[0], feats = e[1];
+            var label = d.auc_scores[k] ? d.auc_scores[k].label : k;
+            lines.push('[' + label + ']');
+            feats.forEach(function(f, i) {
+                lines.push('  '+(i+1)+'. '+f.feature+' — '+(f.importance*100).toFixed(1)+'%');
+            });
+        });
+        lines.push('');
+        lines.push('--- TOP 5 RECOMMENDATIONS (False Positives, highest confidence) ---');
+        Object.entries(d.top_recommendations).forEach(function(e) {
+            var k = e[0], recs = e[1];
+            var label = d.auc_scores[k] ? d.auc_scores[k].label : k;
+            lines.push('[' + label + ']');
+            if (!recs || recs.length === 0) {
+                lines.push('  (no recommendations generated)');
+            } else {
+                recs.forEach(function(r, i) {
+                    lines.push('  '+(i+1)+'. '+r.borough
+                        +' | '+(r.prob*100).toFixed(1)+'% confident'
+                        +' | Pop: '+r.population.toLocaleString()
+                        +(r.degree_pct > 0 ? ' | Degree-edu: '+r.degree_pct+'%' : '')
+                        +(r.age_pct    > 0 ? ' | Age 16-34: '+r.age_pct+'%'    : ''));
+                });
+            }
+        });
+        var text = lines.join('\n');
+        navigator.clipboard.writeText(text).then(function() {
+            var btn = document.getElementById('copy-report-btn');
+            btn.textContent = '\u2713 Copied!';
+            btn.classList.add('copied');
+            setTimeout(function() {
+                btn.innerHTML = '&#128203; Copy Report';
+                btn.classList.remove('copied');
+            }, 2500);
+        }).catch(function() {
+            prompt('Copy the report below (Ctrl+A, Ctrl+C):', text);
+        });
+    }
+
+    function pad(str, len) {
+        str = String(str);
+        while (str.length < len) str += ' ';
+        return str;
+    }
+
+    // Pre-fetch report data in the background on page load — so it's ready when user opens the tab
+    setTimeout(loadReport, 800);
+
+    // Also re-trigger on tab click in case the background fetch hasn't finished yet
+    document.querySelectorAll('.tab-btn').forEach(function(btn) {
+        if (btn.dataset.tab === 'claude-report') {
+            btn.addEventListener('click', function() { setTimeout(loadReport, 50); });
+        }
+    });
+    </script>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- SITE FINDER LOGIC -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<script>
+/* ── Site Finder Tool ──────────────────────────────────────────── */
+var _dashBiz     = 'cafe';
+var _dashBorough = 'All';
+var _dashThr     = 0;
+
+function setDashBiz(biz) {
+    _dashBiz = biz;
+    document.querySelectorAll('.biz-btn').forEach(function(b) {
+        b.classList.toggle('active', b.dataset.biz === biz);
+    });
+    updateDashMap();
+    renderDashRecs();
+    renderDashStats();
+}
+
+function setDashBorough(bor) {
+    _dashBorough = bor;
+    markUpdatePending();
+    renderDashRecs(); // rec cards update immediately from _reportData (no iframe needed)
+}
+
+function setDashThr(thr) {
+    _dashThr = thr;
+    var lbl = document.getElementById('dash-thr-lbl');
+    if (lbl) lbl.textContent = Math.round(thr * 100) + '%';
+    markUpdatePending();
+}
+
+function markUpdatePending() {
+    var btn  = document.getElementById('dash-update-btn');
+    var hint = document.getElementById('dash-pending-hint');
+    if (btn)  btn.classList.add('pending');
+    if (hint) hint.style.display = 'inline';
+}
+
+function applyFiltersAndUpdate() {
+    var btn  = document.getElementById('dash-update-btn');
+    var hint = document.getElementById('dash-pending-hint');
+    if (btn)  btn.classList.remove('pending');
+    if (hint) hint.style.display = 'none';
+    pushFiltersToMap();
+    renderDashRecs();
+    renderDashStats();
+}
+
+function updateDashMap() {
+    var iframe  = document.getElementById('dash-map-iframe');
+    if (!iframe) return;
+    var src      = '../data/outputs/london_recommendations_' + _dashBiz + '.html';
+    // Load the per-type map directly (all 6 per-type files always exist after notebook run)
+    iframe.src = src;
+    iframe.onload = function() { setTimeout(pushFiltersToMap, 200); };
+}
+
+function pushFiltersToMap() {
+    var iframe = document.getElementById('dash-map-iframe');
+    if (!iframe || !iframe.contentWindow) return;
+    // Try direct access first — works on http:// (same origin, no CORS)
+    try {
+        if (typeof iframe.contentWindow._rebuildDeck === 'function') {
+            iframe.contentWindow._rebuildDeck(_dashBorough, _dashThr);
+            return;
+        }
+    } catch(e) { /* SecurityError on file:// (null origin) — fall through to postMessage */ }
+    // postMessage works across file:// null origins where direct property access is blocked
+    iframe.contentWindow.postMessage(
+        { type: 'rebuildDeck', borough: _dashBorough, threshold: _dashThr }, '*'
+    );
+}
+
+function renderDashRecs() {
+    var container = document.getElementById('dash-rec-cards');
+    if (!container) return;
+    if (!_reportData || !_reportData.top_recommendations) {
+        container.innerHTML = '<p style="color:var(--text-light)">Loading&hellip;</p>';
+        setTimeout(renderDashRecs, 400);
+        return;
+    }
+    var recs = (_reportData.top_recommendations[_dashBiz] || []).slice();
+    if (_dashBorough !== 'All') {
+        var filtered = recs.filter(function(r) { return r.borough === _dashBorough; });
+        if (filtered.length === 0) {
+            container.innerHTML =
+                '<p style="color:var(--text-light)">No top-5 sites in <strong>' + _dashBorough +
+                '</strong> for this type. Explore the green hexagons on the map above — ' +
+                'the map is filtered to this borough. Showing London-wide top sites below for context.</p>' +
+                buildRecCards(recs, true);
+            return;
+        }
+        recs = filtered;
+    }
+    container.innerHTML = buildRecCards(recs, false);
+}
+
+function buildRecCards(recs, dimmed) {
+    return recs.map(function(r, i) {
+        var conf = (r.prob * 100).toFixed(0);
+        var pop  = r.population ? r.population.toLocaleString() : '—';
+        var edu  = r.degree_pct > 0 ? r.degree_pct + '% degree-level' : '';
+        var age  = r.age_pct    > 0 ? r.age_pct    + '% age 16\u201334'  : '';
+        var opacity = dimmed ? ' style="opacity:0.6"' : '';
+        return '<div class="rec-card"' + opacity + '>'
+            + '<div class="rec-rank">#' + (i + 1) + '</div>'
+            + '<div class="rec-borough">' + r.borough + '</div>'
+            + '<div class="rec-conf"><strong>' + conf + '%</strong> confidence</div>'
+            + '<div class="rec-stats">'
+            + '<span>&#128101; ' + pop + ' population</span>'
+            + (edu ? '<span>&#127979; ' + edu + '</span>' : '')
+            + (age ? '<span>&#129489; ' + age + '</span>' : '')
+            + '</div></div>';
+    }).join('');
+}
+
+function renderDashStats() {
+    if (!_reportData) return;
+    var auc = _reportData.auc_scores  && _reportData.auc_scores[_dashBiz];
+    var out = _reportData.outcomes    && _reportData.outcomes[_dashBiz];
+    var thr = _reportData.thresholds  && _reportData.thresholds[_dashBiz];
+    var aucEl = document.getElementById('dash-auc');
+    var fpEl  = document.getElementById('dash-fp-count');
+    var thrEl = document.getElementById('dash-threshold-val');
+    if (aucEl && auc) aucEl.textContent = (auc.mean * 100).toFixed(1) + '%';
+    if (fpEl  && out) fpEl.textContent  = out.fp.toLocaleString();
+    if (thrEl && thr != null) thrEl.textContent = (thr * 100).toFixed(1) + '% min confidence';
+}
+
+// Initialise Site Finder when its tab is clicked
+document.querySelectorAll('.tab-btn').forEach(function(btn) {
+    if (btn.dataset.tab === 'dashboard') {
+        btn.addEventListener('click', function() {
+            setTimeout(function() {
+                updateDashMap();
+                renderDashRecs();
+                renderDashStats();
+            }, 50);
+        });
+    }
+});
+</script>
 </body>
 </html>
