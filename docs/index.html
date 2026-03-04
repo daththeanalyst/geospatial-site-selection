@@ -1058,6 +1058,50 @@
             50%      { transform: translateY(-3px); }
         }
 
+        /* ── Accordion ─────────────────────────────── */
+        .accordion { margin: 1.5rem 0; }
+        .accordion-item {
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            margin-bottom: 0.75rem;
+            overflow: hidden;
+            background: var(--bg-surface);
+        }
+        .accordion-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-elevated);
+            border: none;
+            color: var(--text-heading);
+            font-size: 1.05rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: left;
+        }
+        .accordion-header:hover { background: var(--bg-hover); }
+        .accordion-icon {
+            color: var(--primary);
+            font-size: 1.3rem;
+            font-weight: 700;
+            width: 1.2em;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+            padding: 0 1.5rem;
+        }
+        .accordion-open .accordion-body {
+            padding: 1rem 1.5rem 1.5rem;
+        }
+
     </style>
 <!-- Load report data inline — works on file:// (no CORS block from Chrome null-origin policy) -->
 <script src="model_report_data.js" onerror="window._inlineReportData=null"></script>
@@ -1071,7 +1115,7 @@
     <h1>Find Your Next <span class="highlight">Location</span></h1>
     <p class="subtitle">
         AI-powered site intelligence for retail expansion across Greater London.
-        Trained on 27 geospatial features. Validated with spatial cross-validation.
+        Identifying high-potential locations across 33 boroughs and 6 business types.
     </p>
     <div class="stat-row">
         <div class="stat-item">
@@ -1084,7 +1128,7 @@
         </div>
         <div class="stat-item">
             <span class="stat-number" data-target="91.1" data-suffix="%" data-decimal="1">0%</span>
-            <span class="stat-label">AUC (Cafe Model)</span>
+            <span class="stat-label">Prediction Accuracy</span>
         </div>
         <div class="stat-item">
             <span class="stat-number" data-target="6" data-suffix="">0</span>
@@ -1092,14 +1136,12 @@
         </div>
     </div>
     <button class="hero-cta" onclick="document.querySelector('[data-tab=dashboard]').click()">
-        Explore the Site Finder &rarr;
+        Find a Location &rarr;
     </button>
     <div class="badges">
         <span class="badge">H3 Hexagonal Grid</span>
-        <span class="badge">XGBoost</span>
-        <span class="badge">Spatial Block CV</span>
-        <span class="badge">Node2Vec Embeddings</span>
-        <span class="badge">Burt's Structural Holes</span>
+        <span class="badge">XGBoost ML</span>
+        <span class="badge">Spatial Cross-Validation</span>
     </div>
 </div>
 
@@ -1107,21 +1149,17 @@
 <!-- NAVIGATION -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 <nav class="tab-nav">
-    <button class="tab-btn active" data-tab="overview">Overview</button>
+    <button class="tab-btn active" data-tab="home">Home</button>
     <button class="tab-btn" data-tab="dashboard">Site Finder</button>
-    <button class="tab-btn" data-tab="results">Results</button>
     <div class="tab-separator"></div>
-    <button class="tab-btn" data-tab="model">ML Model</button>
-    <button class="tab-btn" data-tab="graph">Graph Analytics</button>
-    <button class="tab-btn" data-tab="grid">Spatial Indexing</button>
-    <button class="tab-btn" data-tab="data">Data Pipeline</button>
+    <button class="tab-btn" data-tab="how-it-works">How It Works</button>
     <button class="tab-btn" data-tab="claude-report">Report</button>
 </nav>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- TAB 1: OVERVIEW -->
+<!-- TAB 1: HOME -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
-<div class="tab-content active" id="overview">
+<div class="tab-content active" id="home">
 <section>
     <h2>Project Overview</h2>
     <p>
@@ -1327,18 +1365,43 @@
         <tr><td>OpenStreetMap (OSMnx)</td><td>Vector (Points)</td><td>POIs: cafes, gyms, stations, offices</td></tr>
         <tr><td>H3 Adjacency Graph</td><td>Computed (NetworkX)</td><td>6 centrality metrics, Louvain community detection, Node2Vec embeddings (3D)</td></tr>
     </table>
+
+    <h3>The False Positive Thesis</h3>
+    <div class="insight">
+        <strong>Key Insight:</strong> False Positive hexagons possess all the learned features of
+        successful business locations &mdash; high footfall, educated demographics, strong transit
+        connectivity, co-located complementary businesses &mdash; but <strong>no one has opened that business there yet</strong>.
+        These are untapped opportunities, validated by supervised learning.
+        The F<sub>1</sub>-optimal threshold balances precision and recall for credible map coverage.
+    </div>
+
+    <div style="text-align:center; margin:2.5rem 0;">
+        <button class="hero-cta" onclick="document.querySelector('[data-tab=dashboard]').click()">
+            Find a Location &rarr;
+        </button>
+    </div>
 </section>
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- TAB 2: DATA PIPELINE -->
+<!-- TAB 3: HOW IT WORKS -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
-<div class="tab-content" id="data">
+<div class="tab-content" id="how-it-works">
 <section>
-    <h2>Step 01: Data Pipeline (ETL)</h2>
+    <h2>How It Works</h2>
+    <p>The pipeline transforms raw geospatial data into actionable site recommendations in four stages.</p>
+
+    <div class="accordion">
+
+        <!-- 1. Data Pipeline -->
+        <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+                <span class="accordion-icon">+</span>
+                <span>Data Pipeline (ETL)</span>
+            </button>
+            <div class="accordion-body">
     <p>
-        The first notebook acquires source datasets from three geospatial modalities and harmonises
-        them into a common coordinate reference system (EPSG:27700, British National Grid).
+        Three geospatial data modalities are acquired and harmonised into EPSG:27700 (British National Grid).
     </p>
 
     <h3>Three Data Modalities</h3>
@@ -1383,49 +1446,47 @@
     <h3>Competition Density (k=2 Ring)</h3>
     <p>
         For each business type, a <strong>competition density</strong> feature counts same-type businesses
-        in a k=2 H3 ring (~18 neighboring hexagons, ~350m radius). This wider radius ensures
-        hexagons over open spaces (parks, railway corridors) can still "see" nearby businesses
-        on surrounding streets, preventing artificial dead zones in the feature matrix.
+        in a k=2 H3 ring (~18 neighboring hexagons, ~350m radius).
     </p>
 
     <h3>Census Merge</h3>
     <p>
         Three ONS Census 2021 CSVs (Economic Activity, Age Structure, Qualifications) are merged
         on <code>geog_code</code> (Output Area identifier), producing 846 OAs with 7 demographic columns.
-        Missing values are imputed with the column median (not zero, which would falsely imply "0% employed").
+        Missing values are imputed with the column median.
     </p>
 
     <h3>Exploratory Data Analysis</h3>
     <div class="img-container">
-        <img src="assets/missingness_class_balance.png" alt="Missingness audit and class balance"
+        <img src="assets/missingness_class_balance.png" alt="Missingness audit and class balance" loading="lazy"
              onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
         <p class="caption">Fig. 1 &mdash; Feature missingness audit (left) and target class distribution (right).</p>
     </div>
     <div class="img-grid">
         <div class="img-container">
-            <img src="assets/correlation_heatmap.png" alt="Feature correlation heatmap"
+            <img src="assets/correlation_heatmap.png" alt="Feature correlation heatmap" loading="lazy"
                  onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
-            <p class="caption">Fig. 2 &mdash; Feature correlation matrix (including target variable).</p>
+            <p class="caption">Fig. 2 &mdash; Feature correlation matrix.</p>
         </div>
         <div class="img-container">
-            <img src="assets/feature_distributions.png" alt="Feature distributions by target class"
+            <img src="assets/feature_distributions.png" alt="Feature distributions by target class" loading="lazy"
                  onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
             <p class="caption">Fig. 3 &mdash; Feature distributions split by target class (cafe).</p>
         </div>
     </div>
-</section>
-</div>
+            </div>
+        </div>
 
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- TAB 3: SPATIAL INDEXING -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<div class="tab-content" id="grid">
-<section>
-    <h2>Step 02: H3 Hexagonal Grid &amp; Enrichment</h2>
+        <!-- 2. Spatial Indexing -->
+        <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+                <span class="accordion-icon">+</span>
+                <span>Spatial Indexing (H3 Grid)</span>
+            </button>
+            <div class="accordion-body">
     <p>
         Uber's <strong>H3</strong> library partitions Greater London into hierarchical hexagonal cells.
-        Unlike square grids (which have ambiguous adjacency at corners), hexagons have
-        6 equidistant neighbours &mdash; ideal for walking-distance analysis.
+        Unlike square grids, hexagons have 6 equidistant neighbours &mdash; ideal for walking-distance analysis.
     </p>
 
     <h3>Why Resolution 9?</h3>
@@ -1455,25 +1516,21 @@
 
     <p>
         Census demographics are joined via <code>sjoin_nearest</code> with <strong>population-weighted mean</strong>
-        aggregation: larger Output Areas contribute proportionally more to each hex's demographic profile.
-        Hexes with no OA match receive the borough median (conservative imputation).
+        aggregation. Hexes with no OA match receive the borough median (conservative imputation).
     </p>
-</section>
-</div>
+            </div>
+        </div>
 
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- TAB 4: GRAPH ANALYTICS -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<div class="tab-content" id="graph">
-<section>
-    <h2>Step 03: Graph Analytics &amp; Heuristic Scoring</h2>
+        <!-- 3. Graph Analytics -->
+        <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+                <span class="accordion-icon">+</span>
+                <span>Graph Analytics &amp; Scoring</span>
+            </button>
+            <div class="accordion-body">
     <p>
         The enriched H3 grid becomes a <strong>spatial graph</strong> where hexagons are nodes
-        and edges connect adjacent hexes, weighted by inverse distance in metres.
-        From this graph we extract three layers of structural information:
-        <strong>six centrality metrics</strong> (individual node importance),
-        <strong>Louvain community detection</strong> (meso-scale neighbourhood clusters), and
-        <strong>Node2Vec embeddings</strong> (latent structural roles learned via random walks).
+        and edges connect adjacent hexes. From this graph we extract three layers of structural information.
     </p>
 
     <h3>Six Centrality Metrics</h3>
@@ -1487,49 +1544,20 @@
         <tr><td><strong>PageRank</strong></td><td>Damped random walk steady state</td><td>Foot-traffic accumulation potential</td></tr>
     </table>
 
-    <div class="warning">
-        <strong>Weight Semantics:</strong> NetworkX treats the <code>weight</code> parameter differently
-        across algorithms. Path-based metrics (betweenness, closeness) interpret weight as <em>cost to minimise</em>,
-        so we use actual Euclidean distance. Clustering interprets weight as <em>connection strength</em>,
-        so we use the IDW value (1/(d+1)).
-    </div>
-
     <h3>Louvain Community Detection</h3>
     <p>
-        Beyond individual centrality scores, the spatial graph encodes <strong>meso-scale structure</strong>
-        &mdash; clusters of hexagons that are more densely connected to each other than to the rest of the network.
-        We apply the <strong>Louvain algorithm</strong> (Blondel et al., 2008) to partition the H3 adjacency graph
-        into communities, maximising <em>modularity</em> (the fraction of edges falling within groups minus the
-        expected fraction if edges were placed at random).
-    </p>
-    <p>
-        Each hexagon receives a <code>community_id</code> (integer label) that captures which spatial neighbourhood
-        cluster it belongs to. This allows the ML model to learn that certain community clusters share latent
-        characteristics &mdash; for example, a community covering a town centre with mixed retail may behave
-        differently from one covering a residential suburb, even if their individual centrality scores are similar.
+        The <strong>Louvain algorithm</strong> partitions the H3 adjacency graph
+        into communities, maximising <em>modularity</em>. Each hexagon receives a <code>community_id</code>
+        capturing which spatial neighbourhood cluster it belongs to.
     </p>
 
     <h3>Node2Vec Graph Embeddings</h3>
     <p>
-        Centrality metrics and community labels capture <em>explicit</em> structural properties, but the graph
-        also contains <em>implicit</em> patterns that are difficult to express as hand-crafted features.
-        <strong>Node2Vec</strong> (Grover &amp; Leskovec, 2016) learns a low-dimensional vector representation
-        for each hexagon by simulating biased random walks on the graph, then training a Word2Vec skip-gram
-        model on the resulting "sentences" of node visits.
+        <strong>Node2Vec</strong> learns a 3-dimensional vector representation
+        for each hexagon by simulating biased random walks on the graph.
+        Hexagons with similar graph neighbourhoods receive similar embeddings,
+        even if geographically distant.
     </p>
-    <p>
-        We generate <strong>3 embedding dimensions</strong> (<code>node2vec_dim0</code>, <code>dim1</code>,
-        <code>dim2</code>) per hexagon. These capture latent structural roles &mdash; hexagons with similar
-        graph neighbourhoods (e.g., inner-ring transit corridors, suburban cul-de-sacs) receive similar
-        embedding vectors, even if they are geographically distant. The walk parameters (p=1, q=1)
-        balance between local neighbourhood exploration and broader structural equivalence.
-    </p>
-
-    <div class="insight">
-        <strong>Why 3 dimensions?</strong> Adding more dimensions risks overfitting on a graph with ~16k nodes
-        and relatively uniform H3 adjacency. Three dimensions capture the dominant structural variation
-        (urban core vs. suburb vs. boundary) while keeping the feature matrix compact.
-    </div>
 
     <h3>Heuristic Site Score</h3>
     <div class="formula">
@@ -1538,29 +1566,21 @@
     <p>
         Where <em>D<sub>H</sub></em> = Level 4 qualification % / 100 (demand proxy),
         <em>S</em> = synergy count, <em>A</em> = anchor count, <em>C</em> = competitor count.
-        This is an interpretable heuristic &mdash; the ML model learns optimal weights from data.
     </p>
+            </div>
+        </div>
 
-    <h3>3D Visualisation</h3>
-    <p>
-        Scores are normalised to [0, 1] using min-max scaling, then mapped to a green (high) &rarr; red (low)
-        colour gradient. Extrusion height is proportional to the normalised score. The final 3D map
-        is generated automatically by the notebook and embedded in the Results tab.
-    </p>
-</section>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- TAB 5: ML MODEL -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<div class="tab-content" id="model">
-<section>
-    <h2>Machine Learning Model</h2>
-
+        <!-- 4. Machine Learning Model -->
+        <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+                <span class="accordion-icon">+</span>
+                <span>Machine Learning Model</span>
+            </button>
+            <div class="accordion-body">
     <h3>Problem Formulation</h3>
     <p>
         Binary classification: for each of 6 business types, predict whether a hexagon <em>should</em> contain
-        that business based on its geospatial features. The commercially valuable output is the
+        that business. The commercially valuable output is the
         <strong>False Positives</strong> &mdash; locations predicted as suitable that have no current supply.
     </p>
 
@@ -1570,28 +1590,17 @@
         <tr><td>Footfall</td><td>1</td><td><code>population</code> (LandScan zonal sum)</td></tr>
         <tr><td>Demographics</td><td>5</td><td><code>employed_total_perc</code>, <code>age_16_to_34_perc</code>, <code>level4_perc</code>, <code>retired_perc</code>, <code>no_qualifications_perc</code></td></tr>
         <tr><td>Graph Centrality</td><td>6</td><td><code>degree_centrality</code>, <code>betweenness_centrality</code>, <code>closeness_centrality</code>, <code>clustering_coeff</code>, <code>eigenvector_centrality</code>, <code>pagerank</code></td></tr>
-        <tr><td>Community Structure</td><td>1</td><td><code>community_id</code> &mdash; Louvain community detection on H3 adjacency graph (captures neighbourhood boundaries)</td></tr>
-        <tr><td>Graph Embeddings</td><td>3</td><td><code>node2vec_dim0/1/2</code> &mdash; Node2Vec random walks + Word2Vec (learns latent structural roles)</td></tr>
-        <tr><td>POI Co-occurrence</td><td>10</td><td>Individual counts of all 11 POI types <em>except</em> the target type (e.g., for the cafe model: <code>n_restaurant</code>, <code>n_pub</code>, <code>n_gym</code>, <code>n_station</code>, etc.)</td></tr>
-        <tr><td>Competition Density</td><td>1</td><td><code>nearby_{type}</code> &mdash; count of same-type businesses in k=2 ring (~350m radius)</td></tr>
+        <tr><td>Community Structure</td><td>1</td><td><code>community_id</code> (Louvain)</td></tr>
+        <tr><td>Graph Embeddings</td><td>3</td><td><code>node2vec_dim0/1/2</code></td></tr>
+        <tr><td>POI Co-occurrence</td><td>10</td><td>Counts of all 11 POI types <em>except</em> the target type</td></tr>
+        <tr><td>Competition Density</td><td>1</td><td><code>nearby_{type}</code> &mdash; same-type businesses in k=2 ring</td></tr>
     </table>
-
-    <div class="insight">
-        <strong>Leakage Guard:</strong> For each business type model, <code>n_{type}</code> (the count of that
-        type) is <em>excluded</em> from the feature matrix because it directly encodes the target variable.
-        All other POI type counts are retained as co-occurrence features, enabling the model to learn
-        which business types tend to cluster together.
-    </div>
 
     <h3>Spatial Cross-Validation</h3>
     <p>
-        Standard k-fold CV violates spatial independence (Tobler's First Law). Adjacent hexes
-        leak similar features into both train and test sets, inflating AUC by 5&ndash;15%.
-    </p>
-    <p>
-        <strong>Solution:</strong> Group Resolution-9 hexes by their Resolution-7 parent cell (~0.74 km&sup2; blocks).
-        All hexes sharing a parent are assigned to the same fold via greedy class-balanced assignment,
-        preserving spatial integrity and guaranteeing both classes in every fold across 5 folds.
+        Standard k-fold CV violates spatial independence. We group Resolution-9 hexes by their Resolution-7
+        parent cell (~0.74 km&sup2; blocks). All hexes sharing a parent are assigned to the same fold,
+        preserving spatial integrity across 5 folds.
     </p>
 
     <h3>Model Comparison</h3>
@@ -1601,82 +1610,46 @@
         <tr><td>Random Forest</td><td>Bagged ensemble</td><td><code>class_weight='balanced'</code></td><td>Non-linear, robust</td></tr>
         <tr><td>XGBoost</td><td>Boosted ensemble</td><td><code>scale_pos_weight</code></td><td>State-of-the-art tabular</td></tr>
     </table>
-    <p>
-        The best model is tuned via <code>GridSearchCV</code> with the spatial CV splitter,
-        searching over tree depth, learning rate, subsampling, and column sampling.
-    </p>
-
-    <h3>Threshold Tuning (F<sub>1</sub>)</h3>
-    <p>
-        The default classification threshold of 0.5 is rarely optimal for imbalanced datasets.
-        We use <strong>Precision&ndash;Recall curves</strong> on honest out-of-fold predictions from spatial CV
-        to find the threshold that maximises <strong>F<sub>1</sub></strong> per business type.
-    </p>
-    <p>
-        F<sub>1</sub> balances precision and recall equally, ensuring the model captures most existing businesses
-        while still maintaining high-confidence recommendations &mdash; each green hexagon
-        on the map represents a genuine opportunity, and the map avoids excessive blind spots.
-    </p>
-
-    <div class="warning">
-        <strong>Why not 0.5?</strong> At the default threshold, the model over-predicts &mdash; producing
-        hundreds of False Positives including many borderline cases. The F<sub>1</sub>-optimal threshold
-        balances precision and recall for credible map coverage with fewer blind spots.
-    </div>
 
     <h3>Evaluation Figures</h3>
-    <p>All figures below are <strong>auto-generated</strong> by the notebook on each run &mdash; no manual export needed.</p>
-
     <div class="img-grid">
         <div class="img-container">
-            <img src="assets/roc_curves.png" alt="ROC curves for all models"
+            <img src="assets/roc_curves.png" alt="ROC curves for all models" loading="lazy"
                  onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
             <p class="caption">Fig. 4 &mdash; ROC curves (out-of-fold, spatial CV)</p>
         </div>
         <div class="img-container">
-            <img src="assets/confusion_matrix.png" alt="Confusion matrices for all 6 business types"
+            <img src="assets/confusion_matrix.png" alt="Confusion matrices for all 6 business types" loading="lazy"
                  onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
             <p class="caption">Fig. 5 &mdash; Confusion matrices (out-of-fold, all 6 types)</p>
         </div>
     </div>
-
     <div class="img-grid">
         <div class="img-container">
-            <img src="assets/feature_importance.png" alt="Feature importance for all 6 business types"
+            <img src="assets/feature_importance.png" alt="Feature importance for all 6 business types" loading="lazy"
                  onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
             <p class="caption">Fig. 6 &mdash; Top 10 features by business type (XGBoost gain)</p>
         </div>
         <div class="img-container">
-            <img src="assets/precision_recall_thresholds.png" alt="Precision-Recall curves with F1 optimal thresholds"
+            <img src="assets/precision_recall_thresholds.png" alt="Precision-Recall curves" loading="lazy"
                  onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
             <p class="caption">Fig. 7 &mdash; Precision&ndash;Recall curves with F<sub>1</sub>-optimal thresholds</p>
         </div>
     </div>
-
     <div class="img-grid">
         <div class="img-container">
-            <img src="assets/calibration_curve.png" alt="Calibration curve"
+            <img src="assets/calibration_curve.png" alt="Calibration curve" loading="lazy"
                  onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
-            <p class="caption">Fig. 8 &mdash; Calibration curve (OOF predictions vs observed frequency)</p>
+            <p class="caption">Fig. 8 &mdash; Calibration curve</p>
         </div>
         <div class="img-container">
-            <img src="assets/failure_mode_profiles.png" alt="Feature profiles by prediction outcome"
+            <img src="assets/failure_mode_profiles.png" alt="Feature profiles by prediction outcome" loading="lazy"
                  onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
-            <p class="caption">Fig. 9 &mdash; Failure mode analysis: feature profiles by outcome (FP/TP/FN/TN)</p>
+            <p class="caption">Fig. 9 &mdash; Failure mode analysis</p>
         </div>
     </div>
 
     <h3>Overfitting Diagnostics</h3>
-    <p>
-        Three independent tests confirm the model generalises well and is not simply memorising training data:
-    </p>
-
-    <h4>1. Train vs Out-of-Fold AUC Gap</h4>
-    <p>
-        For each business type, we compare the AUC on training data against the honest out-of-fold AUC
-        from spatial cross-validation. A small gap indicates the model learns real patterns rather than
-        memorising noise. Our results:
-    </p>
     <table>
         <tr><th>Business Type</th><th>OOF AUC</th><th>Train AUC</th><th>Gap</th><th>Verdict</th></tr>
         <tr><td>Coffee Shop / Cafe</td><td>0.9113</td><td>0.9314</td><td>0.020</td><td style="color:var(--green);font-weight:bold">Excellent</td></tr>
@@ -1686,67 +1659,16 @@
         <tr><td>Gym / Fitness</td><td>0.8765</td><td>0.9529</td><td>0.076</td><td style="color:var(--orange);font-weight:bold">Moderate</td></tr>
         <tr><td>Bakery</td><td>0.8635</td><td>0.9118</td><td>0.048</td><td style="color:var(--green);font-weight:bold">Acceptable</td></tr>
     </table>
-    <p>
-        All gaps fall below the 0.10 concern threshold. Gym shows the largest gap (0.076) due to having
-        the fewest positive examples (~3.2% positive rate), which gives the model less signal to learn from
-        and more room for memorisation. This is expected behaviour for rare-class problems, not a defect.
-    </p>
-
-    <h4>2. Feature Ablation (Competition Density)</h4>
-    <p>
-        The <code>nearby_{type}</code> feature counts same-type businesses in a 2-ring neighbourhood (~350m).
-        This could theoretically leak target information. To test, we re-run each model with this feature
-        <em>dropped</em> and measure the AUC change:
-    </p>
-    <p>
-        All deltas were <strong>&lt; 0.002 AUC</strong> for 5 of 6 types, confirming competition density is
-        <em>not</em> driving the model&rsquo;s predictions. Gym showed a +0.015 improvement when dropped,
-        suggesting this feature adds slight noise for the rarest class.
-        <strong>Verdict: no soft leakage detected.</strong>
-    </p>
-
-    <h4>3. Learning Curve</h4>
-    <p>
-        We train on increasing fractions of the data (20%, 40%, 60%, 80%, 100%) and track both train and
-        test AUC. A converged learning curve (flat at full data) means the model has extracted all available
-        signal and more data would yield diminishing returns.
-    </p>
-    <p>
-        The last increment was <strong>+0.0001 AUC</strong> &mdash; the model has fully converged.
-        Train and test curves approach each other as data increases, the classic signature of a
-        well-regularised model.
-    </p>
-
     <div class="img-grid">
         <div class="img-container">
-            <img src="assets/overfitting_diagnostics.png" alt="Learning Curve and Feature Ablation diagnostic plots"
+            <img src="assets/overfitting_diagnostics.png" alt="Learning Curve and Feature Ablation" loading="lazy"
                  onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run notebook Cell 35 to auto-generate this figure.</p>'">
-            <p class="caption">Fig. 10 &mdash; Overfitting diagnostics: Learning Curve (left) and Feature Ablation (right)</p>
+            <p class="caption">Fig. 10 &mdash; Learning Curve (left) and Feature Ablation (right)</p>
         </div>
     </div>
-
     <div class="insight">
-        <strong>Summary:</strong> All three diagnostics converge on the same conclusion &mdash; the XGBoost
-        model generalises well under spatial cross-validation. The train&ndash;test gaps are tight, competition
-        density features do not leak, and the learning curve has plateaued. No remedial action required.
-    </div>
-</section>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- TAB 6: RESULTS -->
-<!-- ═══════════════════════════════════════════════════════════════ -->
-<div class="tab-content" id="results">
-<section>
-    <h2>Results &amp; Recommendations</h2>
-
-    <h3>The False Positive Thesis</h3>
-    <div class="insight">
-        <strong>Key Insight:</strong> False Positive hexagons possess all the learned features of
-        successful business locations &mdash; high footfall, educated demographics, strong transit
-        connectivity, co-located complementary businesses &mdash; but <strong>no one has opened that business there yet</strong>.
-        These are Burt's Structural Holes, validated by supervised learning.
-        The F<sub>1</sub>-optimal threshold balances precision and recall for credible map coverage.
+        <strong>Summary:</strong> All three diagnostics confirm the model generalises well. Train&ndash;test
+        gaps are tight, competition density does not leak, and the learning curve has plateaued.
     </div>
 
     <h3>Confusion Matrix Interpretation</h3>
@@ -1778,19 +1700,16 @@
             <td>Niche shops not captured by feature set</td>
         </tr>
     </table>
+            </div>
+        </div>
 
-    <div style="text-align:center; margin:2.5rem 0;">
-        <h3 style="margin-bottom:1rem;">Explore Recommendations Interactively</h3>
-        <p style="color:var(--text-light); margin-bottom:1.5rem; max-width:500px; margin-left:auto; margin-right:auto;">
-            Use the Site Finder tool to explore 3D recommendation maps with borough, business type,
-            and confidence filters.
-        </p>
-        <button class="hero-cta" onclick="document.querySelector('[data-tab=dashboard]').click()">
-            Open Site Finder Tool &rarr;
-        </button>
-    </div>
-
-    <h3>Limitations</h3>
+        <!-- 5. Limitations -->
+        <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+                <span class="accordion-icon">+</span>
+                <span>Limitations &amp; Caveats</span>
+            </button>
+            <div class="accordion-body">
     <table>
         <tr><th>Limitation</th><th>Impact</th></tr>
         <tr><td>Static POI snapshot</td><td>OSM data reflects current state; recent openings/closings not captured</td></tr>
@@ -1799,6 +1718,10 @@
         <tr><td>No real-time footfall</td><td>LandScan is an estimate; no mobile signal data</td></tr>
         <tr><td>No rental cost data</td><td>Commercial viability depends on rent, which is not modelled</td></tr>
     </table>
+            </div>
+        </div>
+
+    </div><!-- .accordion -->
 </section>
 </div>
 
@@ -2016,10 +1939,31 @@
             document.getElementById(btn.dataset.tab).classList.add('active');
             // Show hero only on Overview tab
             var hero = document.querySelector('.hero');
-            if (btn.dataset.tab === 'overview') {
+            if (btn.dataset.tab === 'home') {
                 hero.classList.remove('hero-collapsed');
             } else {
                 hero.classList.add('hero-collapsed');
+            }
+        });
+    });
+
+    // Accordion toggle
+    document.querySelectorAll('.accordion-header').forEach(function(header) {
+        header.addEventListener('click', function() {
+            var item = this.parentElement;
+            var body = item.querySelector('.accordion-body');
+            var icon = this.querySelector('.accordion-icon');
+            var isOpen = item.classList.contains('accordion-open');
+            if (isOpen) {
+                body.style.maxHeight = null;
+                item.classList.remove('accordion-open');
+                icon.textContent = '+';
+                this.setAttribute('aria-expanded', 'false');
+            } else {
+                body.style.maxHeight = body.scrollHeight + 'px';
+                item.classList.add('accordion-open');
+                icon.textContent = '\u2212';
+                this.setAttribute('aria-expanded', 'true');
             }
         });
     });
@@ -2418,7 +2362,7 @@ document.querySelectorAll('.tab-btn').forEach(function(btn) {
 
     // Re-animate when returning to Overview tab
     document.querySelectorAll('.tab-btn').forEach(function(btn) {
-        if (btn.dataset.tab === 'overview') {
+        if (btn.dataset.tab === 'home') {
             btn.addEventListener('click', function() {
                 started = false;
                 counters.forEach(function(el) { el.textContent = '0'; });

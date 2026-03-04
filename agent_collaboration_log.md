@@ -963,4 +963,18 @@ No outlier folds detected. The spatial block CV produces consistent, reproducibl
 
 ---
 
+### Entry #85
+**Date:** 2026-03-04
+**Task:** Consolidate 8 tabs to 4 + simplify hero for business audience
+**Who:** User requested cleaner navigation and business-friendly copy; AI (Claude) planned and implemented
+**Changes:**
+1. **Hero Simplified:** Subtitle changed from technical jargon ("27 geospatial features", "spatial cross-validation") to business-friendly copy ("Identifying high-potential locations across 33 boroughs and 6 business types"). AUC label changed to "Prediction Accuracy". CTA changed to "Find a Location". Badges reduced from 5 to 3 (dropped Node2Vec Embeddings, Burt's Structural Holes).
+2. **Tab Consolidation (8 → 4):** Overview → Home (renamed, added False Positive Thesis + CTA). Site Finder → unchanged. Data Pipeline + Spatial Indexing + Graph Analytics + ML Model + Results → "How It Works" (single tab with 5 collapsible accordion sections). Report → unchanged.
+3. **Accordion Component:** Built CSS + JS accordion with smooth max-height transitions, +/− toggle icons, hover states, and `aria-expanded` accessibility attributes. 5 sections: Data Pipeline, Spatial Indexing, Graph Analytics, ML Model, Limitations.
+4. **Content Redistribution:** False Positive Thesis moved from Results to Home tab. Confusion Matrix Interpretation moved into ML Model accordion. Limitations became its own accordion section.
+5. **JS Updates:** Changed `'overview'` → `'home'` in tab switching and counter animation. Added 20-line accordion toggle script.
+6. **Images:** Added `loading="lazy"` to all images inside accordion bodies for performance.
+
+---
+
 *This log was maintained continuously throughout the project and is submitted as part of the MSIN0097 assessment for transparency, academic integrity, and evidence of critical AI evaluation.*
