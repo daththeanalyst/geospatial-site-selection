@@ -950,4 +950,17 @@ No outlier folds detected. The spatial block CV produces consistent, reproducibl
 
 ---
 
+### Entry #84
+**Date:** 2026-03-04
+**Task:** Unified map + filter panel layout
+**Who:** User requested filters beside the map as one component; AI (Claude) implemented
+**Changes:**
+1. **Unified Panel:** Wrapped the interactive map iframe and all filter controls into a single `.finder-panel` flex container with shared border and background — map on left, sidebar on right, appearing as one integrated dashboard component.
+2. **Sidebar:** Created `.finder-sidebar` (200px width) containing vertically stacked business-type buttons, borough dropdown, and color legend. All controls use compact sizing to fit the sidebar.
+3. **Business Buttons:** Changed from horizontal pill row to vertical `.biz-btn-stack` — full-width buttons stacked in the sidebar for easy scanning.
+4. **Legend Integrated:** Moved legend from a separate bar into the sidebar as a third section with colored swatches.
+5. **Responsive:** At 700px width, panel stacks vertically (map on top, controls below in a horizontal wrap).
+
+---
+
 *This log was maintained continuously throughout the project and is submitted as part of the MSIN0097 assessment for transparency, academic integrity, and evidence of critical AI evaluation.*
