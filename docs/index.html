@@ -222,16 +222,18 @@
             margin-bottom: 0.5rem;
             border-bottom: 3px solid var(--primary);
             padding-bottom: 0.5rem;
-            display: inline-block;
+            display: block;
         }
         h3 {
             font-size: 1.2rem;
             color: var(--blue);
-            margin: 1.5rem 0 0.5rem;
+            margin: 2rem 0 0.5rem;
         }
         h4 {
             color: var(--text-heading);
-            margin: 1.2rem 0 0.4rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin: 1.2rem 0 0.5rem;
         }
         p { margin-bottom: 1rem; }
 
@@ -251,7 +253,7 @@
         }
         .card h4 {
             color: var(--text-heading);
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.5rem;
             font-size: 1rem;
         }
         .card p {
@@ -310,9 +312,9 @@
             border-bottom: 1px solid var(--border);
             color: var(--text-primary);
         }
-        tr:nth-child(even) { background: var(--bg-surface); }
+        tr:nth-child(even) { background: #151d2e; }
         tr:nth-child(odd) { background: var(--bg-body); }
-        tr:hover { background: var(--bg-hover); }
+        tr:hover { background: #1e3a5f; }
 
         /* ── Formula ───────────────────────────────── */
         .formula {
@@ -357,7 +359,7 @@
         /* ── Map Embed ─────────────────────────────── */
         .map-embed {
             width: 100%;
-            height: 700px;
+            height: 650px;
             border: 2px solid var(--border);
             border-radius: var(--radius);
             margin: 1.5rem 0;
@@ -369,7 +371,7 @@
             border-left: 4px solid var(--green);
             border-radius: var(--radius);
             padding: 1.2rem 1.5rem;
-            margin: 1.5rem 0;
+            margin: 2rem 0;
             color: var(--text-primary);
         }
         .insight strong { color: var(--green); }
@@ -379,7 +381,7 @@
             border-left: 4px solid var(--orange);
             border-radius: var(--radius);
             padding: 1.2rem 1.5rem;
-            margin: 1.5rem 0;
+            margin: 2rem 0;
             color: var(--text-primary);
         }
         .warning strong { color: var(--orange); }
@@ -420,7 +422,7 @@
             text-align: center;
             padding: 2rem;
             font-size: 0.85rem;
-            border-top: 1px solid var(--border);
+            border-top: 2px solid var(--border);
         }
         footer a { color: var(--primary); text-decoration: none; }
 
@@ -434,10 +436,36 @@
             .pipeline { flex-direction: column; }
             .pipeline-arrow { transform: rotate(90deg); }
             .img-grid { grid-template-columns: 1fr; }
+            .map-embed { height: 400px; }
+        }
+
+        /* ── Inline SVG Icons ──────────────────────── */
+        .ico {
+            display: inline-block;
+            width: 16px; height: 16px;
+            vertical-align: -2px;
+            margin-right: 4px;
+            flex-shrink: 0;
+        }
+        .ico-lg {
+            display: block;
+            width: 28px; height: 28px;
+            margin: 0 auto 2px;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .legend-swatch {
+            display: inline-block;
+            width: 12px; height: 12px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-right: 4px;
         }
 
         code {
-            background: var(--bg-elevated);
+            background: rgba(0, 212, 255, 0.06);
             padding: 0.15rem 0.4rem;
             border-radius: 4px;
             font-size: 0.88rem;
@@ -480,7 +508,7 @@
         .report-table { font-size: 0.88rem; }
         .biz-block {
             margin: 0.8rem 0;
-            padding: 0.6rem 1rem;
+            padding: 0.8rem 1.2rem;
             background: var(--bg-elevated);
             border-radius: 6px;
             border: 1px solid var(--border);
@@ -672,7 +700,7 @@
 
         .rec-cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1rem;
             margin: 1rem 0;
         }
@@ -1047,19 +1075,19 @@
         <!-- ── DATA SOURCES ────────────────────────────────────── -->
         <div class="arch-row arch-sources">
             <div class="arch-card arch-data">
-                <strong>&#127757; LandScan Raster</strong>
+                <strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> LandScan Raster</strong>
                 Population density<br>
                 WGS84 &bull; ~1km resolution<br>
                 Zonal stats &rarr; H3 hexagons
             </div>
             <div class="arch-card arch-data">
-                <strong>&#128200; Digimap Census CSVs</strong>
+                <strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Digimap Census CSVs</strong>
                 Education &bull; Age &bull; Employment<br>
                 LSOA-level &bull; 2021 Census<br>
                 Areal interpolation &rarr; H3
             </div>
             <div class="arch-card arch-data">
-                <strong>&#128205; OSM / Overpass API</strong>
+                <strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> OSM / Overpass API</strong>
                 845k+ POIs across 33 boroughs<br>
                 19 tag categories &bull; 4&times;4 tile grid<br>
                 Deduplicated by H3 index
@@ -1156,12 +1184,12 @@
 
         <!-- ── 6 BUSINESS TYPES ────────────────────────────────── -->
         <div class="arch-row arch-types">
-            <div class="arch-type-card"><span>&#9749;</span>Coffee<br>Shop</div>
-            <div class="arch-type-card"><span>&#127860;</span>Restau-<br>rant</div>
-            <div class="arch-type-card"><span>&#127866;</span>Pub /<br>Bar</div>
-            <div class="arch-type-card"><span>&#127839;</span>Fast<br>Food</div>
-            <div class="arch-type-card"><span>&#127947;</span>Gym /<br>Fitness</div>
-            <div class="arch-type-card"><span>&#129360;</span>Bakery</div>
+            <div class="arch-type-card"><svg class="ico-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h14v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M17 10h2a2 2 0 0 1 0 4h-2"/><path d="M7 5c0-1.5 2-1.5 2-3"/><path d="M11 5c0-1.5 2-1.5 2-3"/></svg>Coffee<br>Shop</div>
+            <div class="arch-type-card"><svg class="ico-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="17" x2="22" y2="17"/><path d="M12 3a9 9 0 0 0-9 9h18a9 9 0 0 0-9-9z"/><line x1="6" y1="17" x2="6" y2="20"/><line x1="18" y1="17" x2="18" y2="20"/></svg>Restau-<br>rant</div>
+            <div class="arch-type-card"><svg class="ico-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2h14l-2 20H7z"/><line x1="5.5" y1="8" x2="18.5" y2="8"/></svg>Pub /<br>Bar</div>
+            <div class="arch-type-card"><svg class="ico-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a8 4.5 0 0 1 16 0"/><line x1="3" y1="11" x2="21" y2="11"/><line x1="3" y1="14" x2="21" y2="14"/><path d="M3 14v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2"/></svg>Fast<br>Food</div>
+            <div class="arch-type-card"><svg class="ico-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="12" x2="17" y2="12"/><rect x="3.5" y="8.5" width="3.5" height="7" rx="1"/><rect x="17" y="8.5" width="3.5" height="7" rx="1"/><line x1="1.5" y1="10" x2="3.5" y2="10"/><line x1="1.5" y1="14" x2="3.5" y2="14"/><line x1="1.5" y1="10" x2="1.5" y2="14"/><line x1="20.5" y1="10" x2="22.5" y2="10"/><line x1="20.5" y1="14" x2="22.5" y2="14"/><line x1="22.5" y1="10" x2="22.5" y2="14"/></svg>Gym /<br>Fitness</div>
+            <div class="arch-type-card"><svg class="ico-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20h12"/><path d="M6 20V10a6 6 0 0 1 12 0v10"/><path d="M9 14a3 3 0 0 0 6 0"/></svg>Bakery</div>
         </div>
 
         <div class="arch-arrow">&#8595; Confusion matrix outcomes &rarr; FP = New Sites &bull; Expansion Opportunities &#8595;</div>
@@ -1169,19 +1197,19 @@
         <!-- ── OUTPUTS ─────────────────────────────────────────── -->
         <div class="arch-row arch-outputs">
             <div class="arch-output-card arch-out-recs">
-                <strong>&#128197; Site Recommendations</strong>
+                <strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Site Recommendations</strong>
                 FP (new sites) + Expansion Opps<br>
                 Per-type CSV &bull; Ranked by confidence<br>
                 Structural holes + growth zones
             </div>
             <div class="arch-output-card arch-out-maps">
-                <strong>&#127757; Interactive 3D Maps</strong>
+                <strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> Interactive 3D Maps</strong>
                 Pydeck H3HexagonLayer<br>
                 6 maps &bull; Colour = outcome<br>
                 Height = model confidence
             </div>
             <div class="arch-output-card arch-out-port">
-                <strong>&#128196; Portfolio &amp; Report</strong>
+                <strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Portfolio &amp; Report</strong>
                 This site &bull; Report tab<br>
                 AUC &bull; Feature importance<br>
                 Threshold analysis
@@ -1688,14 +1716,7 @@
             Use the Site Finder tool to explore 3D recommendation maps with borough, business type,
             and confidence filters.
         </p>
-        <button onclick="document.querySelector('[data-tab=dashboard]').click()"
-                style="padding:0.8rem 2rem; font-size:1.1rem; font-weight:700; border:none;
-                       border-radius:8px; cursor:pointer; font-family:inherit;
-                       background:linear-gradient(135deg, var(--primary), var(--accent));
-                       color:#fff; box-shadow:0 4px 15px rgba(0,212,255,0.3);
-                       transition:transform 0.2s, box-shadow 0.2s;"
-                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,212,255,0.4)';"
-                onmouseout="this.style.transform=''; this.style.boxShadow='0 4px 15px rgba(0,212,255,0.3)';">
+        <button class="hero-cta" onclick="document.querySelector('[data-tab=dashboard]').click()">
             Open Site Finder Tool &rarr;
         </button>
     </div>
@@ -1722,16 +1743,16 @@
     <p>All model metrics in one place &mdash; AUC scores, outcomes, top features, and recommendations. Copy a structured plain-text summary with the button below.</p>
 
     <button class="copy-btn" id="copy-report-btn" onclick="copyReport()">
-        &#128203; Copy Report
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Report
     </button>
 
     <div id="report-loading" style="text-align:center; padding: 3rem 0; color: var(--text-light);">
-        <div style="font-size: 2rem; margin-bottom: 0.5rem;">&#8987;</div>
+        <div style="margin-bottom: 0.5rem;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="animation: spin 1.5s linear infinite;"><line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"/><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"/><line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/><line x1="4.93" y1="19.07" x2="7.76" y2="16.24"/><line x1="16.24" y1="7.76" x2="19.07" y2="4.93"/></svg></div>
         Loading report data&hellip;
     </div>
     <div id="report-error" style="display:none;">
         <div style="text-align:center; padding: 3rem 1rem; background: var(--light); border-radius: var(--radius); border: 2px dashed var(--border);">
-            <div style="font-size: 3rem; margin-bottom: 1rem;">&#128218;</div>
+            <div style="margin-bottom: 1rem;"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
             <h3 style="color: var(--text); margin-bottom: 0.5rem;">Report data not generated yet</h3>
             <p style="color: var(--text-light); margin-bottom: 1rem;">
                 Run the full notebook to the last cell to generate <code>docs/model_report_data.json</code>,
@@ -1875,16 +1896,16 @@
 
     <!-- Map -->
     <p class="tool-hint">
-        &#127776; <b>Green</b> = high-opportunity location (matches the profile of a successful site, no competitor there yet) &nbsp;|&nbsp;
-        &#128308; <b>Red</b> = existing business (proven demand) &nbsp;|&nbsp;
-        &#128156; <b>Purple</b> = expansion opportunity (high demand, few competitors &mdash; room for another) &nbsp;|&nbsp;
-        &#128992; <b>Orange</b> = model blind spot &nbsp;|&nbsp;
+        <span class="legend-swatch" style="background:#3fb950;"></span> <b>Green</b> = high-opportunity location (no competitor there yet) &nbsp;|&nbsp;
+        <span class="legend-swatch" style="background:#f87171;"></span> <b>Red</b> = existing business (proven demand) &nbsp;|&nbsp;
+        <span class="legend-swatch" style="background:#a78bfa;"></span> <b>Purple</b> = expansion opportunity (high demand, room for another) &nbsp;|&nbsp;
+        <span class="legend-swatch" style="background:#fbbf24;"></span> <b>Orange</b> = model blind spot &nbsp;|&nbsp;
         Height = model confidence &nbsp;|&nbsp;
         Hover a hex for demographics
     </p>
     <iframe class="map-embed" id="dash-map-iframe"
             src="../data/outputs/london_recommendations_cafe.html"
-            title="Site Finder Map" style="height:650px;"></iframe>
+            title="Site Finder Map"></iframe>
 
     <!-- Recommendation cards -->
     <h3 style="margin-top:2rem">Top recommended sites</h3>
@@ -2161,7 +2182,7 @@
             btn.textContent = '\u2713 Copied!';
             btn.classList.add('copied');
             setTimeout(function() {
-                btn.innerHTML = '&#128203; Copy Report';
+                btn.innerHTML = '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy Report';
                 btn.classList.remove('copied');
             }, 2500);
         }).catch(function() {
@@ -2252,9 +2273,9 @@ function buildRecCards(recs, dimmed) {
             + '<div class="rec-borough">' + r.borough + '</div>'
             + '<div class="rec-conf"><strong>' + conf + '%</strong> confidence</div>'
             + '<div class="rec-stats">'
-            + '<span>&#128101; ' + pop + ' population</span>'
-            + (edu ? '<span>&#127979; ' + edu + '</span>' : '')
-            + (age ? '<span>&#129489; ' + age + '</span>' : '')
+            + '<span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> ' + pop + ' population</span>'
+            + (edu ? '<span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 6 3 6 3s6-1 6-3v-5"/></svg> ' + edu + '</span>' : '')
+            + (age ? '<span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ' + age + '</span>' : '')
             + '</div></div>';
     }).join('');
 }

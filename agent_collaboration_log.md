@@ -911,4 +911,19 @@ No outlier folds detected. The spatial block CV produces consistent, reproducibl
 
 ---
 
+### Entry #81
+**Date:** 2026-03-04
+**Task:** Replace all emojis with SVG icons + professional layout polish
+**Who:** User requested no emojis, professional icons; AI (Claude) implemented all changes
+**Changes:**
+1. **Emoji Removal:** Replaced all 27 HTML emoji entities with inline SVG icons (`viewBox="0 0 24 24"`, `stroke="currentColor"`, consistent 16px sizing via `.ico` class). Architecture data sources (globe, bar-chart, map-pin), outputs (check-circle, layers, file-text), 6 business type cards (reusing biz-btn SVGs), report buttons (clipboard, spinner, alert), rec-card stats (users, academic-cap, person). Map legend uses coloured square swatches instead of emoji circles.
+2. **Table Contrast:** Changed even-row background from `#111827` to `#151d2e` and hover to `#1e3a5f` for clearly distinguishable alternating rows.
+3. **Typography Hierarchy:** `h2` changed to `display: block` (full-width underline), `h3` margin-top increased to `2rem`, `h4` set to explicit `1.05rem/600` weight, card `h4` margin increased.
+4. **Spacing:** Insight/warning box margins increased to `2rem`, `.biz-block` padding increased, code blocks given cyan-tinted background for distinction.
+5. **Map Responsiveness:** CSS `.map-embed` height set to 650px, responsive override to 400px at 768px width. Inline style removed from iframe.
+6. **Button Polish:** Results tab "Open Site Finder" button replaced inline styles with `.hero-cta` class. Rec-card grid `minmax` increased from 180px to 200px. Footer border thickened to 2px.
+7. **Loading Animation:** Report loading spinner is now an animated rotating SVG (CSS `@keyframes spin`). Error state uses alert-circle SVG.
+
+---
+
 *This log was maintained continuously throughout the project and is submitted as part of the MSIN0097 assessment for transparency, academic integrity, and evidence of critical AI evaluation.*
