@@ -926,4 +926,15 @@ No outlier folds detected. The spatial block CV produces consistent, reproducibl
 
 ---
 
+### Entry #82
+**Date:** 2026-03-04
+**Task:** Deploy interactive maps to GitHub Pages
+**Who:** User reported 404 on GitHub Pages and maps not rendering; AI (Claude) implemented fix
+**Changes:**
+1. **Map Deployment:** Copied all 6 interactive map HTML files (~67MB total) from `data/outputs/` to `docs/maps/` so they are served by GitHub Pages.
+2. **Path Fix:** Updated iframe `src` in `index.html` from `../data/outputs/london_recommendations_*.html` to `maps/london_recommendations_*.html` (both initial load and JS business-type switcher).
+3. **Root Cause:** Maps were in gitignored `data/outputs/` directory, unreachable from GitHub Pages which only serves from `/docs`.
+
+---
+
 *This log was maintained continuously throughout the project and is submitted as part of the MSIN0097 assessment for transparency, academic integrity, and evidence of critical AI evaluation.*

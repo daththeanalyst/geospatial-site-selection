@@ -1904,7 +1904,7 @@
         Hover a hex for demographics
     </p>
     <iframe class="map-embed" id="dash-map-iframe"
-            src="../data/outputs/london_recommendations_cafe.html"
+            src="maps/london_recommendations_cafe.html"
             title="Site Finder Map"></iframe>
 
     <!-- Recommendation cards -->
@@ -2234,7 +2234,7 @@ function setDashBorough(bor) {
 function updateDashMap() {
     var iframe = document.getElementById('dash-map-iframe');
     if (!iframe) return;
-    iframe.src = '../data/outputs/london_recommendations_' + _dashBiz + '.html';
+    iframe.src = 'maps/london_recommendations_' + _dashBiz + '.html';
 }
 
 function renderDashRecs() {
