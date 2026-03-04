@@ -367,7 +367,7 @@
 
         /* ── Highlight Boxes ───────────────────────── */
         .insight {
-            background: rgba(63, 185, 80, 0.08);
+            background: rgba(0, 212, 255, 0.06);
             border-left: 4px solid var(--green);
             border-radius: var(--radius);
             padding: 1.2rem 1.5rem;
@@ -639,10 +639,10 @@
             line-height: 1.5;
         }
         .arch-output-card strong { display: block; font-size: 0.88rem; margin-bottom: 0.3rem; }
-        .arch-out-recs  { background: rgba(63,185,80,0.08); border: 2px solid var(--green); color: var(--green); }
+        .arch-out-recs  { background: rgba(0,212,255,0.06); border: 2px solid var(--green); color: var(--green); }
         .arch-out-recs  strong { color: var(--green); }
-        .arch-out-maps  { background: rgba(188,86,221,0.08); border: 2px solid #bc56dd; color: #d2a8ff; }
-        .arch-out-maps  strong { color: #d2a8ff; }
+        .arch-out-maps  { background: rgba(167,139,250,0.08); border: 2px solid #a78bfa; color: #a78bfa; }
+        .arch-out-maps  strong { color: #a78bfa; }
         .arch-out-port  { background: rgba(210,153,34,0.08); border: 2px solid var(--orange); color: var(--orange); }
         .arch-out-port  strong { color: var(--orange); }
 
@@ -650,7 +650,8 @@
             .arch-sources, .arch-outputs { grid-template-columns: 1fr; }
             .arch-types   { grid-template-columns: repeat(3, 1fr); }
             .arch-stage-body.cols3, .arch-stage-body.cols4 { grid-template-columns: 1fr 1fr; }
-            .biz-btn-grid { grid-template-columns: repeat(3, 1fr); }
+            .finder-controls { flex-direction: column; }
+            .finder-borough { flex: 1 1 100%; }
             .tool-controls { grid-template-columns: 1fr; }
         }
 
@@ -658,26 +659,72 @@
         .tool-step  { margin: 2rem 0; }
         .tool-hint  { color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 0.8rem; }
 
+        .map-legend-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .map-legend-bar b { color: var(--text-primary); }
+
+        .finder-controls {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            margin: 0.5rem 0 1.5rem;
+        }
+        .finder-control-group { flex: 1; min-width: 0; }
+        .finder-control-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.4rem;
+        }
+        .finder-borough { flex: 0 0 220px; }
+        .finder-borough select {
+            width: 100%;
+            padding: 0.5rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
         .biz-btn-grid {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 0.8rem;
-            margin: 1rem 0;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
         }
         .biz-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
             background: var(--bg-surface);
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            padding: 1rem 0.5rem;
-            text-align: center;
-            font-size: 0.85rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.82rem;
             font-weight: 600;
             color: var(--text-primary);
             cursor: pointer;
             font-family: inherit;
             transition: all 0.2s;
-            line-height: 1.5;
+            white-space: nowrap;
         }
+        .biz-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
         .biz-btn:hover  { border-color: var(--primary); background: rgba(0,212,255,0.06); }
         .biz-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; }
 
@@ -745,7 +792,7 @@
             cursor: pointer;
             transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
         }
-        .dash-update-btn:hover  { background: #0891b2; }
+        .dash-update-btn:hover  { background: rgba(0,212,255,0.8); }
         .dash-update-btn:active { transform: scale(0.97); }
 
         /* ── Animated Effects ─────────────────────────────────────── */
@@ -879,7 +926,7 @@
             transition: box-shadow 0.3s ease;
         }
         .insight:hover {
-            box-shadow: -2px 0 15px rgba(63, 185, 80, 0.15);
+            box-shadow: -2px 0 15px rgba(0, 212, 255, 0.15);
         }
         .warning {
             transition: box-shadow 0.3s ease;
@@ -1364,7 +1411,7 @@
         <tr><th>Resolution</th><th>Edge Length</th><th>Hex Area</th><th>Use Case</th></tr>
         <tr><td>7</td><td>~1.2 km</td><td>~5.16 km&sup2;</td><td>District-level</td></tr>
         <tr><td>8</td><td>~460 m</td><td>~0.74 km&sup2;</td><td>Neighbourhood</td></tr>
-        <tr style="background: rgba(63,185,80,0.12); font-weight: bold;"><td>9</td><td>~174 m</td><td>~0.105 km&sup2;</td><td>Walking-scale (our choice)</td></tr>
+        <tr style="background: rgba(0,212,255,0.1); font-weight: bold;"><td>9</td><td>~174 m</td><td>~0.105 km&sup2;</td><td>Walking-scale (our choice)</td></tr>
         <tr><td>10</td><td>~66 m</td><td>~0.015 km&sup2;</td><td>Street-level</td></tr>
     </table>
 
@@ -1689,7 +1736,7 @@
             <td>Site recommendation &mdash; highest commercial value</td>
         </tr>
         <tr>
-            <td><span style="color: #8e44ad; font-weight: bold;">Expansion Opportunity</span></td>
+            <td><span style="color: #a78bfa; font-weight: bold;">Expansion Opportunity</span></td>
             <td>Model says YES, reality is YES, low saturation</td>
             <td>Room for another &mdash; high demand, few competitors</td>
         </tr>
@@ -1813,99 +1860,91 @@
 <section>
     <h2>Site Finder</h2>
 
-    <div class="insight" style="margin-bottom: 2rem;">
-        <strong>How it works:</strong> Each hexagon on the map below represents a ~174m walking-scale location.
-        Green hexagons are <strong>opportunities</strong> &mdash; locations where the ML model predicts demand
-        but no business of this type currently exists. Select a business type and borough to explore.
-    </div>
-
-    <!-- Step 1: Business type -->
-    <div class="tool-step">
-        <h3>1. What type of business?</h3>
-        <p class="tool-hint">Each type has its own model trained on the demographics and footfall patterns of existing successful sites.</p>
-        <div class="biz-btn-grid">
-            <button class="biz-btn active" data-biz="cafe" onclick="setDashBiz('cafe')">
-                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto 4px;"><path d="M3 8h14v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M17 10h2a2 2 0 0 1 0 4h-2"/><path d="M7 5c0-1.5 2-1.5 2-3"/><path d="M11 5c0-1.5 2-1.5 2-3"/></svg>
-                Coffee Shop
-            </button>
-            <button class="biz-btn" data-biz="restaurant" onclick="setDashBiz('restaurant')">
-                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto 4px;"><line x1="2" y1="17" x2="22" y2="17"/><path d="M12 3a9 9 0 0 0-9 9h18a9 9 0 0 0-9-9z"/><line x1="6" y1="17" x2="6" y2="20"/><line x1="18" y1="17" x2="18" y2="20"/></svg>
-                Restaurant
-            </button>
-            <button class="biz-btn" data-biz="pub" onclick="setDashBiz('pub')">
-                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto 4px;"><path d="M5 2h14l-2 20H7z"/><line x1="5.5" y1="8" x2="18.5" y2="8"/></svg>
-                Pub / Bar
-            </button>
-            <button class="biz-btn" data-biz="fast_food" onclick="setDashBiz('fast_food')">
-                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto 4px;"><path d="M4 11a8 4.5 0 0 1 16 0"/><line x1="3" y1="11" x2="21" y2="11"/><line x1="3" y1="14" x2="21" y2="14"/><path d="M3 14v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2"/></svg>
-                Fast Food
-            </button>
-            <button class="biz-btn" data-biz="gym" onclick="setDashBiz('gym')">
-                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto 4px;"><line x1="7" y1="12" x2="17" y2="12"/><rect x="3.5" y="8.5" width="3.5" height="7" rx="1"/><rect x="17" y="8.5" width="3.5" height="7" rx="1"/><line x1="1.5" y1="10" x2="3.5" y2="10"/><line x1="1.5" y1="14" x2="3.5" y2="14"/><line x1="1.5" y1="10" x2="1.5" y2="14"/><line x1="20.5" y1="10" x2="22.5" y2="10"/><line x1="20.5" y1="14" x2="22.5" y2="14"/><line x1="22.5" y1="10" x2="22.5" y2="14"/></svg>
-                Gym
-            </button>
-            <button class="biz-btn" data-biz="bakery" onclick="setDashBiz('bakery')">
-                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;margin:0 auto 4px;"><path d="M4 11a8 7 0 0 1 16 0"/><rect x="3" y="11" width="18" height="9" rx="2"/><line x1="8" y1="11" x2="7.5" y2="20"/><line x1="12" y1="11" x2="12" y2="20"/><line x1="16" y1="11" x2="16.5" y2="20"/></svg>
-                Bakery
-            </button>
-        </div>
-    </div>
-
-    <!-- Step 2: Borough filter -->
-    <div style="margin: 1rem 0 1.5rem; max-width: 400px;">
-        <label for="dash-borough-sel" style="display:block; font-weight:600; margin-bottom:0.4rem;">2. Filter by borough (optional)</label>
-        <select id="dash-borough-sel" onchange="setDashBorough(this.value)"
-                style="width:100%; padding:0.6rem 1rem; border:2px solid var(--primary); border-radius:6px; background:var(--light); color:var(--text); font-size:0.95rem; font-family:inherit; cursor:pointer;">
-            <option value="All">All London (33 boroughs)</option>
-            <option>Barking and Dagenham</option>
-            <option>Barnet</option>
-            <option>Bexley</option>
-            <option>Brent</option>
-            <option>Bromley</option>
-            <option>Camden</option>
-            <option>City of London</option>
-            <option>Croydon</option>
-            <option>Ealing</option>
-            <option>Enfield</option>
-            <option>Greenwich</option>
-            <option>Hackney</option>
-            <option>Hammersmith and Fulham</option>
-            <option>Haringey</option>
-            <option>Harrow</option>
-            <option>Havering</option>
-            <option>Hillingdon</option>
-            <option>Hounslow</option>
-            <option>Islington</option>
-            <option>Kensington and Chelsea</option>
-            <option>Kingston upon Thames</option>
-            <option>Lambeth</option>
-            <option>Lewisham</option>
-            <option>Merton</option>
-            <option>Newham</option>
-            <option>Redbridge</option>
-            <option>Richmond upon Thames</option>
-            <option>Southwark</option>
-            <option>Sutton</option>
-            <option>Tower Hamlets</option>
-            <option>Waltham Forest</option>
-            <option>Wandsworth</option>
-            <option>City of Westminster</option>
-        </select>
-        <p class="tool-hint" style="margin-top:0.4rem;">Filters the recommendation cards below. The map always shows the full London view for context.</p>
-    </div>
-
-    <!-- Map -->
-    <p class="tool-hint">
-        <span class="legend-swatch" style="background:#3fb950;"></span> <b>Green</b> = high-opportunity location (no competitor there yet) &nbsp;|&nbsp;
-        <span class="legend-swatch" style="background:#f87171;"></span> <b>Red</b> = existing business (proven demand) &nbsp;|&nbsp;
-        <span class="legend-swatch" style="background:#a78bfa;"></span> <b>Purple</b> = expansion opportunity (high demand, room for another) &nbsp;|&nbsp;
-        <span class="legend-swatch" style="background:#fbbf24;"></span> <b>Orange</b> = model blind spot &nbsp;|&nbsp;
-        Height = model confidence &nbsp;|&nbsp;
-        Hover a hex for demographics
-    </p>
+    <!-- Map first -->
     <iframe class="map-embed" id="dash-map-iframe"
             src="maps/london_recommendations_cafe.html"
-            title="Site Finder Map"></iframe>
+            title="Site Finder Map" style="margin-top:0.5rem;"></iframe>
+
+    <!-- Legend bar -->
+    <div class="map-legend-bar">
+        <span><span class="legend-swatch" style="background:var(--green);"></span> Opportunity</span>
+        <span><span class="legend-swatch" style="background:var(--red);"></span> Existing</span>
+        <span><span class="legend-swatch" style="background:#a78bfa;"></span> Expansion</span>
+        <span><span class="legend-swatch" style="background:var(--orange);"></span> Blind spot</span>
+        <span style="color:var(--text-muted);">Height = confidence</span>
+    </div>
+
+    <!-- Compact filters row -->
+    <div class="finder-controls">
+        <div class="finder-control-group">
+            <label>Business type</label>
+            <div class="biz-btn-grid">
+                <button class="biz-btn active" data-biz="cafe" onclick="setDashBiz('cafe')">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h14v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M17 10h2a2 2 0 0 1 0 4h-2"/><path d="M7 5c0-1.5 2-1.5 2-3"/><path d="M11 5c0-1.5 2-1.5 2-3"/></svg>
+                    Cafe
+                </button>
+                <button class="biz-btn" data-biz="restaurant" onclick="setDashBiz('restaurant')">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="17" x2="22" y2="17"/><path d="M12 3a9 9 0 0 0-9 9h18a9 9 0 0 0-9-9z"/><line x1="6" y1="17" x2="6" y2="20"/><line x1="18" y1="17" x2="18" y2="20"/></svg>
+                    Restaurant
+                </button>
+                <button class="biz-btn" data-biz="pub" onclick="setDashBiz('pub')">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2h14l-2 20H7z"/><line x1="5.5" y1="8" x2="18.5" y2="8"/></svg>
+                    Pub
+                </button>
+                <button class="biz-btn" data-biz="fast_food" onclick="setDashBiz('fast_food')">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a8 4.5 0 0 1 16 0"/><line x1="3" y1="11" x2="21" y2="11"/><line x1="3" y1="14" x2="21" y2="14"/><path d="M3 14v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2"/></svg>
+                    Fast Food
+                </button>
+                <button class="biz-btn" data-biz="gym" onclick="setDashBiz('gym')">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="12" x2="17" y2="12"/><rect x="3.5" y="8.5" width="3.5" height="7" rx="1"/><rect x="17" y="8.5" width="3.5" height="7" rx="1"/><line x1="1.5" y1="10" x2="3.5" y2="10"/><line x1="1.5" y1="14" x2="3.5" y2="14"/><line x1="1.5" y1="10" x2="1.5" y2="14"/><line x1="20.5" y1="10" x2="22.5" y2="10"/><line x1="20.5" y1="14" x2="22.5" y2="14"/><line x1="22.5" y1="10" x2="22.5" y2="14"/></svg>
+                    Gym
+                </button>
+                <button class="biz-btn" data-biz="bakery" onclick="setDashBiz('bakery')">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a8 7 0 0 1 16 0"/><rect x="3" y="11" width="18" height="9" rx="2"/><line x1="8" y1="11" x2="7.5" y2="20"/><line x1="12" y1="11" x2="12" y2="20"/><line x1="16" y1="11" x2="16.5" y2="20"/></svg>
+                    Bakery
+                </button>
+            </div>
+        </div>
+        <div class="finder-control-group finder-borough">
+            <label for="dash-borough-sel">Borough</label>
+            <select id="dash-borough-sel" onchange="setDashBorough(this.value)">
+                <option value="All">All London (33 boroughs)</option>
+                <option>Barking and Dagenham</option>
+                <option>Barnet</option>
+                <option>Bexley</option>
+                <option>Brent</option>
+                <option>Bromley</option>
+                <option>Camden</option>
+                <option>City of London</option>
+                <option>Croydon</option>
+                <option>Ealing</option>
+                <option>Enfield</option>
+                <option>Greenwich</option>
+                <option>Hackney</option>
+                <option>Hammersmith and Fulham</option>
+                <option>Haringey</option>
+                <option>Harrow</option>
+                <option>Havering</option>
+                <option>Hillingdon</option>
+                <option>Hounslow</option>
+                <option>Islington</option>
+                <option>Kensington and Chelsea</option>
+                <option>Kingston upon Thames</option>
+                <option>Lambeth</option>
+                <option>Lewisham</option>
+                <option>Merton</option>
+                <option>Newham</option>
+                <option>Redbridge</option>
+                <option>Richmond upon Thames</option>
+                <option>Southwark</option>
+                <option>Sutton</option>
+                <option>Tower Hamlets</option>
+                <option>Waltham Forest</option>
+                <option>Wandsworth</option>
+                <option>City of Westminster</option>
+            </select>
+        </div>
+    </div>
 
     <!-- Recommendation cards -->
     <h3 style="margin-top:2rem">Top recommended sites</h3>
@@ -2050,7 +2089,7 @@
                 var exp = v.expansion != null ? v.expansion : 0;
                 return '<tr><td>'+label+'</td>'
                     +'<td style="color:var(--green);font-weight:600;">'+v.fp+'</td>'
-                    +'<td style="color:#8e44ad;font-weight:600;">'+exp+'</td>'
+                    +'<td style="color:#a78bfa;font-weight:600;">'+exp+'</td>'
                     +'<td style="color:var(--red);">'+v.tp+'</td>'
                     +'<td style="color:var(--orange);">'+v.fn+'</td>'
                     +'<td style="color:var(--grey);">'+v.tn+'</td></tr>';

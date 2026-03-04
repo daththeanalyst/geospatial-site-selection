@@ -937,4 +937,17 @@ No outlier folds detected. The spatial block CV produces consistent, reproducibl
 
 ---
 
+### Entry #83
+**Date:** 2026-03-04
+**Task:** Site Finder layout rearrangement + color scheme cleanup
+**Who:** User requested map-first layout, compact filters, and cleaner color scheme; AI (Claude) implemented
+**Changes:**
+1. **Map-First Layout:** Moved the interactive map iframe to the top of the Site Finder tab so it's the first thing users see. Previously hidden behind two filter sections.
+2. **Compact Legend Bar:** Replaced verbose paragraph legend with a slim horizontal bar using colored swatches and short labels.
+3. **Compact Filters:** Business type buttons changed from a 6-column grid of large cards to a single-row inline-flex layout with 16px icons and short labels. Borough dropdown placed alongside in a flex row instead of taking a full block.
+4. **Color Consistency:** Replaced all remaining hardcoded off-palette colors: `rgba(63,185,80,...)` green references swapped to `rgba(0,212,255,...)` cyan to match the Electric Cyan theme. Architecture "maps" output card changed from `#bc56dd`/`#d2a8ff` purple to `#a78bfa` (consistent with expansion opportunity color). Expansion Opportunity text changed from `#8e44ad` to `#a78bfa`. Table highlight row changed from green to cyan tint. Button hover changed from `#0891b2` to `rgba(0,212,255,0.8)`.
+5. **Responsive:** Added mobile breakpoint for finder controls (stacks vertically at 700px).
+
+---
+
 *This log was maintained continuously throughout the project and is submitted as part of the MSIN0097 assessment for transparency, academic integrity, and evidence of critical AI evaluation.*
