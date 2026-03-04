@@ -23,4 +23,5 @@ pyarrow>=14.0
 # Streamlit dashboard (streamlit run streamlit_app.py)
 streamlit>=1.28
 plotly>=5.17
+gensim>=4.3            # Word2Vec for Node2Vec graph embeddings
 geopy>=2.4           # Postcode geocoding for area search

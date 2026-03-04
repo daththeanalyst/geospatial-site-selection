@@ -4,7 +4,7 @@
 **Programme**: MSc Business Analytics (MSIN0097)
 **AI Tool**: Claude (Anthropic) via Claude Code CLI
 **Date Range**: February–March 2026
-**Total Entries**: 71
+**Total Entries**: 74
 **Business Types Modelled**: Cafe, Restaurant, Pub, Fast Food, Gym, Bakery
 
 ---
@@ -755,14 +755,32 @@ Rows 1–8: Agent contributions rejected or modified (H3 v3 API, CRS error, trai
 **Files:** `MSIN0097_Report.docx`
 **Contributor:** Human (requested), AI (wrote content using collaboration log as source)
 
+### Entry #74
+**Date:** 2026-03-04
+**What changed:** Added Louvain community detection, Node2Vec graph embeddings, and Expansion Opportunity recommendations. Feature count increased from 23 to 27 per business type.
+
+**Research & Decision (Human):** Student researched additional graph-based techniques to strengthen the spatial feature set. Evaluated options including community detection (Louvain/Leiden), Node2Vec graph embeddings, spatial lag models, street-network accessibility, and Graph Neural Networks. Selected Louvain (captures mesoscale neighbourhood boundaries that centrality misses) and Node2Vec (learns latent structural roles via random walks). Rejected GNNs as over-engineered for tabular XGBoost pipeline.
+
+**Implementation (AI, directed by human):**
+- **Cell 14:** Louvain community detection (`community_id`) + manual Node2Vec via random walks + gensim Word2Vec (`node2vec_dim0/1/2`). Manual implementation chosen after `node2vec`, `pecanpy`, and `nodevectors` packages all failed due to numpy<2.0 conflicts.
+- **Cell 18:** Updated FEATURE_COLS from 23 to 27 (added COMMUNITY_COLS + NODE2VEC_COLS).
+- **Cell 44:** Added Expansion Opportunity classification — TP hexagons with high demand and low saturation are relabelled as expansion sites (comp_score >= median OR prob >= 90th pctl with nearby <= 2). This addresses the student's observation that the model ignored actionable existing-shop locations.
+- **Cell 49:** Purple colour [142, 68, 173, 200], medium elevation (prob * 350), legend entry for expansion hexagons.
+- **Markdown cells 3, 7, 13, 50:** Updated feature counts, modality descriptions, and feature tables.
+- **docs/index.html:** Updated 10+ locations — feature count, architecture diagram, feature matrix table (added Community Structure and Graph Embeddings rows), confusion matrix interpretation (added Expansion Opportunity row), outcome counts table, JS rendering functions.
+- **requirements.txt:** Added `gensim>=4.3`.
+
+**Files:** `camden_synergy_index.ipynb` (cells 2, 3, 6, 7, 13, 14, 18, 44, 49, 50, 52), `docs/index.html`, `requirements.txt`, `MSIN0097_Report.docx`
+**Contributor:** Human (research, technique selection, expansion concept), AI (implementation, downstream propagation)
+
 ---
 
 ## Summary Statistics
 
 | Metric | Value |
 |---|---|
-| **Total log entries** | 73 |
-| **Development period** | 2026-02-21 to 2026-03-03 (11 days) |
+| **Total log entries** | 74 |
+| **Development period** | 2026-02-21 to 2026-03-04 (12 days) |
 | **Decision register items** | 22 (Section 1) |
 | **Verification methods documented** | 19 (Section 2) |
 | **AI errors caught and corrected** | 12 (Section 3) |
@@ -770,6 +788,126 @@ Rows 1–8: Agent contributions rejected or modified (H3 v3 API, CRS error, trai
 | **Most complex debugging episode** | Westminster POI fetch — 12 entries (#30–42), root cause: single incorrect geocoding string |
 | **Agent contributions accepted** | Code scaffolding, API retry logic, documentation, DOCX formatting |
 | **Agent contributions rejected** | Default 0.5 threshold (Entry #26), `office: True` wildcard tag (Entry #30), Westminster name string (Entry #42) |
+
+### Entry #75
+**Date:** 2026-03-04
+**Task:** Portfolio polish — index.html audit, Site Finder cleanup, Cell 50 dead code removal
+**Who:** AI (Claude) with user direction
+**What changed:**
+1. `docs/index.html` — Research Question updated to include "community structure" and "graph embeddings"
+2. `docs/index.html` — Data Sources table: "Centrality: degree, betweenness, closeness, clustering" → "6 centrality metrics, Louvain community detection, Node2Vec embeddings (3D)"
+3. `docs/index.html` — Graph Analytics tab: added full Louvain Community Detection and Node2Vec Graph Embeddings sections with academic references (Blondel 2008, Grover & Leskovec 2016)
+4. `docs/index.html` — Graph Analytics intro paragraph: now mentions all three layers of graph features
+5. `docs/index.html` — Site Finder map hint: added purple (expansion opportunity) and orange (blind spot) legend entries
+6. `docs/index.html` — Removed confidence slider from Site Finder (user decision: non-functional, added complexity without value)
+7. `docs/index.html` — Cleaned up dead JS functions: `setDashThr`, `markUpdatePending`, `applyFiltersAndUpdate`, `pushFiltersToMap`
+8. `camden_synergy_index.ipynb` — Cell 50: removed 63 lines of dead code (CONTROLS_HTML, REBUILD_JS, bor_options, injection logic)
+9. `camden_synergy_index.ipynb` — Cell 50: now only injects LEGEND_HTML overlay, no JavaScript filter code — prevents hexagon-disappearing bug on re-run
+**Why:** User requested thorough audit of portfolio explanations ("make sure everything is extremely well explained"). Graph Analytics tab was missing Louvain and Node2Vec entirely. Confidence slider didn't work since REBUILD_JS was removed to fix map rendering. Dead code in Cell 50 would re-introduce rendering bugs on next run.
+**Root cause (confidence slider):** REBUILD_JS JavaScript was injected into map HTML files by replacing `const deckInstance = createDeck(` with custom code. This renamed the variable, breaking pydeck's internal references and causing hexagons to disappear after initial render. User chose to remove the slider rather than fix the complex injection.
+**Verification:** ast.parse() passed on cleaned Cell 50 source. All assertions confirmed REBUILD_JS, CONTROLS_HTML, bor_options removed while LEGEND_HTML preserved.
+
+### Entry #76
+**Date:** 2026-03-04
+**Task:** Overfitting diagnostic — add train AUC vs OOF AUC comparison
+**Who:** AI (Claude) proposed, user approved
+**What changed:**
+1. `camden_synergy_index.ipynb` — Cell 34: added `train_auc = roc_auc_score(y_t, model_t.predict_proba(X_t)[:, 1])` after `model_t.fit(X_t, y_t)`
+2. Cell 34: updated print statement to show `OOF=X.XXXX  Train=X.XXXX  Gap=X.XXXX` for each business type
+3. Cell 34: stored `train_auc` in `all_type_results` dict for downstream access
+**Why:** User asked to check for overfitting in the model results. A thorough audit of the notebook revealed:
+- **No train AUC was ever computed** — the classic overfitting diagnostic (train-test gap) was completely absent
+- **OOF AUC values (0.77–0.93) are honest** — correctly computed via `cross_val_predict` with spatial block CV
+- **Outcome counts (FP, TP, FN) in Cell 45 are in-sample** — the full-data refit model predicts on its own training data for map visualisation. This is standard practice (evaluate on OOF, deploy full-data refit) but means the map outcome counts are slightly optimistic
+- **No held-out final test set** — same 5 spatial folds used for hyperparameter tuning, evaluation, and threshold tuning. Minor optimistic bias.
+- **Hyperparams tuned on cafe only** (`SHARED_BEST_PARAMS`), reused for all 6 types
+- **`community_id` and `node2vec` features are transductive** — computed on full graph before any fold split (standard for graph ML, but noted)
+**Expected output after re-run:** Each business type will print a line like:
+```
+Coffee Shop / Cafe        OOF=0.9113+/-0.0035  Train=0.98XX  Gap=0.07XX  (pos_rate=10.6%)
+```
+A gap of 0.05–0.10 is normal for XGBoost with 27 features on ~15k samples. A gap >0.15 would indicate concerning overfitting.
+**What this does NOT change:** No model outputs, predictions, maps, or recommendations are affected. This is purely a diagnostic transparency addition.
+**Verification:** ast.parse() passed. The change is 3 lines of code + 2 lines of print formatting.
+
+### Entry #77
+**Date:** 2026-03-04
+**Task:** Diagnostic tests — per-fold AUC, feature ablation, learning curve
+**Who:** AI (Claude) proposed options, user chose ablation + learning curve + per-fold AUC
+**What changed:**
+1. `camden_synergy_index.ipynb` — New Cell 35 (Section 7b) inserted after the per-type training loop
+2. Contains three diagnostic tests in a single cell:
+   - **Per-fold AUC:** Prints each of the 5 spatial CV fold AUCs per business type, plus the range (>0.05 = concern)
+   - **Feature ablation:** Drops `nearby_{type}` (the competition density feature) and re-runs OOF evaluation to quantify soft-leakage contribution. Reports delta AUC.
+   - **Learning curve:** Trains on 20%, 40%, 60%, 80%, 100% of data with spatial CV. Shows train AUC, test AUC, and gap at each size. Reports whether the model has converged or would benefit from more data.
+3. All three tests reuse existing `type_datasets`, `spatial_cv`, `SHARED_BEST_PARAMS` — no pipeline re-run needed
+4. Map cell shifted from index 50 to 51 (no code changes needed, just index shift)
+**Why:** User asked for additional diagnostic tests to verify model quality. The ablation test is the most scientifically rigorous — it directly measures whether `nearby_{type}` (the most contested feature for potential spatial leakage) inflates AUC. The learning curve shows whether 15,430 hexagons is sufficient or if more data would improve performance. Per-fold AUC reveals if any single spatial fold is an outlier.
+**Expected runtime:** ~2-3 minutes (ablation re-trains 6 XGBoost models via cross_val_predict; learning curve trains 5 sizes x 5 folds = 25 fits)
+**Verification:** ast.parse() passed. Cell reuses all existing variables from Cell 34.
+
+### Entry #78
+**Date:** 2026-03-04
+**Task:** Interpret overfitting diagnostic results from Cell 34 and Cell 35
+**Who:** User ran notebook, AI (Claude) interpreted results
+**Results from Cell 34 (Train AUC vs OOF AUC):**
+| Business Type | OOF AUC | Train AUC | Gap | Interpretation |
+|---|---|---|---|---|
+| Coffee Shop / Cafe | 0.9113 | 0.9314 | 0.0202 | Excellent — minimal overfitting |
+| Restaurant | 0.9285 | 0.9478 | 0.0193 | Excellent — minimal overfitting |
+| Pub / Bar | 0.8806 | 0.9107 | 0.0300 | Very good — slight complexity in pub location patterns |
+| Fast Food | 0.9251 | 0.9450 | 0.0199 | Excellent — minimal overfitting |
+| Gym / Fitness | 0.7723 | 0.8487 | 0.0764 | Moderate — fewest positive examples (9.2%), hardest type |
+| Bakery | 0.9212 | 0.9692 | 0.0480 | Acceptable — very low positive rate (3.5%) causes memorisation |
+**Interpretation:** The `max_depth=3` hyperparameter (selected by GridSearchCV) acts as a natural regulariser — shallow trees cannot memorise individual training examples. Gaps of 0.02–0.03 for the four main food/drink types demonstrate strong generalisation. Gym's larger gap (0.076) reflects the fundamental difficulty of predicting gym locations: gyms locate in industrial estates, basements, and non-standard commercial spaces that are poorly captured by POI co-occurrence features. Bakery's gap (0.048) is driven by extreme class imbalance (only 3.5% positive) — with so few positive examples, the model inevitably memorises some.
+**Results from Cell 35 DIAGNOSTIC 1 (Per-Fold AUC):**
+All 6 business types showed fold-to-fold ranges well under 0.05:
+- Cafe: range 0.015 (most stable)
+- Restaurant: range 0.025
+- Pub: range 0.035 (widest, still safe)
+- Fast Food, Gym, Bakery: all under 0.05
+No outlier folds detected. The spatial block CV produces consistent, reproducible evaluation.
+**Results from Cell 35 DIAGNOSTIC 2 and 3:** Pending — user to paste full output for ablation and learning curve interpretation.
+**Conclusion:** The model does NOT exhibit concerning overfitting. The train-test gaps are within expected ranges for gradient-boosted trees with shallow depth. The per-fold stability confirms that the spatial block CV design is robust and no single geographic region is distorting the results.
+
+---
+
+### Entry #79
+**Date:** 2026-03-04
+**Task:** Add overfitting diagnostic plots and portfolio section
+**Who:** AI (Claude) wrote code and HTML; user to re-run Cell 35 to generate plots
+**Changes:**
+1. **Cell 35 (notebook):** Appended matplotlib plot generation code (56 lines) that creates a 2-panel figure:
+   - Left: Learning Curve (train vs test AUC across data fractions, with std-dev bands)
+   - Right: Feature Ablation horizontal bar chart (AUC delta when dropping `nearby_{type}`, color-coded by severity)
+   - Saves to `docs/assets/overfitting_diagnostics.png` at 150 DPI
+2. **`docs/index.html` ML Model tab:** Added full "Overfitting Diagnostics" section with:
+   - Train vs OOF AUC gap table (all 6 business types with verdicts)
+   - Feature Ablation interpretation (no soft leakage detected)
+   - Learning Curve interpretation (model converged, +0.0001 last increment)
+   - Image embed for the auto-generated diagnostic plot (Fig. 10)
+   - Summary insight box confirming no remedial action required
+**Interpretation of diagnostics:** All three tests confirm the model generalises well. Train-test gaps are 0.02–0.08 (well below the 0.10 concern threshold). Competition density features do not leak target information. The learning curve has fully converged. Gym shows the largest gap (0.076) due to extreme class rarity, which is expected and not a defect.
+**User action required:** Re-run Cell 35 (Shift+Enter) to generate `docs/assets/overfitting_diagnostics.png`.
+
+---
+
+### Entry #80
+**Date:** 2026-03-04
+**Task:** Major dark-theme redesign of `docs/index.html` — transform from academic portfolio to decision intelligence tool
+**Who:** User requested redesign direction; AI (Claude) implemented all changes
+**Changes:**
+1. **CSS Variables — Full Dark Palette:** Replaced entire `:root` block with GitHub-dark inspired scheme (`--bg-body: #0d1117`, `--bg-surface: #161b22`, `--bg-elevated: #1c2333`). Kept `--primary: #e94560` as signature accent. Remapped legacy aliases (`--light`, `--dark`, `--text`) so ~70% of existing CSS auto-updated.
+2. **Google Fonts:** Added Inter font import for modern typography.
+3. **Dark-Themed All Components:** Tables (dark rows, elevated headers), cards (surface bg + border), insight/warning boxes (semi-transparent colored bg), code elements (dark bg with pink syntax color), pipeline diagrams, image containers, formula blocks, report tab, Site Finder controls, footer.
+4. **Hero Section Redesign:** Replaced academic title ("Predictive Site Selection Model") with business-focused hero: "Find Your Next Location" + value prop subtitle + 4-stat row (33 Boroughs, 15,430 Micro-locations, 91.1% AUC, 6 Business Types) + prominent CTA button ("Explore the Site Finder →") + subtle dot-grid background pattern.
+5. **Tab Reordering:** Changed from chronological pipeline order to user-centric: Overview → Site Finder → Results | separator | ML Model → Graph Analytics → Spatial Indexing → Data Pipeline → Report. Added visual separator between product and methodology tabs.
+6. **Animations:** Tab content fade-in (0.3s), custom dark scrollbar (webkit).
+7. **copyReport() JS:** Added full overfitting diagnostics section to clipboard copy: Train vs OOF AUC gap table, feature ablation summary, learning curve convergence.
+8. **Site Finder Enhancements:** Added "How it works" intro insight box, increased map iframe height from 520px to 650px.
+9. **Inline Style Fixes:** Converted all hardcoded light-theme colors (`#666`, `#2ecc71`, `#f39c12`, `#d5f5e3`, `#ccc`) to CSS variable references.
+10. **Title:** Changed from "London Predictive Site Selection | MSc Business Analytics" to "London Site Intelligence | AI-Powered Retail Location Selection".
+**Design rationale:** Dark themes are standard for data/analytics dashboards (Palantir, Grafana, Bloomberg Terminal). The reorder puts the interactive tool front-and-centre for business users while keeping technical depth accessible in later tabs. The hero CTA drives engagement with the primary deliverable (Site Finder).
 
 ---
 
