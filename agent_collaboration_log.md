@@ -977,4 +977,15 @@ No outlier folds detected. The spatial block CV produces consistent, reproducibl
 
 ---
 
+### Entry #86
+**Date:** 2026-03-05
+**Task:** Integrate Kaggle house price data into feature pipeline
+**Who:** User provided Kaggle house price dataset (418k records with lat/lon); AI (Claude) designed and implemented integration
+**Changes:**
+1. **New Cell 13:** Added house price enrichment cell after census join (Cell 12). Loads `kaggle_london_house_price_data.csv`, drops rows without coordinates/price, assigns H3 Res 9 index via `h3.latlng_to_cell()`, computes per-hex aggregates: `median_house_price`, `median_rent`, `median_price_per_sqm`, `property_count`. Borough-median fallback for hexes without direct property matches (same strategy as census join).
+2. **Cell 20 (formerly 19):** Updated feature matrix assembly to include 4 new `HOUSE_PRICE_COLS` in the feature set. Feature count increased from 27 to 31 per business type. Feature order: demographics(6) + house_price(4) + centrality(6) + community(1) + node2vec(3) + co-occurrence(10) + competition(1).
+3. **Rationale:** Median house price proxies area affluence/spending power. Rent estimates capture the cost environment relevant to retail viability. Property transaction count proxies market activity. Price-per-sqm normalizes for property size.
+
+---
+
 *This log was maintained continuously throughout the project and is submitted as part of the MSIN0097 assessment for transparency, academic integrity, and evidence of critical AI evaluation.*
