@@ -988,4 +988,55 @@ No outlier folds detected. The spatial block CV produces consistent, reproducibl
 
 ---
 
+### Entry #87
+**Date:** 2026-03-05
+**Task:** Fix house price data quality — replace estimate columns with actual Land Registry transactions
+**Who:** User flagged data leakage risk in estimate columns from prior analysis; AI (Claude) profiled data, confirmed issue, and rewrote pipeline
+**Changes:**
+1. **Cell 13 rewritten:** Replaced `saleEstimate_currentPrice` and `rentEstimate_currentPrice` (model-generated valuations with leakage risk) with `history_price` and `history_date` (actual Land Registry transaction records). Added temporal filter to 2021 calendar year to align with census data vintage.
+2. **Dropped `median_rent`:** No real rent transaction data exists in this dataset — only model estimates. Feature set reduced from 4 house price cols to 3: `median_house_price`, `median_price_per_sqm`, `transaction_count`.
+3. **Cell 20 updated:** `HOUSE_PRICE_COLS` reduced from 4 to 3. Feature count per business type: 31 → 30.
+4. **Data quality note:** 25,577 verified 2021 transactions with coordinates. Gross yield cross-check (5.05% median) confirmed estimates were plausible but still model-generated — actual transactions are the defensible choice for academic work.
+
+---
+
+### Entry #88
+**Date:** 2026-03-05
+**Task:** Add methodology documentation for house price feature integration
+**Who:** User requested justifications and methodology be written into the report and log; AI (Claude) authored documentation
+**Changes:**
+1. **New Cell 14 (markdown):** Inserted methodology section "Section 1.5: House Price Enrichment" in the notebook between the house price code (Cell 13) and the graph features section. Includes:
+   - **Justification:** Property values as proxies for area affluence/spending power (citing Cheshire & Sheppard 2004; Hernandez & Bennison 2000). Price/sqm as location desirability signal. Transaction count as market dynamism proxy.
+   - **Data source table:** HM Land Registry Price Paid Data via Kaggle, 25,577 transactions in 2021, all 33 boroughs, aggregated to H3 Res 9.
+   - **Why not estimates:** Explicit reasoning for rejecting `saleEstimate_currentPrice` and `rentEstimate_currentPrice` — model-generated valuations introduce data leakage risk; only `history_price` (actual Land Registry transactions) is defensible.
+   - **Feature table:** 3 features derived (median_house_price, median_price_per_sqm, transaction_count) with aggregation method and rationale.
+   - **Missing value strategy:** Two-tier imputation (borough median → London-wide median), consistent with census feature approach.
+2. **Portfolio update (docs/index.html):** Updated Data Sources table to include Land Registry row, feature count 27→30, added House Prices chip to Feature Engineering stage, updated How It Works accordion with house price methodology.
+3. **Total cells:** 56 → 57 (new markdown cell inserted at index 14).
+
+---
+
+### Entry #89
+**Date:** 2026-03-05
+**Task:** Fix house price data path reference (broken after folder rename)
+**Who:** AI (Claude) identified broken path during crime integration; fixed proactively
+**Changes:**
+1. **Cell 13:** Changed `HOUSE_PRICE_PATH` from `r'Police Data 2025-2026 and Crime 2024/...'` to `r'House price data 2021 and Crime 2021/kaggle_london_house_price_data (1).csv'`. Old folder was deleted by user when reorganising data; new path verified.
+
+---
+
+### Entry #90
+**Date:** 2026-03-05
+**Task:** Integrate London 2021 crime data into H3 feature pipeline
+**Who:** User provided police.uk 2021 archive (all UK forces, 12 months); AI (Claude) designed and implemented cleaning pipeline, crime type grouping, and feature engineering
+**Changes:**
+1. **New Cell 15 (code):** Crime data enrichment. Loads 24 CSVs (12 months × 2 London forces), filters to 33 London boroughs via LSOA name parsing, removes ~166K exact duplicate rows (15.7%) and ~40K Crime ID duplicates (jurisdictional overlap between Met and City of London Police). Groups 14 crime types into 3 retail-relevant categories (violent, property, ASB). Assigns H3 Res 9 index, aggregates per hex, log-transforms counts. Missing hexes imputed with 0 (not median — "no crime" is an observed zero).
+2. **New Cell 16 (markdown):** Full methodology documentation — justification (safety perception, operational cost, neighbourhood quality), data source table, data quality issues & resolutions table, crime type grouping rationale, feature descriptions, log-transform rationale, missing value strategy.
+3. **Cell 23 (was 21):** Updated feature matrix assembly. Added `CRIME_FEATURE_COLS_MODEL` (3 log-transformed columns) to feature set. Feature count: 30 → 33 per business type. Fixed stale comment that said "27 features".
+4. **Cell 58 (was 56):** Updated model report export `'features': 27` → `'features': 33`.
+5. **Portfolio (docs/index.html):** Added police.uk data source row, Crime Rates chip in architecture diagram (cols5→cols6), crime enrichment accordion section in How It Works, crime rows in Feature Matrix table, updated feature counts 30→33 throughout. Fixed stale "27 Features" in Feature Matrix heading.
+6. **Total cells:** 57 → 59 (2 new cells inserted at indices 15–16).
+
+---
+
 *This log was maintained continuously throughout the project and is submitted as part of the MSIN0097 assessment for transparency, academic integrity, and evidence of critical AI evaluation.*

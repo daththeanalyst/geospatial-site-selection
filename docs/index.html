@@ -594,6 +594,8 @@
         .arch-stage-body.cols2 { grid-template-columns: 1fr 1fr; }
         .arch-stage-body.cols3 { grid-template-columns: 1fr 1fr 1fr; }
         .arch-stage-body.cols4 { grid-template-columns: repeat(4, 1fr); }
+        .arch-stage-body.cols5 { grid-template-columns: repeat(5, 1fr); }
+        .arch-stage-body.cols6 { grid-template-columns: repeat(3, 1fr); }
 
         .arch-chip {
             background: var(--bg-body);
@@ -650,7 +652,7 @@
         @media (max-width: 700px) {
             .arch-sources, .arch-outputs { grid-template-columns: 1fr; }
             .arch-types   { grid-template-columns: repeat(3, 1fr); }
-            .arch-stage-body.cols3, .arch-stage-body.cols4 { grid-template-columns: 1fr 1fr; }
+            .arch-stage-body.cols3, .arch-stage-body.cols4, .arch-stage-body.cols5, .arch-stage-body.cols6 { grid-template-columns: 1fr 1fr; }
             .finder-panel { flex-direction: column; }
             .finder-sidebar { width: 100%; border-left: none; border-top: 1px solid var(--border); flex-direction: row; flex-wrap: wrap; }
             .finder-sidebar-section { flex: 1; min-width: 140px; }
@@ -1234,9 +1236,9 @@
         <div class="arch-stage">
             <div class="arch-stage-header">
                 <span class="stage-num">2</span>
-                Feature Engineering &mdash; 27 Features per Hexagon
+                Feature Engineering &mdash; 33 Features per Hexagon
             </div>
-            <div class="arch-stage-body cols4">
+            <div class="arch-stage-body cols6">
                 <div class="arch-chip">
                     <strong>POI Counts</strong>
                     Synergy &bull; Competitor<br>
@@ -1256,6 +1258,16 @@
                     <strong>Population</strong>
                     LandScan zonal stats<br>
                     Daytime + residential
+                </div>
+                <div class="arch-chip">
+                    <strong>House Prices</strong>
+                    Land Registry 2021<br>
+                    Median price &bull; &pound;/m&sup2; &bull; Volume
+                </div>
+                <div class="arch-chip">
+                    <strong>Crime Rates</strong>
+                    police.uk 2021<br>
+                    Violent &bull; Property &bull; ASB
                 </div>
             </div>
         </div>
@@ -1364,6 +1376,8 @@
         <tr><td>ONS Census 2021 (Digimap)</td><td>Tabular (OA level)</td><td>Demographics: education, age, employment</td></tr>
         <tr><td>OpenStreetMap (OSMnx)</td><td>Vector (Points)</td><td>POIs: cafes, gyms, stations, offices</td></tr>
         <tr><td>H3 Adjacency Graph</td><td>Computed (NetworkX)</td><td>6 centrality metrics, Louvain community detection, Node2Vec embeddings (3D)</td></tr>
+        <tr><td>HM Land Registry (Kaggle, 2021)</td><td>Tabular (geocoded)</td><td>Median house price, price/m&sup2;, transaction count per hex</td></tr>
+        <tr><td>police.uk (Met Police + City of London, 2021)</td><td>Tabular (geocoded)</td><td>Crime rates: violent, property, anti-social behaviour per hex</td></tr>
     </table>
 
     <h3>The False Positive Thesis</h3>
@@ -1389,7 +1403,7 @@
 <div class="tab-content" id="how-it-works">
 <section>
     <h2>How It Works</h2>
-    <p>The pipeline transforms raw geospatial data into actionable site recommendations in four stages.</p>
+    <p>The pipeline transforms raw geospatial data into actionable site recommendations in seven stages.</p>
 
     <div class="accordion">
 
@@ -1521,7 +1535,103 @@
             </div>
         </div>
 
-        <!-- 3. Graph Analytics -->
+        <!-- 3. House Price Enrichment -->
+        <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+                <span class="accordion-icon">+</span>
+                <span>House Price Enrichment</span>
+            </button>
+            <div class="accordion-body">
+    <p>
+        Property transaction data from <strong>HM Land Registry</strong> (via Kaggle, 418k records) is filtered to
+        <strong>2021</strong> to align with the ONS Census vintage. Each geocoded transaction is assigned to an H3 hex
+        via <code>h3.latlng_to_cell()</code>, then aggregated to produce three features per hexagon.
+    </p>
+
+    <h3>Why House Prices?</h3>
+    <p>
+        Median property value is a well-established proxy for <strong>area affluence</strong> and
+        <strong>consumer spending power</strong>. Price per m&sup2; normalises for property size and captures
+        the <em>intensity</em> of location demand. Transaction count proxies market dynamism &mdash;
+        neighbourhoods with high turnover tend to signal regeneration or sustained demand.
+    </p>
+
+    <h3>Features Derived</h3>
+    <table>
+        <tr><th>Feature</th><th>Aggregation</th><th>Rationale</th></tr>
+        <tr><td><code>median_house_price</code></td><td>Median of sale prices per hex</td><td>Area affluence / spending power</td></tr>
+        <tr><td><code>median_price_per_sqm</code></td><td>Median of (price / floor area)</td><td>Location desirability (size-normalised)</td></tr>
+        <tr><td><code>transaction_count</code></td><td>Count of 2021 sales per hex</td><td>Market activity / area dynamism</td></tr>
+    </table>
+
+    <h3>Data Quality Decision</h3>
+    <p>
+        The dataset also contains <code>saleEstimate</code> and <code>rentEstimate</code> columns &mdash;
+        these are <strong>model-generated valuations</strong> (automated valuation models from property portals),
+        not observed transactions. Using ML-generated estimates as features introduces
+        <strong>data leakage risk</strong>: the estimates may encode target-correlated signals from the same
+        underlying distribution. We use only <code>history_price</code> &mdash; actual Land Registry sale prices
+        &mdash; which is the defensible choice for academic work.
+    </p>
+
+    <p>
+        Missing hexes (no 2021 transactions) receive the <strong>borough median</strong> as fallback,
+        consistent with the census imputation strategy. 25,577 verified transactions provide strong London-wide coverage.
+    </p>
+            </div>
+        </div>
+
+        <!-- 4. Crime Rate Enrichment -->
+        <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+                <span class="accordion-icon">+</span>
+                <span>Crime Rate Enrichment</span>
+            </button>
+            <div class="accordion-body">
+    <p>
+        Street-level crime data from <strong>police.uk</strong> (Metropolitan Police + City of London Police,
+        ~1.08M raw records across 2021) is cleaned, deduplicated, and aggregated to H3 hexagons.
+    </p>
+
+    <h3>Data Cleaning</h3>
+    <p>
+        The raw data contains significant quality issues that are resolved before feature engineering:
+    </p>
+    <table>
+        <tr><th>Issue</th><th>Scale</th><th>Action</th></tr>
+        <tr><td>Exact duplicate rows</td><td>~166,000 (15.7%)</td><td>Removed via deduplication</td></tr>
+        <tr><td>Crime ID duplicates</td><td>~40,600</td><td>Jurisdictional overlap at force boundaries; deduplicated by Crime ID</td></tr>
+        <tr><td>Non-London records</td><td>~19,800</td><td>Met Police covers some edge areas (Epping, Elmbridge); filtered by LSOA to 33 boroughs</td></tr>
+        <tr><td>ASB without Crime ID</td><td>~302,000</td><td>By design in police.uk data; retained after exact dedup</td></tr>
+    </table>
+    <p>Post-cleaning: <strong>~852,000 verified crime records</strong> across all 33 London boroughs.</p>
+
+    <h3>Crime Type Grouping</h3>
+    <p>14 raw crime types grouped into 3 retail-relevant categories:</p>
+    <table>
+        <tr><th>Group</th><th>Types Included</th><th>Retail Signal</th></tr>
+        <tr><td><strong>Violent crime</strong></td><td>Violence, Robbery, Weapons, Public order, Drugs</td><td>Safety perception &mdash; deters footfall</td></tr>
+        <tr><td><strong>Property crime</strong></td><td>Burglary, Vehicle crime, Theft, Shoplifting, Criminal damage</td><td>Operational cost &mdash; shrinkage, insurance</td></tr>
+        <tr><td><strong>Anti-social behaviour</strong></td><td>ASB</td><td>Neighbourhood quality &mdash; high street decline</td></tr>
+    </table>
+
+    <h3>Features (3 per Hexagon)</h3>
+    <p>
+        Each crime group is aggregated per hex, then <strong>log-transformed</strong> (<code>log1p</code>) to compress
+        the right-skewed tail &mdash; hotspot hexes like Oxford Street and Stratford Westfield have thousands of incidents
+        while most residential hexes have single digits. Hexes with no crime receive <strong>0</strong>
+        (an observed zero, not imputed with borough median).
+    </p>
+    <table>
+        <tr><th>Feature</th><th>Description</th></tr>
+        <tr><td><code>violent_crime_log1p</code></td><td>log(1 + violent crime count) &mdash; safety signal</td></tr>
+        <tr><td><code>property_crime_log1p</code></td><td>log(1 + property crime count) &mdash; retail cost signal</td></tr>
+        <tr><td><code>antisocial_behaviour_log1p</code></td><td>log(1 + ASB count) &mdash; neighbourhood quality signal</td></tr>
+    </table>
+            </div>
+        </div>
+
+        <!-- 5. Graph Analytics -->
         <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
                 <span class="accordion-icon">+</span>
@@ -1584,11 +1694,13 @@
         <strong>False Positives</strong> &mdash; locations predicted as suitable that have no current supply.
     </p>
 
-    <h3>Feature Matrix (27 Features per Business Type)</h3>
+    <h3>Feature Matrix (33 Features per Business Type)</h3>
     <table>
         <tr><th>Modality</th><th>Count</th><th>Features</th></tr>
         <tr><td>Footfall</td><td>1</td><td><code>population</code> (LandScan zonal sum)</td></tr>
         <tr><td>Demographics</td><td>5</td><td><code>employed_total_perc</code>, <code>age_16_to_34_perc</code>, <code>level4_perc</code>, <code>retired_perc</code>, <code>no_qualifications_perc</code></td></tr>
+        <tr><td>House Prices</td><td>3</td><td><code>median_house_price</code>, <code>median_price_per_sqm</code>, <code>transaction_count</code></td></tr>
+        <tr><td>Crime Rates</td><td>3</td><td><code>violent_crime_log1p</code>, <code>property_crime_log1p</code>, <code>antisocial_behaviour_log1p</code></td></tr>
         <tr><td>Graph Centrality</td><td>6</td><td><code>degree_centrality</code>, <code>betweenness_centrality</code>, <code>closeness_centrality</code>, <code>clustering_coeff</code>, <code>eigenvector_centrality</code>, <code>pagerank</code></td></tr>
         <tr><td>Community Structure</td><td>1</td><td><code>community_id</code> (Louvain)</td></tr>
         <tr><td>Graph Embeddings</td><td>3</td><td><code>node2vec_dim0/1/2</code></td></tr>
