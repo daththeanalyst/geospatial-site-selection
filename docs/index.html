@@ -2312,18 +2312,18 @@ function renderDashRecs() {
         setTimeout(renderDashRecs, 400);
         return;
     }
-    var recs = (_reportData.top_recommendations[_dashBiz] || []).slice();
+    var allRecs = (_reportData.top_recommendations[_dashBiz] || []).slice();
+    var recs;
     if (_dashBorough !== 'All') {
-        var filtered = recs.filter(function(r) { return r.borough === _dashBorough; });
-        if (filtered.length === 0) {
+        recs = allRecs.filter(function(r) { return r.borough === _dashBorough; }).slice(0, 5);
+        if (recs.length === 0) {
             container.innerHTML =
-                '<p style="color:var(--text-light)">No top-5 sites in <strong>' + _dashBorough +
-                '</strong> for this type. Explore the green hexagons on the map above — ' +
-                'the map is filtered to this borough. Showing London-wide top sites below for context.</p>' +
-                buildRecCards(recs, true);
+                '<p style="color:var(--text-light)">No recommended sites in <strong>' + _dashBorough +
+                '</strong> for this business type. This borough may already be well-served or lack the feature profile.</p>';
             return;
         }
-        recs = filtered;
+    } else {
+        recs = allRecs.slice(0, 5);
     }
     container.innerHTML = buildRecCards(recs, false);
 }
@@ -2356,7 +2356,15 @@ function renderDashStats() {
     var fpEl  = document.getElementById('dash-fp-count');
     var thrEl = document.getElementById('dash-threshold-val');
     if (aucEl && auc) aucEl.textContent = (auc.mean * 100).toFixed(1) + '%';
-    if (fpEl  && out) fpEl.textContent  = out.fp.toLocaleString();
+    if (fpEl && out) {
+        if (_dashBorough !== 'All') {
+            var allRecs = (_reportData.top_recommendations[_dashBiz] || []);
+            var boroughCount = allRecs.filter(function(r) { return r.borough === _dashBorough; }).length;
+            fpEl.textContent = boroughCount + ' / ' + out.fp.toLocaleString();
+        } else {
+            fpEl.textContent = out.fp.toLocaleString();
+        }
+    }
     if (thrEl && thr != null) thrEl.textContent = (thr * 100).toFixed(1) + '%';
 }
 
