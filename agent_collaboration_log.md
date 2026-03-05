@@ -1039,4 +1039,18 @@ No outlier folds detected. The spatial block CV produces consistent, reproducibl
 
 ---
 
+### Entry #91
+**Date:** 2026-03-05
+**Task:** Remove house price features from pipeline (insufficient hex-level coverage)
+**Who:** User identified that house price data provided poor coverage (only 26% of hexes had direct matches; 74% received flat borough-median imputation, effectively degenerating to a borough-level feature). Decision: remove and keep only crime data.
+**Changes:**
+1. **Removed Cell 13 (house price code) and Cell 14 (house price methodology markdown):** The Kaggle Land Registry data (25,577 transactions in 2021) only covered 4,392 of 16,889 hexes directly. Borough-median fallback for the remaining 74% reduced the feature to ~33 unique values across most hexes — less discriminative than existing demographic features (education %, employment %) which already capture affluence at finer granularity.
+2. **Cell 21 (was 23):** Removed `HOUSE_PRICE_COLS` from feature matrix. Feature count: 33 → 30 per business type (6 demographic + 3 crime + 6 centrality + 1 community + 3 node2vec + 10 POI + 1 competition).
+3. **Cell 56 (was 58):** Updated model report export `'features': 33` → `'features': 30`.
+4. **Portfolio (docs/index.html):** Removed House Prices chip from architecture diagram (cols6→cols5), removed Land Registry from Data Sources table, removed House Price Enrichment accordion section, removed house price row from Feature Matrix table, updated feature counts 33→30 throughout.
+5. **Total cells:** 59 → 57 (2 cells removed).
+6. **Rationale:** Crime data (~1.06M records, 33 boroughs) has far better spatial coverage per hex than house prices. The 3 crime features (violent, property, ASB) provide genuine hex-level signal. House price data could be revisited with k-ring spatial smoothing to improve coverage, but was deprioritised.
+
+---
+
 *This log was maintained continuously throughout the project and is submitted as part of the MSIN0097 assessment for transparency, academic integrity, and evidence of critical AI evaluation.*
