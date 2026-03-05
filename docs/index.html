@@ -788,6 +788,15 @@
         .rec-conf    { margin-bottom: 0.5rem; }
         .rec-conf strong { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
         .rec-stats   { display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.82rem; color: var(--text-secondary); }
+        .rec-shap { margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px solid var(--border); }
+        .rec-shap-title { font-size: 0.72rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.3rem; }
+        .shap-row { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; margin-bottom: 0.15rem; }
+        .shap-label { width: 110px; text-align: right; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-shrink: 0; }
+        .shap-bar-wrap { flex: 1; height: 10px; background: var(--bg-elevated); border-radius: 5px; overflow: hidden; position: relative; }
+        .shap-bar { height: 100%; border-radius: 5px; min-width: 2px; }
+        .shap-bar.positive { background: var(--primary); }
+        .shap-bar.negative { background: #ef4444; }
+        .shap-val { width: 40px; font-size: 0.7rem; color: var(--text-muted); }
 
         .tool-stats-bar {
             display: flex;
@@ -2329,12 +2338,41 @@ function renderDashRecs() {
 }
 
 function buildRecCards(recs, dimmed) {
+    var FEATURE_LABELS = {
+        'population': 'Population', 'employed_total_perc': 'Employment',
+        'age_16_to_34_perc': 'Young adults', 'level4_perc': 'Degree-level',
+        'retired_perc': 'Retired', 'no_qualifications_perc': 'No qualifications',
+        'violent_crime_log1p': 'Violent crime', 'property_crime_log1p': 'Property crime',
+        'antisocial_behaviour_log1p': 'ASB', 'degree_centrality': 'Connectivity',
+        'betweenness_centrality': 'Bridging', 'closeness_centrality': 'Accessibility',
+        'clustering_coeff': 'Clustering', 'eigenvector_centrality': 'Prestige',
+        'pagerank': 'PageRank', 'community_id': 'Community',
+        'node2vec_dim0': 'Embedding-0', 'node2vec_dim1': 'Embedding-1',
+        'node2vec_dim2': 'Embedding-2'
+    };
     return recs.map(function(r, i) {
         var conf = (r.prob * 100).toFixed(0);
         var pop  = r.population ? r.population.toLocaleString() : '—';
         var edu  = r.degree_pct > 0 ? r.degree_pct + '% degree-level' : '';
         var age  = r.age_pct    > 0 ? r.age_pct    + '% age 16\u201334'  : '';
         var opacity = dimmed ? ' style="opacity:0.6"' : '';
+        var shapHtml = '';
+        if (r.shap_drivers && r.shap_drivers.length > 0) {
+            var maxAbs = Math.max.apply(null, r.shap_drivers.map(function(d) { return Math.abs(d.shap); }));
+            if (maxAbs === 0) maxAbs = 1;
+            shapHtml = '<div class="rec-shap"><div class="rec-shap-title">Why here?</div>'
+                + r.shap_drivers.map(function(d) {
+                    var lbl = FEATURE_LABELS[d.feature] || d.feature.replace(/_/g,' ').replace('n ','');
+                    var pct = Math.min(Math.abs(d.shap) / maxAbs * 100, 100);
+                    var cls = d.shap >= 0 ? 'positive' : 'negative';
+                    var sign = d.shap >= 0 ? '+' : '';
+                    return '<div class="shap-row">'
+                        + '<span class="shap-label">' + lbl + '</span>'
+                        + '<span class="shap-bar-wrap"><span class="shap-bar ' + cls + '" style="width:' + pct + '%"></span></span>'
+                        + '<span class="shap-val">' + sign + d.shap.toFixed(2) + '</span>'
+                        + '</div>';
+                }).join('') + '</div>';
+        }
         return '<div class="rec-card"' + opacity + '>'
             + '<div class="rec-rank">#' + (i + 1) + '</div>'
             + '<div class="rec-borough">' + r.borough + '</div>'
@@ -2343,7 +2381,9 @@ function buildRecCards(recs, dimmed) {
             + '<span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> ' + pop + ' population</span>'
             + (edu ? '<span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 6 3 6 3s6-1 6-3v-5"/></svg> ' + edu + '</span>' : '')
             + (age ? '<span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> ' + age + '</span>' : '')
-            + '</div></div>';
+            + '</div>'
+            + shapHtml
+            + '</div>';
     }).join('');
 }
 

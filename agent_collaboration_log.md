@@ -1053,4 +1053,18 @@ No outlier folds detected. The spatial block CV produces consistent, reproducibl
 
 ---
 
+### Entry #92
+**Date:** 2026-03-05
+**Task:** Add SHAP explanations, fix correlation heatmap readability, add "Why Here?" to portfolio
+**Who:** User requested SHAP + calibration + portfolio SHAP bars + transport research; AI (Claude) implemented
+**Changes:**
+1. **New Cell 42 (SHAP):** Computes SHAP values via `shap.TreeExplainer` for all 6 business types. Stores top 3 SHAP drivers per hex in h3_grid. Generates summary plots (single cafe + 2x3 grid for all types) saved to `docs/assets/`.
+2. **Cell 57 (report export):** Added `shap_drivers` array to each recommendation in the JSON export — each driver has `{feature, shap}` for the top 3 features.
+3. **Portfolio (docs/index.html):** Added "Why Here?" SHAP bars to recommendation cards — each card now shows the top 3 features driving the recommendation with cyan (positive) / red (negative) bars and SHAP values. Added CSS for `.rec-shap`, `.shap-row`, `.shap-bar` components. Added human-readable feature labels mapping (e.g. `violent_crime_log1p` → "Violent crime").
+4. **Cell 24 (correlation heatmap):** Fixed readability — increased figure size to 18x15, reduced annotation font to 7pt, changed format from `.2f` to `.1f`, rotated x-labels 45deg. The 30-feature matrix was unreadable at the old 12x10 size.
+5. **Calibration plot:** Already existed at Cell 43 — no changes needed.
+6. **Total cells:** 57 → 58 (1 new SHAP cell inserted at index 42).
+
+---
+
 *This log was maintained continuously throughout the project and is submitted as part of the MSIN0097 assessment for transparency, academic integrity, and evidence of critical AI evaluation.*
