@@ -1258,3 +1258,9 @@ Updated `docs/index.html` to reflect accurate 33-feature model results and added
 **What changed**: Fixed borough filter JS in Cell 63 — replaced `deckgl` with `deckInstance` (4 occurrences). Pydeck's generated HTML exposes the deck.gl instance as `deckInstance`, not `deckgl`, so the polling loop never found it and the dropdown filter never initialized.
 **Why**: User reported the borough dropdown wasn't updating the map. Root cause: wrong JS variable name meant the filter script silently timed out after 100 polling attempts.
 **AI vs Human**: AI diagnosed by inspecting the generated HTML output. User reported the broken behaviour.
+
+### Entry #112
+**Date**: 2026-03-06
+**What changed**: Rewrote borough filter JS in Cell 63 — replaced `new deck.H3HexagonLayer(...)` + `deckInstance.setProps()` approach with `createDeck()` re-rendering. The new approach clears the deck container and re-creates the entire deck with filtered data using the same `createDeck` function pydeck uses internally. Also increased polling attempts from 100 to 200 and polls at 100ms intervals. Stores original data + view state on init, restores on "All London" selection.
+**Why**: Previous fix (#111) corrected the variable name but the filter still failed silently. Root cause: `deck.H3HexagonLayer` is not exposed in pydeck's global JS scope — it's resolved internally by JSON transport. The `createDeck` approach bypasses this entirely by re-using pydeck's own rendering pipeline.
+**AI vs Human**: AI diagnosed by inspecting the CDN bundle structure and pydeck HTML output. User reported the filter still didn't work.
