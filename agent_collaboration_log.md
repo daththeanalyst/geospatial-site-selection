@@ -1252,3 +1252,9 @@ Updated `docs/index.html` to reflect accurate 33-feature model results and added
 **What changed**: Updated portfolio (`docs/index.html`) performance metrics to match latest model report run. Updated all 6 business-type AUC values, Std, and Optimal Thresholds in the performance table; updated 33-feature AUC and delta values in the feature value-add table; updated feature importance percentages; updated mean AUC insight (0.9188 → 0.9195, +1.8pp); updated JS `perfData` array and copy-report value-add text.
 **Why**: After re-running the full notebook, CV randomness caused small metric shifts. Portfolio must reflect actual latest outputs for academic accuracy.
 **AI vs Human**: AI cross-checked report output against hardcoded portfolio values and updated all mismatches. User provided the model report data.
+
+### Entry #111
+**Date**: 2026-03-06
+**What changed**: Fixed borough filter JS in Cell 63 — replaced `deckgl` with `deckInstance` (4 occurrences). Pydeck's generated HTML exposes the deck.gl instance as `deckInstance`, not `deckgl`, so the polling loop never found it and the dropdown filter never initialized.
+**Why**: User reported the borough dropdown wasn't updating the map. Root cause: wrong JS variable name meant the filter script silently timed out after 100 polling attempts.
+**AI vs Human**: AI diagnosed by inspecting the generated HTML output. User reported the broken behaviour.
