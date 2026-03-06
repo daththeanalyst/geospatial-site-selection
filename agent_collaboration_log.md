@@ -4,7 +4,7 @@
 **Programme**: MSc Business Analytics (MSIN0097)
 **AI Tool**: Claude (Anthropic) via Claude Code CLI
 **Date Range**: February–March 2026
-**Total Entries**: 74
+**Total Entries**: 110
 **Business Types Modelled**: Cafe, Restaurant, Pub, Fast Food, Gym, Bakery
 
 ---
@@ -1067,4 +1067,188 @@ No outlier folds detected. The spatial block CV produces consistent, reproducibl
 
 ---
 
+### Entry #93
+**Date:** 2026-03-05
+**Task:** Fix `ablation_results` NameError in Cell 37 (diagnostic tests)
+**Who:** User reported error; AI (Claude) diagnosed and fixed
+**Root Cause:** The DIAGNOSTIC 2 (Feature Ablation) loop computed `delta` values for each business type and printed them, but never stored them in the `ablation_results` list that the visualization code expected. The variable was referenced at line 163 (`if ablation_results:`) but never initialized or populated.
+**Fix:** Added `ablation_results = []` before the ablation loop, and `ablation_results.append({"type": biz_cfg["label"], "delta": -delta})` inside the loop after computing each delta. This populates the list for the ablation bar chart in the diagnostic plots.
+
+---
+
+### Entry #94
+**Date:** 2026-03-05
+**Task:** Add transport accessibility features to ML pipeline (30 → 33 features)
+**Who:** User requested transport features; AI (Claude) researched sources and implemented
+**Changes:**
+1. **New Cell 15 (Transport Enrichment):** Computes 3 transport accessibility features per hexagon:
+   - `dist_to_nearest_station_log`: log1p of Euclidean distance (BNG meters) to nearest rail/tube/DLR station, computed via `scipy.spatial.cKDTree` on existing POI station data.
+   - `station_count_800m`: count of stations within 800m walkable catchment (TfL PTAL standard), via cKDTree radius query.
+   - `bus_stop_count_log`: log1p of bus stop count per hex, fetched from Overpass API (`highway=bus_stop`, London-wide bbox query, ~19K stops). Zero-imputed (no stops = observed zero).
+2. **New Cell 16 (Transport Methodology):** Full markdown documentation — justification (3 mechanisms: catchment expansion, passing trade, accessibility gradient), data sources, feature table, 800m rationale, missing value strategy.
+3. **Cell 23 (was 21, Feature Matrix):** Added `TRANSPORT_FEATURE_COLS` to feature assembly. Updated feature count comment: 30 → 33 features per business type.
+4. **Cell 59 (was 57, Report Export):** Updated `'features': 30` → `'features': 33`.
+5. **Total cells:** 58 → 60 (2 new transport cells inserted at indices 15-16).
+
+---
+
+### Entry #95
+**Date:** 2026-03-05
+**Task:** Update portfolio for transport accessibility features
+**Who:** AI (Claude) — portfolio updates to match notebook changes
+**Changes:**
+1. **Architecture diagram:** "30 Features" → "33 Features", added "Transport Access" chip (station distance, bus stops, 800m catchment), changed grid from `cols5` to `cols6`.
+2. **Data Sources table:** Added row for "OpenStreetMap / Overpass API (bus stops)".
+3. **How It Works accordion:** Inserted "Transport Accessibility" section after Crime Rate Enrichment — spatial computation method, 3 feature descriptions, missing value strategy.
+4. **Feature Matrix table:** "30 Features" → "33 Features", added Transport Access row (3 features).
+5. **JS FEATURE_LABELS:** Added mappings for `dist_to_nearest_station_log` → "Station distance", `station_count_800m` → "Stations (800m)", `bus_stop_count_log` → "Bus stops".
+
+---
+
+### Entry #96
+**Date:** 2026-03-05
+**Task:** Add statistical significance testing and prediction accuracy summary
+**Who:** User requested significance testing with high threshold; AI (Claude) implemented
+**Changes:**
+1. **New Cell 50 (Significance Tests):** Computes:
+   - **Prediction accuracy table**: Accuracy, Precision, Recall, F1, AUC for all 6 business types at F1-optimised thresholds, with "X correct / N total" counts.
+   - **Bootstrap 95% CI on AUC** (n=2000 resamples): Proves model AUC is precisely estimated and CI lower bound > 0.5 (better than random).
+   - **Permutation test** (n=1000 shuffles, p < 0.001 threshold): Proves model learned genuine patterns, not random noise. Conservative p-value correction (Phipson & Smyth, 2010).
+   - **Summary verdict table**: Per-type AUC, CI, p-value, SIGNIFICANT/REVIEW verdict.
+   - **Diagnostic plot**: 2x3 grid of null distribution histograms with observed AUC line, saved to `docs/assets/significance_tests.png`.
+2. **New Cell 51 (Significance Methodology):** Markdown documenting bootstrap CI method, permutation test method, and why p < 0.001 (Bonferroni correction for 6 simultaneous tests).
+3. **Portfolio (docs/index.html):** Added "Statistical Significance" subsection under ML Model accordion with permutation test figure and interpretation.
+4. **Total cells:** 60 → 62 (2 new cells inserted at indices 50-51).
+
+---
+
+### Entry #97
+**Date:** 2026-03-05
+**Task:** Implement 5-tier confidence-based recommendation system
+**Who:** User requested confidence+competition tiers; AI (Claude) implemented
+**Changes:**
+1. **Cell 53 (Outcome Classification):** Added tier classification for False Positive hexagons. Tiers combine model probability AND competition density: Prime Location (>=95%, <=2 nearby), Strong Recommend (85-95%, <=3), Viable (above threshold, <=5), Competitive (above threshold, >5). Prints tier distribution table.
+2. **Cell 58 (Interactive Maps):** Replaced binary green/faint-green FP colouring with 4-tier colours: bright green (Prime), medium green (Strong), yellow (Viable), orange (Competitive). Elevation scaled by tier (500/350/200/150px). Updated legend to show all 5 tiers with colour swatches.
+3. **Cell 61 (Report Export):** Added `tier` field to each recommendation in JSON/JS export.
+4. **Portfolio (docs/index.html):** Added tier badge CSS (`.rec-tier-prime`, `.rec-tier-strong`, `.rec-tier-viable`, `.rec-tier-competitive`). Updated `buildRecCards()` JS to render tier badges on rec cards. Replaced "Confusion Matrix Interpretation" with "5-Tier Recommendation System" table showing tier criteria and business value.
+
+---
+
 *This log was maintained continuously throughout the project and is submitted as part of the MSIN0097 assessment for transparency, academic integrity, and evidence of critical AI evaluation.*
+
+
+### Entry #98
+**Date**: 2026-03-05
+**Cell(s)**: 15, 58
+**Type**: Bug fix (code audit follow-up)
+**What changed**:
+1. **Cell 15 (Transport Enrichment)**: Added empty stations guard. Wrapped cKDTree construction and feature computation (lines 32–64) in `if len(stations) == 0: ... else: ...` block. If no stations found, sets `dist_to_nearest_station` to NaN, `dist_to_nearest_station_log` to 0.0, and `station_count_800m` to 0, with a warning printed.
+2. **Cell 58 (Interactive Maps)**: Fixed tier column alignment. Changed `h3_grid[tier_col].values` to `h3_grid.loc[viz_df.index, tier_col].values` to ensure index-safe assignment when viz_df and h3_grid have different row ordering.
+3. Deleted stale temp scripts: `_fix_audit_bugs.py`, `_insert_significance_cell.py`.
+**Why**: Code audit (3 parallel review agents) found 2 bugs: (1) cKDTree crashes on empty array (CRITICAL), (2) positional-based .values assignment can misalign tiers after filtering/sorting (MEDIUM).
+**Root cause**: (1) No defensive check before passing station coordinates to cKDTree. (2) Using .values extracts by position, not index alignment.
+**AI vs Human**: AI-identified and AI-fixed. User requested the code audit.
+
+
+### Entry #99
+**Date**: 2026-03-05
+**Cell(s)**: N/A (portfolio only)
+**Type**: Portfolio update (comprehensive sync)
+**What changed**:
+Comprehensive update to `docs/index.html` to reflect all recent notebook changes:
+
+1. **Feature count 27 to 33**: Updated Key Results card, enrichment pipeline, report JS fallback (3 locations), and research question to show 33 features including crime (3) and transport (3).
+2. **5-Tier recommendation system**: Updated Site Finder legend from old outcome colors (Opportunity/Existing/Expansion/Blind spot) to 5-tier system (Prime/Strong/Viable/Competitive/Not Recommended) with correct color swatches.
+3. **SHAP Explanations accordion**: Added new "SHAP Explanations & Why Here? Cards" accordion section in How It Works, explaining SHAP vs feature importance, signed contribution table, and stakeholder value.
+4. **Architecture diagram updates**: Output cards now mention 5-tier system, SHAP "Why Here?" cards, borough filter. Arrow text updated from "Confusion matrix outcomes" to "5-Tier Classification".
+5. **Hero badges**: Added "SHAP Explanations", "5-Tier Recommendations", "33 Features" badges.
+6. **Project overview**: Updated to mention 5 data modalities, 33 features, 5-tier system, SHAP explanations.
+7. **Research question**: Now includes crime, transport, SHAP, and confidence tiers.
+8. **FP thesis insight**: Updated to mention low crime, 5 tiers, and SHAP "Why Here?" explanations.
+9. **Report tab**: Rec blocks now show tier badges; copy report includes tier labels.
+10. **Site Finder rec cards hint**: Updated description to explain tier thresholds and SHAP drivers.
+11. **ETL accordion**: Changed "Three data modalities" to "Five data modalities" listing all sources.
+12. **Footer**: Updated tech stack to include SHAP, 33 features, 5-tier system.
+
+**Why**: Portfolio was out of sync with notebook after adding transport features, crime data, statistical significance, 5-tier recommendations, and SHAP explanations across entries #93-#98.
+**AI vs Human**: AI-initiated comprehensive sync. User requested "update index file with all the things we changed".
+
+
+### Entry #100
+**Date**: 2026-03-05
+**Cell(s)**: N/A (portfolio only)
+**Type**: Portfolio update (metrics accuracy + feature value-add analysis)
+**What changed**:
+Updated `docs/index.html` to reflect accurate 33-feature model results and added rigorous feature value-add analysis:
+
+1. **Hero stat**: Changed from '91.1% Prediction Accuracy' (stale, misleading) to '91.9% Mean AUC (Top 5)' — the honest mean AUC across 5 reliable types (excluding Gym).
+2. **Overfitting diagnostics table replaced**: Old hardcoded 30-feature OOF AUC values replaced with full 33-feature performance table showing AUC, Std, Accuracy, Precision, Recall, F1, and Threshold for all 6 types. Gym row highlighted with warning.
+3. **Feature Value-Add table added**: New section comparing 30-feat vs 33-feat AUC per type, showing delta and key new feature. Shows crime + transport improved 4/6 types (mean +1.7pp excl. Gym).
+4. **Gym model caveat**: Warning box explaining Gym degradation (0.877 → 0.775, -10.2pp) due to data sparsity (6.6% prevalence, 1,014 positives). Notes 0 Prime/Strong recs survived tier filter.
+5. **Copy-report JS updated**: Replaced hardcoded overfitData with perfData matching new results. Added feature value-add summary and Gym caveat to plain-text report.
+6. **Limitations table**: Added 'Gym model degradation' and 'Feature dominance by POI' rows.
+
+**Why**: User requested deep analysis of model results and accuracy. Hardcoded metrics from 30-feature run were stale and misleading. The Gym degradation needed honest disclosure.
+**Root cause**: Portfolio HTML contained hardcoded metrics from pre-crime/transport run. Hero stat showed single-type AUC labeled as 'accuracy'.
+**AI vs Human**: AI analysis and implementation. User requested 'deep analysis on results' and 'address all accuracies and predictions'.
+
+### Entry #101
+**Date**: 2026-03-05
+**What changed**: Added Contrastive SHAP cell (new Cell 45) to notebook. Compares mean |SHAP| values across TP/FP/FN quadrants for all 6 business types. Identifies which features most distinguish recommendations (FP) from missed sites (FN). Saves `contrastive_shap.png` (Fig. 13).
+**Why**: Tier 1 improvement — failure mode analysis. Examiners need contrastive explanations showing why the model recommends one location but not another.
+**AI vs Human**: AI implementation. User requested all Tier 1 improvements from the project audit.
+
+### Entry #102
+**Date**: 2026-03-05
+**What changed**: Added Confidence Distributions cell (new Cell 51) to notebook. 2x3 grid of OOF probability histograms split by actual label, with F1/Strong/Prime threshold lines overlaid. Saves `confidence_distributions.png` (Fig. 14).
+**Why**: Tier 1 improvement — shows the model produces well-separated probability scores, not a blob around 0.5. Demonstrates genuine discrimination power visually.
+**AI vs Human**: AI implementation. User requested all Tier 1 improvements.
+
+### Entry #103
+**Date**: 2026-03-05
+**What changed**: Added Borough Holdout CV / LOBO cell (new Cell 53) to notebook. Leave-one-borough-out cross-validation: trains on 32 boroughs, tests on the held-out one. 198 models (33 boroughs x 6 types). Produces heatmap + boxplot figure. Saves `borough_holdout_cv.png` (Fig. 15).
+**Why**: Tier 1 improvement — external validity. Tests if the model generalises to administratively distinct areas it has never seen, the strongest generalization test available.
+**AI vs Human**: AI implementation. User requested all Tier 1 improvements.
+
+### Entry #104
+**Date**: 2026-03-05
+**What changed**: Added Gym Model Deep-Dive cell (new Cell 57) to notebook. 4-panel diagnostic: (A) class distribution, (B) AUC comparison (33-feat vs 30-feat vs 2x weight), (C) precision-recall curve with AP score, (D) per-fold AUC variance gym vs cafe. Saves `gym_deep_dive.png` (Fig. 16).
+**Why**: Tier 1 improvement — Gym AUC dropped from 0.877 to 0.775. This cell diagnoses root cause: data sparsity (6.6% prevalence) vs crime/transport noise vs insufficient class weighting.
+**AI vs Human**: AI implementation. User requested all Tier 1 improvements.
+
+### Entry #105
+**Date**: 2026-03-05
+**What changed**: Added Fairness Audit cell (new Cell 58) to notebook. Uses `no_qualifications_perc` quintiles as deprivation proxy (no IMD available). Computes recommendation rate per quintile per type with Spearman rho correlation. 2x3 bar chart with rho annotations. Saves `fairness_audit.png` (Fig. 17).
+**Why**: Tier 1 improvement — checks if model systematically under-recommends in deprived areas, which would encode historical inequity into future recommendations.
+**AI vs Human**: AI implementation. User requested all Tier 1 improvements.
+
+### Entry #106
+**Date**: 2026-03-05
+**What changed**: Updated `docs/index.html` with 5 new sections: (1) Contrastive SHAP in SHAP accordion, (2) Confidence Distributions in ML Model accordion, (3) Borough Holdout CV in ML Model accordion, (4) Gym Deep-Dive in ML Model accordion, (5) New Equity & Fairness Audit accordion with proxy limitation warning. Added Fairness/equity bias row to Limitations table. Updated Gym limitation to reference Fig. 16.
+**Why**: Portfolio must reflect all new analyses added to the notebook. Each new figure needs explanation, interpretation, and proper figure numbering (Figs 13-17).
+**AI vs Human**: AI implementation. User requested all Tier 1 improvements.
+
+### Entry #107
+**Date**: 2026-03-06
+**What changed**: Added interactive borough filter to Cell 63 (interactive 3D maps). Each exported HTML map now includes: (1) a dropdown with all 33 London boroughs, (2) JavaScript that filters hexagons by selected borough and updates the deck.gl layer in-place, (3) fly-to animation that zooms to the selected borough's center, (4) hex count display showing filtered vs total. Also added `_lat`/`_lng` centroid columns to viz_render for fly-to coordinate lookup.
+**Why**: User requested ability to filter the interactive map by specific borough (e.g., select Camden to hide all other boroughs). Uses deck.gl `setProps` and `FlyToInterpolator` for smooth transitions.
+**AI vs Human**: AI implementation. User requested the feature.
+
+### Entry #108
+**Date**: 2026-03-06
+**What changed**: Fixed 2 bugs in Cell 58 (Fairness Audit) found during pre-run audit: (1) Spearman direction labels were swapped — `rho > 0` incorrectly said "UNDER-REC in deprived" when it should say "OVER-REC in deprived" (positive correlation means more recs in deprived areas). (2) `pd.qcut` with fixed `labels=[1,2,3,4,5]` and `duplicates='drop'` would crash if tied values reduced bin count below 5. Replaced with `.cat.codes + 1` and dynamic `n_quintiles` variable. Also made quintile loop and label arrays dynamic.
+**Why**: Pre-run audit caught these before user ran the notebook. Bug 1 would produce misleading interpretation text. Bug 2 would cause a `ValueError` crash if census data had many tied values.
+**Root cause**: Bug 1: logical error in ternary condition. Bug 2: `pd.qcut` `labels` parameter requires exact match to bin count, but `duplicates='drop'` can reduce bins.
+**AI vs Human**: AI audit and fix. User requested pre-run check.
+
+### Entry #109
+**Date**: 2026-03-06
+**What changed**: Simplified SHAP all-types plot (Cell 44) from beeswarm dots to bar charts (`plot_type='bar'`). Increased figure size from 24x16 to 28x18, reduced max_display from 10 to 8 features. Updated portfolio caption (Fig. 12) to reflect bar chart format.
+**Why**: User reported SHAP graph was "too small and all are complicated". Beeswarm plots with hundreds of dots per subplot in a 2x3 grid were hard to read. Bar charts (mean |SHAP|) are cleaner and convey the same ranking information at a glance.
+**AI vs Human**: AI implementation. User flagged the readability issue.
+
+### Entry #110
+**Date**: 2026-03-06
+**What changed**: Updated portfolio (`docs/index.html`) performance metrics to match latest model report run. Updated all 6 business-type AUC values, Std, and Optimal Thresholds in the performance table; updated 33-feature AUC and delta values in the feature value-add table; updated feature importance percentages; updated mean AUC insight (0.9188 → 0.9195, +1.8pp); updated JS `perfData` array and copy-report value-add text.
+**Why**: After re-running the full notebook, CV randomness caused small metric shifts. Portfolio must reflect actual latest outputs for academic accuracy.
+**AI vs Human**: AI cross-checked report output against hardcoded portfolio values and updated all mismatches. User provided the model report data.

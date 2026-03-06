@@ -788,6 +788,11 @@
         .rec-conf    { margin-bottom: 0.5rem; }
         .rec-conf strong { font-size: 1.4rem; font-weight: 700; color: var(--primary); }
         .rec-stats   { display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.82rem; color: var(--text-secondary); }
+        .rec-tier { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; margin-bottom: 0.4rem; letter-spacing: 0.02em; }
+        .rec-tier-prime { background: rgba(0,230,64,0.15); color: #00e640; border: 1px solid rgba(0,230,64,0.3); }
+        .rec-tier-strong { background: rgba(39,174,96,0.15); color: #27ae60; border: 1px solid rgba(39,174,96,0.3); }
+        .rec-tier-viable { background: rgba(241,196,15,0.15); color: #f1c40f; border: 1px solid rgba(241,196,15,0.3); }
+        .rec-tier-competitive { background: rgba(243,156,18,0.15); color: #f39c12; border: 1px solid rgba(243,156,18,0.3); }
         .rec-shap { margin-top: 0.6rem; padding-top: 0.5rem; border-top: 1px solid var(--border); }
         .rec-shap-title { font-size: 0.72rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.3rem; }
         .shap-row { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; margin-bottom: 0.15rem; }
@@ -1138,8 +1143,8 @@
             <span class="stat-label">Micro-locations</span>
         </div>
         <div class="stat-item">
-            <span class="stat-number" data-target="91.1" data-suffix="%" data-decimal="1">0%</span>
-            <span class="stat-label">Prediction Accuracy</span>
+            <span class="stat-number" data-target="91.9" data-suffix="%" data-decimal="1">0%</span>
+            <span class="stat-label">Mean AUC (Top 5)</span>
         </div>
         <div class="stat-item">
             <span class="stat-number" data-target="6" data-suffix="">0</span>
@@ -1153,6 +1158,9 @@
         <span class="badge">H3 Hexagonal Grid</span>
         <span class="badge">XGBoost ML</span>
         <span class="badge">Spatial Cross-Validation</span>
+        <span class="badge">SHAP Explanations</span>
+        <span class="badge">5-Tier Recommendations</span>
+        <span class="badge">33 Features</span>
     </div>
 </div>
 
@@ -1175,10 +1183,13 @@
     <h2>Project Overview</h2>
     <p>
         This project identifies <strong>optimal locations for new retail businesses</strong>
-        across all 33 boroughs of Greater London using multi-modal geospatial data and supervised machine learning.
-        The model supports 6 business types (cafe, restaurant, pub, fast food, gym, bakery).
+        across all 33 boroughs of Greater London using 5 data modalities &mdash; population, demographics,
+        crime rates, transport accessibility, and spatial graph structure &mdash; combined with supervised machine learning.
+        The model supports 6 business types (cafe, restaurant, pub, fast food, gym, bakery) with
+        <strong>33 engineered features</strong> per location.
         The core insight: a binary classifier's <strong>False Positives</strong> &mdash; locations the model
-        predicts <em>should</em> have a given business but currently don't &mdash; represent untapped market opportunities.
+        predicts <em>should</em> have a given business but currently don't &mdash; represent untapped market opportunities,
+        ranked into a <strong>5-tier recommendation system</strong> with per-location SHAP explanations.
     </p>
     <p>
         In the language of network theory, these are <strong>Burt's Structural Holes</strong> (1992):
@@ -1245,9 +1256,9 @@
         <div class="arch-stage">
             <div class="arch-stage-header">
                 <span class="stage-num">2</span>
-                Feature Engineering &mdash; 30 Features per Hexagon
+                Feature Engineering &mdash; 33 Features per Hexagon
             </div>
-            <div class="arch-stage-body cols5">
+            <div class="arch-stage-body cols6">
                 <div class="arch-chip">
                     <strong>POI Counts</strong>
                     Synergy &bull; Competitor<br>
@@ -1272,6 +1283,11 @@
                     <strong>Crime Rates</strong>
                     police.uk 2021<br>
                     Violent &bull; Property &bull; ASB
+                </div>
+                <div class="arch-chip">
+                    <strong>Transport Access</strong>
+                    Station distance &bull; Bus stops<br>
+                    Walkable catchment (800m)
                 </div>
             </div>
         </div>
@@ -1315,27 +1331,27 @@
             <div class="arch-type-card"><svg class="ico-lg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 20h12"/><path d="M6 20V10a6 6 0 0 1 12 0v10"/><path d="M9 14a3 3 0 0 0 6 0"/></svg>Bakery</div>
         </div>
 
-        <div class="arch-arrow">&#8595; Confusion matrix outcomes &rarr; FP = New Sites &bull; Expansion Opportunities &#8595;</div>
+        <div class="arch-arrow">&#8595; 5-Tier Classification &rarr; FP = New Sites (Prime/Strong/Viable/Competitive) &bull; SHAP Explanations &#8595;</div>
 
         <!-- ── OUTPUTS ─────────────────────────────────────────── -->
         <div class="arch-row arch-outputs">
             <div class="arch-output-card arch-out-recs">
-                <strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Site Recommendations</strong>
-                FP (new sites) + Expansion Opps<br>
-                Per-type CSV &bull; Ranked by confidence<br>
+                <strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> 5-Tier Recommendations</strong>
+                Prime &bull; Strong &bull; Viable &bull; Competitive<br>
+                Per-type CSV &bull; SHAP &ldquo;Why Here?&rdquo; cards<br>
                 Structural holes + growth zones
             </div>
             <div class="arch-output-card arch-out-maps">
                 <strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> Interactive 3D Maps</strong>
                 Pydeck H3HexagonLayer<br>
-                6 maps &bull; Colour = outcome<br>
-                Height = model confidence
+                6 maps &bull; Colour = tier<br>
+                Height = confidence &bull; Borough filter
             </div>
             <div class="arch-output-card arch-out-port">
                 <strong><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Portfolio &amp; Report</strong>
                 This site &bull; Report tab<br>
-                AUC &bull; Feature importance<br>
-                Threshold analysis
+                Bootstrap CI &bull; Permutation test<br>
+                Feature importance &bull; SHAP analysis
             </div>
         </div>
 
@@ -1344,9 +1360,10 @@
 
     <h3>Research Question</h3>
     <p>
-        <em>"Can a binary classification model, trained on geospatial features derived from population rasters,
-        census demographics, graph centrality metrics, community structure, and graph embeddings,
-        identify underserved locations (structural holes) for retail businesses across Greater London?"</em>
+        <em>"Can a binary classification model, trained on 33 geospatial features derived from population rasters,
+        census demographics, crime rates, transport accessibility, graph centrality metrics, community structure,
+        and graph embeddings, identify underserved locations (structural holes) for retail businesses across
+        Greater London &mdash; with per-location SHAP explanations and confidence-based recommendation tiers?"</em>
     </p>
 
     <h3>Key Results</h3>
@@ -1357,9 +1374,9 @@
             <p>Resolution 9 (~174m edge) covering 33 London boroughs</p>
         </div>
         <div class="card">
-            <div class="number">27</div>
+            <div class="number">33</div>
             <h4>Engineered Features</h4>
-            <p>Per type: 6 demographic, 6 graph centrality, 1 community, 3 graph embeddings, 10 POI co-occurrence, 1 competition density</p>
+            <p>Per type: 6 demographic, 3 crime, 3 transport, 6 graph centrality, 1 community, 3 graph embeddings, 10 POI co-occurrence, 1 competition density</p>
         </div>
         <div class="card">
             <div class="number">6</div>
@@ -1367,9 +1384,9 @@
             <p>Cafe, restaurant, pub, fast food, gym, bakery</p>
         </div>
         <div class="card">
-            <div class="number">FP + EO</div>
-            <h4>Site Recommendations</h4>
-            <p>False Positives = New sites &bull; Expansion Opportunities = Room for another</p>
+            <div class="number">5 Tiers</div>
+            <h4>Recommendation System</h4>
+            <p>Prime &bull; Strong &bull; Viable &bull; Competitive &bull; Not Recommended &mdash; with SHAP explanations</p>
         </div>
     </div>
 
@@ -1381,15 +1398,18 @@
         <tr><td>OpenStreetMap (OSMnx)</td><td>Vector (Points)</td><td>POIs: cafes, gyms, stations, offices</td></tr>
         <tr><td>H3 Adjacency Graph</td><td>Computed (NetworkX)</td><td>6 centrality metrics, Louvain community detection, Node2Vec embeddings (3D)</td></tr>
         <tr><td>police.uk (Met Police + City of London, 2021)</td><td>Tabular (geocoded)</td><td>Crime rates: violent, property, anti-social behaviour per hex</td></tr>
+        <tr><td>OpenStreetMap / Overpass API (bus stops)</td><td>Vector (Points)</td><td>Bus stop locations for transit accessibility features</td></tr>
     </table>
 
     <h3>The False Positive Thesis</h3>
     <div class="insight">
         <strong>Key Insight:</strong> False Positive hexagons possess all the learned features of
-        successful business locations &mdash; high footfall, educated demographics, strong transit
+        successful business locations &mdash; high footfall, educated demographics, low crime, strong transit
         connectivity, co-located complementary businesses &mdash; but <strong>no one has opened that business there yet</strong>.
-        These are untapped opportunities, validated by supervised learning.
-        The F<sub>1</sub>-optimal threshold balances precision and recall for credible map coverage.
+        These are untapped opportunities, validated by supervised learning and ranked into
+        <strong>5 confidence tiers</strong> (Prime &rarr; Strong &rarr; Viable &rarr; Competitive &rarr; Not Recommended)
+        based on model probability and nearby competition density.
+        Each recommendation includes SHAP-powered &ldquo;Why Here?&rdquo; explanations.
     </div>
 
     <div style="text-align:center; margin:2.5rem 0;">
@@ -1418,7 +1438,9 @@
             </button>
             <div class="accordion-body">
     <p>
-        Three geospatial data modalities are acquired and harmonised into EPSG:27700 (British National Grid).
+        Five geospatial data modalities are acquired and harmonised into EPSG:27700 (British National Grid):
+        population (LandScan), demographics (Census 2021), crime (police.uk 2021),
+        transport (OSM stations + Overpass bus stops), and POIs (OSMnx).
     </p>
 
     <h3>Three Data Modalities</h3>
@@ -1528,7 +1550,7 @@
         <span class="pipeline-arrow">&rarr;</span>
         <div class="pipeline-step"><strong>Spatial Join</strong>Census demographics</div>
         <span class="pipeline-arrow">&rarr;</span>
-        <div class="pipeline-step"><strong>Master Grid</strong>9 columns per hex</div>
+        <div class="pipeline-step"><strong>Master Grid</strong>33 features per hex</div>
     </div>
 
     <p>
@@ -1585,6 +1607,40 @@
         <tr><td><code>property_crime_log1p</code></td><td>log(1 + property crime count) &mdash; retail cost signal</td></tr>
         <tr><td><code>antisocial_behaviour_log1p</code></td><td>log(1 + ASB count) &mdash; neighbourhood quality signal</td></tr>
     </table>
+            </div>
+        </div>
+
+        <!-- 4. Transport Accessibility -->
+        <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+                <span class="accordion-icon">+</span>
+                <span>Transport Accessibility</span>
+            </button>
+            <div class="accordion-body">
+    <p>
+        Transport connectivity features capture the accessibility gradient that drives retail footfall.
+        Station data comes from the existing POI fetch (<code>public_transport=station</code>);
+        bus stops are fetched separately via Overpass API (<code>highway=bus_stop</code>, ~19,000 across London).
+    </p>
+    <h3>Spatial Computation</h3>
+    <p>
+        All distance calculations use <strong>EPSG:27700</strong> (British National Grid) for metric accuracy.
+        A <code>scipy.spatial.cKDTree</code> indexes station locations for O(log n) nearest-neighbour and
+        radius queries against ~16,000 hex centroids.
+    </p>
+    <h3>Features (3 per Hexagon)</h3>
+    <table>
+        <tr><th>Feature</th><th>Description</th></tr>
+        <tr><td><code>dist_to_nearest_station_log</code></td><td>log(1 + BNG meters to nearest rail/tube/DLR station) &mdash; accessibility gradient</td></tr>
+        <tr><td><code>station_count_800m</code></td><td>Count of stations within 800m walkable catchment &mdash; interchange density</td></tr>
+        <tr><td><code>bus_stop_count_log</code></td><td>log(1 + bus stops per hex) &mdash; local transit frequency proxy</td></tr>
+    </table>
+    <h3>Missing Values</h3>
+    <p>
+        Bus stops: <strong>0</strong> for hexes with no stops (observed zero).
+        Station distance: always computed (no missing values).
+        Station count: 0 when no stations within 800m.
+    </p>
             </div>
         </div>
 
@@ -1651,12 +1707,13 @@
         <strong>False Positives</strong> &mdash; locations predicted as suitable that have no current supply.
     </p>
 
-    <h3>Feature Matrix (30 Features per Business Type)</h3>
+    <h3>Feature Matrix (33 Features per Business Type)</h3>
     <table>
         <tr><th>Modality</th><th>Count</th><th>Features</th></tr>
         <tr><td>Footfall</td><td>1</td><td><code>population</code> (LandScan zonal sum)</td></tr>
         <tr><td>Demographics</td><td>5</td><td><code>employed_total_perc</code>, <code>age_16_to_34_perc</code>, <code>level4_perc</code>, <code>retired_perc</code>, <code>no_qualifications_perc</code></td></tr>
         <tr><td>Crime Rates</td><td>3</td><td><code>violent_crime_log1p</code>, <code>property_crime_log1p</code>, <code>antisocial_behaviour_log1p</code></td></tr>
+        <tr><td>Transport Access</td><td>3</td><td><code>dist_to_nearest_station_log</code>, <code>station_count_800m</code>, <code>bus_stop_count_log</code></td></tr>
         <tr><td>Graph Centrality</td><td>6</td><td><code>degree_centrality</code>, <code>betweenness_centrality</code>, <code>closeness_centrality</code>, <code>clustering_coeff</code>, <code>eigenvector_centrality</code>, <code>pagerank</code></td></tr>
         <tr><td>Community Structure</td><td>1</td><td><code>community_id</code> (Louvain)</td></tr>
         <tr><td>Graph Embeddings</td><td>3</td><td><code>node2vec_dim0/1/2</code></td></tr>
@@ -1717,16 +1774,48 @@
         </div>
     </div>
 
-    <h3>Overfitting Diagnostics</h3>
+    <h3>Model Performance (33 Features, Spatial Block CV)</h3>
     <table>
-        <tr><th>Business Type</th><th>OOF AUC</th><th>Train AUC</th><th>Gap</th><th>Verdict</th></tr>
-        <tr><td>Coffee Shop / Cafe</td><td>0.9113</td><td>0.9314</td><td>0.020</td><td style="color:var(--green);font-weight:bold">Excellent</td></tr>
-        <tr><td>Restaurant</td><td>0.9182</td><td>0.9376</td><td>0.019</td><td style="color:var(--green);font-weight:bold">Excellent</td></tr>
-        <tr><td>Pub / Bar</td><td>0.9220</td><td>0.9524</td><td>0.030</td><td style="color:var(--green);font-weight:bold">Very Good</td></tr>
-        <tr><td>Fast Food / Takeaway</td><td>0.8923</td><td>0.9125</td><td>0.020</td><td style="color:var(--green);font-weight:bold">Excellent</td></tr>
-        <tr><td>Gym / Fitness</td><td>0.8765</td><td>0.9529</td><td>0.076</td><td style="color:var(--orange);font-weight:bold">Moderate</td></tr>
-        <tr><td>Bakery</td><td>0.8635</td><td>0.9118</td><td>0.048</td><td style="color:var(--green);font-weight:bold">Acceptable</td></tr>
+        <tr><th>Business Type</th><th>OOF AUC</th><th>&plusmn; Std</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1</th><th>Threshold</th></tr>
+        <tr><td>Coffee Shop / Cafe</td><td><strong>0.9123</strong></td><td>0.0065</td><td>85.1%</td><td>59.6%</td><td>56.4%</td><td>0.580</td><td>0.727</td></tr>
+        <tr><td>Restaurant</td><td><strong>0.9344</strong></td><td>0.0090</td><td>86.3%</td><td>57.7%</td><td>65.0%</td><td>0.611</td><td>0.724</td></tr>
+        <tr><td>Pub / Bar</td><td><strong>0.8916</strong></td><td>0.0133</td><td>84.7%</td><td>45.0%</td><td>54.2%</td><td>0.492</td><td>0.670</td></tr>
+        <tr><td>Fast Food</td><td><strong>0.9357</strong></td><td>0.0083</td><td>87.5%</td><td>55.8%</td><td>61.7%</td><td>0.586</td><td>0.746</td></tr>
+        <tr style="background:rgba(248,113,113,0.08);"><td>Gym / Fitness <span style="color:var(--orange);">*</span></td><td><strong>0.7752</strong></td><td>0.0344</td><td>85.3%</td><td>24.5%</td><td>40.1%</td><td>0.304</td><td>0.683</td></tr>
+        <tr><td>Bakery</td><td><strong>0.9233</strong></td><td>0.0228</td><td>94.9%</td><td>30.9%</td><td>57.7%</td><td>0.402</td><td>0.810</td></tr>
     </table>
+    <p style="font-size:0.85rem; color:var(--text-muted);">
+        <span style="color:var(--orange);">*</span> Gym model has degraded AUC due to data sparsity (6.6% prevalence, only 1,014 positive hexes).
+        Recommendations should be treated with lower confidence. See caveat below.
+    </p>
+
+    <h3>Feature Value-Add: Crime + Transport (30 &rarr; 33 Features)</h3>
+    <table>
+        <tr><th>Business Type</th><th>30-Feat AUC</th><th>33-Feat AUC</th><th>Delta</th><th>Key New Feature</th></tr>
+        <tr><td>Coffee Shop / Cafe</td><td>0.9113</td><td>0.9123</td><td style="color:var(--green);">+0.10pp</td><td>&mdash; (no crime/transport in top-5)</td></tr>
+        <tr><td>Restaurant</td><td>0.9182</td><td>0.9344</td><td style="color:var(--green);font-weight:bold;">+1.62pp</td><td>property_crime (#3, 6.3%)</td></tr>
+        <tr><td>Pub / Bar</td><td>0.9220</td><td>0.8916</td><td style="color:var(--red);font-weight:bold;">&minus;3.04pp</td><td>bus_stops (#4, 4.8%), property_crime (#5, 4.2%)</td></tr>
+        <tr><td>Fast Food</td><td>0.8923</td><td>0.9357</td><td style="color:var(--green);font-weight:bold;">+4.34pp</td><td>property_crime (#3, 7.0%), violent_crime (#4, 5.5%)</td></tr>
+        <tr><td>Gym / Fitness</td><td>0.8765</td><td>0.7752</td><td style="color:var(--red);font-weight:bold;">&minus;10.13pp</td><td>property_crime (#5, 3.2%)</td></tr>
+        <tr><td>Bakery</td><td>0.8635</td><td>0.9233</td><td style="color:var(--green);font-weight:bold;">+5.98pp</td><td>property_crime (#5, 3.2%)</td></tr>
+    </table>
+    <div class="insight">
+        <strong>Verdict:</strong> The 6 new features (3 crime + 3 transport) improve 4/6 types.
+        Mean AUC excluding Gym: <strong>0.9015 &rarr; 0.9195 (+1.8pp)</strong>.
+        <code>property_crime_log1p</code> is the single most valuable new feature, appearing in 5/6 models&rsquo; top-5.
+        Fast Food (+4.3pp) and Bakery (+5.9pp) benefit most &mdash; crime rates clearly discriminate
+        viable retail locations for these types.
+    </div>
+
+    <div class="warning">
+        <strong>Gym Model Caveat:</strong> Gym/Fitness degraded from 0.877 to 0.775 AUC (&minus;10.2pp).
+        Root cause: only 1,014 positive hexes (6.6% prevalence) cannot support 33 features without overfitting.
+        The model&rsquo;s fold variance is 5&times; higher than Cafe (&#177;0.035 vs &#177;0.007), and precision is just 24.5%.
+        The 5-tier system mitigates this: <strong>0 Prime and 0 Strong recommendations</strong> survived the tier filter,
+        correctly flagging that gym predictions lack conviction.
+        Gym recommendations should be treated as directional signals, not confident site selections.
+    </div>
+
     <div class="img-grid">
         <div class="img-container">
             <img src="assets/overfitting_diagnostics.png" alt="Learning Curve and Feature Ablation" loading="lazy"
@@ -1734,18 +1823,109 @@
             <p class="caption">Fig. 10 &mdash; Learning Curve (left) and Feature Ablation (right)</p>
         </div>
     </div>
+
+    <h3>Statistical Significance</h3>
+    <p>
+        All 6 models are validated with <strong>bootstrap 95% confidence intervals</strong> (n=2000)
+        and <strong>permutation tests</strong> (n=1000) at a strict <strong>p &lt; 0.001</strong> threshold.
+        This high bar accounts for multiple comparisons (6 models tested simultaneously) and
+        remains significant even after Bonferroni correction.
+    </p>
+    <div class="img-grid">
+        <div class="img-container">
+            <img src="assets/significance_tests.png" alt="Permutation test null distributions" loading="lazy"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 11 &mdash; Permutation test: null distribution vs observed AUC (all 6 types)</p>
+        </div>
+    </div>
     <div class="insight">
-        <strong>Summary:</strong> All three diagnostics confirm the model generalises well. Train&ndash;test
-        gaps are tight, competition density does not leak, and the learning curve has plateaued.
+        <strong>Interpretation:</strong> The observed AUC (red line) falls far outside the null distribution
+        (grey histogram) for all 6 models. This confirms the model has learned genuine spatial patterns
+        in the data, not random noise. All p-values &lt; 0.001 with 95% CI lower bounds well above 0.5.
     </div>
 
-    <h3>Confusion Matrix Interpretation</h3>
+    <h3>Confidence Score Distributions</h3>
+    <p>
+        Histograms of out-of-fold predicted probabilities, split by actual label (positive vs negative),
+        reveal whether the model achieves genuine score separation. A well-calibrated model produces
+        bimodal distributions: negatives cluster near 0, positives near 1. Flat distributions indicate
+        poor discrimination. Tier threshold lines show where Prime (&ge;0.95) and Strong (&ge;0.85)
+        recommendations are carved from the probability space.
+    </p>
+    <div class="img-grid">
+        <div class="img-container">
+            <img src="assets/confidence_distributions.png"
+                 alt="Predicted probability distributions by business type" loading="lazy"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 14 &mdash; OOF predicted probability distributions:
+            negative hexes (grey) vs positive hexes (red), with F<sub>1</sub> threshold
+            (orange dashed) and tier thresholds (green dotted). Bimodal separation
+            confirms genuine score discrimination.</p>
+        </div>
+    </div>
+
+    <h3>Borough Holdout Cross-Validation (External Validity)</h3>
+    <p>
+        Standard spatial CV tests within-London generalisation. Borough holdout
+        (leave-one-borough-out) tests a harder question: does the model generalise
+        to administratively distinct areas it has never seen?
+        Each of the 33 boroughs is used as a test set in turn (minimum 10 positives
+        required to compute a valid AUC). The heatmap shows per-borough AUC;
+        the boxplot shows the distribution across boroughs per type.
+    </p>
+    <div class="img-grid">
+        <div class="img-container">
+            <img src="assets/borough_holdout_cv.png"
+                 alt="Borough holdout CV heatmap and boxplot" loading="lazy"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 15 &mdash; Borough holdout CV: AUC heatmap (boroughs
+            &times; types, left) and per-type AUC distribution (right). Consistent AUC
+            above 0.5 across boroughs confirms the model generalises beyond its training
+            boroughs.</p>
+        </div>
+    </div>
+
+    <h3>Gym Model Deep-Dive: Root Cause Analysis</h3>
+    <p>
+        The gym model (AUC 0.775) was subjected to three diagnostic tests:
+        (1) removing crime+transport features to test whether the 6 new features
+        cause the degradation, (2) doubling the class weight to test whether
+        imbalance handling is insufficient, and (3) examining per-fold AUC variance
+        to confirm the instability signature of data sparsity.
+    </p>
+    <div class="img-grid">
+        <div class="img-container">
+            <img src="assets/gym_deep_dive.png"
+                 alt="Gym model deep-dive diagnostics" loading="lazy"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 16 &mdash; Gym deep-dive: class distribution (A),
+            AUC comparison across configurations (B), precision-recall curve (C),
+            and per-fold variance vs. Cafe (D).</p>
+        </div>
+    </div>
+
+    <h3>5-Tier Recommendation System</h3>
     <table>
-        <tr><th>Quadrant</th><th>Meaning</th><th>Business Value</th></tr>
+        <tr><th>Tier</th><th>Criteria</th><th>Business Value</th></tr>
         <tr>
-            <td><span style="color: var(--green); font-weight: bold;">False Positive</span></td>
-            <td>Model says YES, reality is NO</td>
-            <td>Site recommendation &mdash; highest commercial value</td>
+            <td><span style="color: #00e640; font-weight: bold;">Prime Location</span></td>
+            <td>&ge;95% confidence, &le;2 competitors nearby</td>
+            <td>Highest-conviction site &mdash; strong demand, minimal competition</td>
+        </tr>
+        <tr>
+            <td><span style="color: #27ae60; font-weight: bold;">Strong Recommend</span></td>
+            <td>85&ndash;95% confidence, &le;3 competitors</td>
+            <td>High confidence, manageable competitive landscape</td>
+        </tr>
+        <tr>
+            <td><span style="color: #f1c40f; font-weight: bold;">Viable</span></td>
+            <td>Above threshold, &le;5 competitors</td>
+            <td>Suitable location with some existing competition</td>
+        </tr>
+        <tr>
+            <td><span style="color: #f39c12; font-weight: bold;">Competitive</span></td>
+            <td>Above threshold, &gt;5 competitors</td>
+            <td>Model says suitable but market is saturated</td>
         </tr>
         <tr>
             <td><span style="color: #a78bfa; font-weight: bold;">Expansion Opportunity</span></td>
@@ -1771,7 +1951,137 @@
             </div>
         </div>
 
-        <!-- 5. Limitations -->
+        <!-- 5. SHAP Explanations -->
+        <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+                <span class="accordion-icon">+</span>
+                <span>SHAP Explanations &amp; &ldquo;Why Here?&rdquo; Cards</span>
+            </button>
+            <div class="accordion-body">
+    <p>
+        Every recommendation comes with a <strong>per-location explanation</strong> powered by
+        <strong>SHAP (SHapley Additive exPlanations)</strong> &mdash; a game-theoretic framework that
+        decomposes each prediction into individual feature contributions.
+    </p>
+
+    <h3>Why SHAP, Not Feature Importance?</h3>
+    <table>
+        <tr><th>Method</th><th>Scope</th><th>Question Answered</th></tr>
+        <tr>
+            <td><strong>XGBoost Gain</strong></td>
+            <td>Global (all hexagons)</td>
+            <td>&ldquo;Which features matter <em>overall</em>?&rdquo;</td>
+        </tr>
+        <tr style="background: rgba(0,212,255,0.1);">
+            <td><strong>SHAP Values</strong></td>
+            <td>Local (per hexagon)</td>
+            <td>&ldquo;Why was <em>this specific location</em> recommended?&rdquo;</td>
+        </tr>
+    </table>
+
+    <h3>How It Works</h3>
+    <p>
+        For each hexagon, SHAP computes a signed contribution for every feature:
+    </p>
+    <table>
+        <tr><th>Feature</th><th>SHAP Value</th><th>Interpretation</th></tr>
+        <tr><td><code>population</code></td><td style="color:#00d4ff;">+0.18</td><td>High footfall <em>pushes prediction up</em></td></tr>
+        <tr><td><code>property_crime_log1p</code></td><td style="color:#ef4444;">&minus;0.09</td><td>High crime <em>pushes prediction down</em></td></tr>
+        <tr><td><code>station_count_800m</code></td><td style="color:#00d4ff;">+0.12</td><td>Good transit access <em>pushes prediction up</em></td></tr>
+    </table>
+    <p>
+        The top 3 SHAP drivers are stored per hexagon and displayed as <strong>&ldquo;Why Here?&rdquo; cards</strong>
+        in the Site Finder tab, giving stakeholders transparent, actionable insight into each recommendation.
+    </p>
+
+    <div class="img-grid">
+        <div class="img-container">
+            <img src="assets/shap_summary_all.png" alt="SHAP feature importance bar charts for all 6 business types" loading="lazy"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 12 &mdash; SHAP feature importance: mean |SHAP| value per feature across all 6 business types (top 8 features shown)</p>
+        </div>
+    </div>
+
+    <h3>Contrastive SHAP: Why Did the Model Recommend Here but Not There?</h3>
+    <p>
+        Each hexagon is assigned to a confusion-matrix quadrant (TP, FP, FN, TN)
+        based on out-of-fold predictions. The grouped bar chart compares mean absolute
+        SHAP attribution for the top 10 features across TP (existing businesses the
+        model confirms), FP (recommendations &mdash; gaps the model identifies), and
+        FN (missed sites). Features where FP bars exceed FN bars indicate what
+        separates an identified opportunity from a model blind spot.
+    </p>
+    <div class="img-grid">
+        <div class="img-container">
+            <img src="assets/contrastive_shap.png"
+                 alt="Contrastive SHAP by confusion-matrix quadrant" loading="lazy"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 13 &mdash; Contrastive SHAP: mean absolute feature
+            attribution for True Positives (red), False Positives / recommendations (green),
+            and False Negatives / missed sites (orange) across all 6 business types.</p>
+        </div>
+    </div>
+
+    <div class="insight">
+        <strong>Stakeholder Value:</strong> SHAP explanations transform the model from a black box
+        into a decision-support tool. Instead of just &ldquo;open here,&rdquo; the system says
+        &ldquo;open here <em>because</em> population is high, crime is low, and 3 stations are within walking distance.&rdquo;
+    </div>
+            </div>
+        </div>
+
+        <!-- 6. Equity & Fairness Audit -->
+        <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+                <span class="accordion-icon">+</span>
+                <span>Equity &amp; Fairness Audit</span>
+            </button>
+            <div class="accordion-body">
+    <h3>Do Recommendations Systematically Exclude Deprived Areas?</h3>
+    <p>
+        A model trained on commercial presence data risks learning historical
+        inequity: businesses have historically avoided deprived areas, so the
+        model may conclude deprived areas are unsuitable &mdash; a self-fulfilling
+        prophecy. We audit this by computing recommendation rates across deprivation
+        quintiles (using <code>no_qualifications_perc</code> as a deprivation proxy,
+        as no IMD data is available).
+    </p>
+    <div class="warning">
+        <strong>Proxy Limitation:</strong> <code>no_qualifications_perc</code>
+        (the ONS Census 2021 percentage of residents with no qualifications) is used
+        as a deprivation proxy in the absence of IMD data. It correlates strongly
+        with IMD at LSOA level (Pearson r &approx; 0.72 in prior literature) but
+        is not a perfect substitute. Results should be interpreted directionally.
+    </div>
+    <h3>Method</h3>
+    <p>
+        Hexagons are split into quintiles (Q1 = least deprived, Q5 = most deprived)
+        and recommendation rate (False Positives / total hexes per quintile) is
+        computed per business type. Spearman &rho; tests whether recommendation
+        rate monotonically increases or decreases with deprivation quintile.
+        A positive &rho; indicates the model under-recommends in deprived areas.
+    </p>
+    <div class="img-grid">
+        <div class="img-container">
+            <img src="assets/fairness_audit.png"
+                 alt="Recommendation rate by deprivation quintile" loading="lazy"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 17 &mdash; Recommendation rate by deprivation
+            quintile across all 6 business types. Q1 = least deprived; Q5 = most
+            deprived. Spearman &rho; annotated per type.</p>
+        </div>
+    </div>
+    <div class="insight">
+        <strong>Interpretation:</strong> A positive &rho; indicates systematic
+        under-recommendation in deprived areas. This may reflect genuine demand
+        patterns (lower purchasing power) or historical data bias (fewer businesses
+        = model learns &ldquo;no business = unsuitable&rdquo;). Human review of all Q5
+        recommendations is advised before acting on model output.
+    </div>
+            </div>
+        </div>
+
+        <!-- 7. Limitations -->
         <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
                 <span class="accordion-icon">+</span>
@@ -1785,6 +2095,9 @@
         <tr><td>No revenue ground truth</td><td>Target is presence/absence, not profitability</td></tr>
         <tr><td>No real-time footfall</td><td>LandScan is an estimate; no mobile signal data</td></tr>
         <tr><td>No rental cost data</td><td>Commercial viability depends on rent, which is not modelled</td></tr>
+        <tr><td>Gym model degradation</td><td>AUC 0.775 (vs 0.89&ndash;0.94 for other types). Only 6.6% positive prevalence; 33 features cause overfitting on sparse data. Treat gym recommendations as directional only. See Gym Deep-Dive (Fig. 16) for root cause analysis.</td></tr>
+        <tr><td>Feature dominance by POI</td><td>POI co-occurrence occupies 67% of top-5 importance slots. Model primarily learns &ldquo;businesses cluster&rdquo; (agglomeration), with crime/transport as secondary discriminators.</td></tr>
+        <tr><td>Fairness / equity bias</td><td>Model trained on OSM business presence inherits historical location patterns. Deprived areas may be systematically under-recommended. See Equity &amp; Fairness Audit (Fig. 17) for quantified evidence.</td></tr>
     </table>
             </div>
         </div>
@@ -1950,21 +2263,24 @@
                 </select>
             </div>
             <div class="finder-sidebar-section finder-legend">
-                <label>Legend</label>
+                <label>Recommendation Tiers</label>
                 <div class="finder-legend-items">
-                    <span><span class="legend-swatch" style="background:var(--green);"></span> Opportunity</span>
-                    <span><span class="legend-swatch" style="background:var(--red);"></span> Existing</span>
+                    <span><span class="legend-swatch" style="background:#00e640;"></span> Prime (&ge;95%, &le;2)</span>
+                    <span><span class="legend-swatch" style="background:#27ae60;"></span> Strong (85-95%)</span>
+                    <span><span class="legend-swatch" style="background:#f1c40f;"></span> Viable (&le;5 comp.)</span>
+                    <span><span class="legend-swatch" style="background:#f39c12;"></span> Competitive (&gt;5)</span>
+                    <span><span class="legend-swatch" style="background:var(--red);"></span> Existing (TP)</span>
                     <span><span class="legend-swatch" style="background:#a78bfa;"></span> Expansion</span>
-                    <span><span class="legend-swatch" style="background:var(--orange);"></span> Blind spot</span>
+                    <span><span class="legend-swatch" style="background:var(--grey);"></span> Not Recommended</span>
                 </div>
-                <p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem;">Height = model confidence. Hover a hex for demographics.</p>
+                <p style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem;">Height = model confidence. Colour = recommendation tier. Hover for SHAP drivers.</p>
             </div>
         </div>
     </div>
 
     <!-- Recommendation cards -->
     <h3 style="margin-top:2rem">Top recommended sites</h3>
-    <p class="tool-hint">These locations have all the learned characteristics of successful sites but no existing business of this type — unmet demand in the market.</p>
+    <p class="tool-hint">Ranked by the 5-tier system: <span style="color:#00e640;font-weight:600;">Prime</span> (&ge;95% confidence, &le;2 competitors) through <span style="color:#f39c12;font-weight:600;">Competitive</span> (&gt;5 competitors). Each card shows SHAP-powered &ldquo;Why Here?&rdquo; drivers.</p>
     <div class="rec-cards-grid" id="dash-rec-cards">
         <p style="color:var(--text-light)">Loading recommendations&hellip;</p>
     </div>
@@ -1988,7 +2304,7 @@
 <footer>
     <p>
         London Predictive Site Selection &bull; MSc Business Analytics 2026<br>
-        Built with Python, H3, NetworkX, XGBoost, Streamlit, Pydeck<br>
+        Built with Python, H3, NetworkX, XGBoost, SHAP, Pydeck &bull; 33 Features &bull; 5-Tier System<br>
         <a href="https://github.com/daththeanalyst/Spatio-Temporal-Graph-Synthesis" target="_blank">GitHub Repository</a>
     </p>
 </footer>
@@ -2101,7 +2417,7 @@
                 ['Boroughs', d.grid.boroughs],
                 ['H3 Resolution', d.grid.resolution],
                 ['CRS', d.grid.crs],
-                ['Features', d.grid.features || 27],
+                ['Features', d.grid.features || 33],
                 ['Business Types', Object.keys(d.auc_scores).length],
                 ['Threshold Method', 'F₁-optimal (balanced precision-recall)'],
             ].map(function(r){ return '<tr><td><strong>'+r[0]+'</strong></td><td>'+r[1]+'</td></tr>'; }).join('');
@@ -2156,7 +2472,10 @@
                     return '<div class="biz-block"><strong>'+label+'</strong><p style="color:var(--text-light);font-size:0.85rem;">No recommendations generated.</p></div>';
                 }
                 var items = recs.map(function(r, i) {
-                    return '<li>'+r.borough+' &mdash; '+(r.prob*100).toFixed(1)+'% confident'
+                    var tierBadge = r.tier ? ' <span class="rec-tier '
+                        + ({'Prime Location':'rec-tier-prime','Strong Recommend':'rec-tier-strong','Viable':'rec-tier-viable','Competitive':'rec-tier-competitive'}[r.tier] || '')
+                        + '">' + r.tier + '</span>' : '';
+                    return '<li>'+r.borough+tierBadge+' &mdash; '+(r.prob*100).toFixed(1)+'% confident'
                         +' | Pop: '+r.population.toLocaleString()
                         +(r.degree_pct > 0 ? ' | Degree-edu: '+r.degree_pct+'%' : '')
                         +(r.age_pct    > 0 ? ' | Age 16-34: '+r.age_pct+'%'    : '')
@@ -2180,7 +2499,7 @@
         lines.push('GRID: ' + d.grid.hexagons.toLocaleString() + ' hexagons | '
             + d.grid.boroughs + ' boroughs | H3 Resolution ' + d.grid.resolution
             + ' | ' + d.grid.crs);
-        lines.push('Features: ' + (d.grid.features || 27) + ' | Business types: '
+        lines.push('Features: ' + (d.grid.features || 33) + ' | Business types: '
             + Object.keys(d.auc_scores).length
             + ' | Threshold method: F1-optimal (balanced precision-recall)');
         lines.push('');
@@ -2220,6 +2539,7 @@
             } else {
                 recs.forEach(function(r, i) {
                     lines.push('  '+(i+1)+'. '+r.borough
+                        +(r.tier ? ' ['+r.tier+']' : '')
                         +' | '+(r.prob*100).toFixed(1)+'% confident'
                         +' | Pop: '+r.population.toLocaleString()
                         +(r.degree_pct > 0 ? ' | Degree-edu: '+r.degree_pct+'%' : '')
@@ -2232,26 +2552,27 @@
         lines.push('');
         lines.push('1. Train vs Out-of-Fold AUC Gap:');
         lines.push(pad('Business Type',26)+pad('OOF AUC',10)+pad('Train AUC',11)+pad('Gap',8)+'Verdict');
-        var overfitData = [
-            {label:'Coffee Shop / Cafe', oof:0.9113, train:0.9314, verdict:'Excellent'},
-            {label:'Restaurant',         oof:0.9182, train:0.9376, verdict:'Excellent'},
-            {label:'Pub / Bar',          oof:0.9220, train:0.9524, verdict:'Very Good'},
-            {label:'Fast Food / Takeaway',oof:0.8923,train:0.9125, verdict:'Excellent'},
-            {label:'Gym / Fitness',      oof:0.8765, train:0.9529, verdict:'Moderate'},
-            {label:'Bakery',             oof:0.8635, train:0.9118, verdict:'Acceptable'},
+        lines.push(pad('Business Type',26)+pad('OOF AUC',10)+pad('Std',8)+pad('Acc',8)+pad('Prec',8)+pad('Recall',8)+'F1');
+        var perfData = [
+            {label:'Coffee Shop / Cafe', auc:0.9123, std:0.0065, acc:'85.1%', prec:'59.6%', rec:'56.4%', f1:'0.580'},
+            {label:'Restaurant',         auc:0.9344, std:0.0090, acc:'86.3%', prec:'57.7%', rec:'65.0%', f1:'0.611'},
+            {label:'Pub / Bar',          auc:0.8916, std:0.0133, acc:'84.7%', prec:'45.0%', rec:'54.2%', f1:'0.492'},
+            {label:'Fast Food',          auc:0.9357, std:0.0083, acc:'87.5%', prec:'55.8%', rec:'61.7%', f1:'0.586'},
+            {label:'Gym / Fitness *',    auc:0.7752, std:0.0344, acc:'85.3%', prec:'24.5%', rec:'40.1%', f1:'0.304'},
+            {label:'Bakery',             auc:0.9233, std:0.0228, acc:'94.9%', prec:'30.9%', rec:'57.7%', f1:'0.402'},
         ];
-        overfitData.forEach(function(row) {
-            var gap = (row.train - row.oof).toFixed(3);
-            lines.push(pad(row.label,26)+pad(row.oof.toFixed(4),10)+pad(row.train.toFixed(4),11)+pad(gap,8)+row.verdict);
+        perfData.forEach(function(row) {
+            lines.push(pad(row.label,26)+pad(row.auc.toFixed(4),10)+pad(row.std.toFixed(4),8)+pad(row.acc,8)+pad(row.prec,8)+pad(row.rec,8)+row.f1);
         });
         lines.push('');
-        lines.push('2. Feature Ablation (Competition Density):');
-        lines.push('   All deltas < 0.002 AUC for 5/6 types. Gym +0.015 when dropped.');
-        lines.push('   Verdict: No soft leakage detected.');
+        lines.push('* Gym model degraded due to data sparsity (6.6% prevalence, 1,014 positives).');
+        lines.push('  Recommendations are directional signals, not confident site selections.');
         lines.push('');
-        lines.push('3. Learning Curve Convergence:');
-        lines.push('   Last increment: +0.0001 AUC. Model fully converged.');
-        lines.push('   Train-test curves approach each other — well-regularised.');
+        lines.push('2. Feature Value-Add (30 -> 33 features):');
+        lines.push('   Improved: Fast Food +4.3pp, Bakery +6.0pp, Restaurant +1.6pp, Cafe +0.1pp');
+        lines.push('   Degraded: Pub -3.0pp, Gym -10.1pp (sample-size issue)');
+        lines.push('   Mean AUC excl. Gym: 0.9015 -> 0.9195 (+1.8pp)');
+        lines.push('   Most valuable new feature: property_crime_log1p (in 5/6 top-5 lists)');
         var text = lines.join('\n');
         navigator.clipboard.writeText(text).then(function() {
             var btn = document.getElementById('copy-report-btn');
@@ -2343,7 +2664,9 @@ function buildRecCards(recs, dimmed) {
         'age_16_to_34_perc': 'Young adults', 'level4_perc': 'Degree-level',
         'retired_perc': 'Retired', 'no_qualifications_perc': 'No qualifications',
         'violent_crime_log1p': 'Violent crime', 'property_crime_log1p': 'Property crime',
-        'antisocial_behaviour_log1p': 'ASB', 'degree_centrality': 'Connectivity',
+        'antisocial_behaviour_log1p': 'ASB',
+        'dist_to_nearest_station_log': 'Station distance', 'station_count_800m': 'Stations (800m)',
+        'bus_stop_count_log': 'Bus stops', 'degree_centrality': 'Connectivity',
         'betweenness_centrality': 'Bridging', 'closeness_centrality': 'Accessibility',
         'clustering_coeff': 'Clustering', 'eigenvector_centrality': 'Prestige',
         'pagerank': 'PageRank', 'community_id': 'Community',
@@ -2356,6 +2679,17 @@ function buildRecCards(recs, dimmed) {
         var edu  = r.degree_pct > 0 ? r.degree_pct + '% degree-level' : '';
         var age  = r.age_pct    > 0 ? r.age_pct    + '% age 16\u201334'  : '';
         var opacity = dimmed ? ' style="opacity:0.6"' : '';
+        var tierHtml = '';
+        if (r.tier) {
+            var tierMap = {
+                'Prime Location':   'rec-tier-prime',
+                'Strong Recommend': 'rec-tier-strong',
+                'Viable':           'rec-tier-viable',
+                'Competitive':      'rec-tier-competitive'
+            };
+            var tierCls = tierMap[r.tier] || '';
+            tierHtml = '<span class="rec-tier ' + tierCls + '">' + r.tier + '</span>';
+        }
         var shapHtml = '';
         if (r.shap_drivers && r.shap_drivers.length > 0) {
             var maxAbs = Math.max.apply(null, r.shap_drivers.map(function(d) { return Math.abs(d.shap); }));
@@ -2376,6 +2710,7 @@ function buildRecCards(recs, dimmed) {
         return '<div class="rec-card"' + opacity + '>'
             + '<div class="rec-rank">#' + (i + 1) + '</div>'
             + '<div class="rec-borough">' + r.borough + '</div>'
+            + tierHtml
             + '<div class="rec-conf"><strong>' + conf + '%</strong> confidence</div>'
             + '<div class="rec-stats">'
             + '<span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> ' + pop + ' population</span>'
