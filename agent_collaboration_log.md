@@ -1270,3 +1270,9 @@ Updated `docs/index.html` to reflect accurate 33-feature model results and added
 **What changed**: Moved borough filter JS injection point in Cell 63. Previously injected before `</body>` in a separate `<script>` block that ran BEFORE pydeck's script (which defines `jsonInput`, `tooltip`, `createDeck`). `const` variables across separate `<script>` blocks caused scope/timing issues. Now: HTML overlays (legend + dropdown) injected before `</body>`, filter JS injected after pydeck's `</script>` before `</html>`. Eliminated the polling loop entirely — all pydeck variables are already defined when our script runs. Also shows error messages in the UI if `createDeck` fails.
 **Why**: User confirmed borough filter still didn't work after entries #111 and #112. Root cause: cross-script-block `const` variable access was unreliable. Placing the filter JS after pydeck's script guarantees all dependencies are available.
 **AI vs Human**: AI diagnosed the script injection ordering issue. User reported continued failure.
+
+### Entry #114
+**Date**: 2026-03-07
+**What changed**: Removed borough filter feature from Cell 63 entirely — dropdown, LONDON_BOROUGHS list, borough_centers_js, CONTROLS_HTML, FILTER_JS, lat/lng centroid columns. Maps now inject only the legend overlay. Print message updated accordingly.
+**Why**: Borough filter was unreliable across multiple fix attempts (#107, #111, #112, #113) due to pydeck's internal deck.gl scope not exposing layer constructors or supporting cross-script-block const access. User requested removal.
+**AI vs Human**: User decision to remove. AI executed the cleanup.
