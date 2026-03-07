@@ -1777,12 +1777,12 @@
     <h3>Model Performance (33 Features, Spatial Block CV)</h3>
     <table>
         <tr><th>Business Type</th><th>OOF AUC</th><th>&plusmn; Std</th><th>Accuracy</th><th>Precision</th><th>Recall</th><th>F1</th><th>Threshold</th></tr>
-        <tr><td>Coffee Shop / Cafe</td><td><strong>0.9123</strong></td><td>0.0065</td><td>85.1%</td><td>59.6%</td><td>56.4%</td><td>0.580</td><td>0.727</td></tr>
-        <tr><td>Restaurant</td><td><strong>0.9344</strong></td><td>0.0090</td><td>86.3%</td><td>57.7%</td><td>65.0%</td><td>0.611</td><td>0.724</td></tr>
-        <tr><td>Pub / Bar</td><td><strong>0.8916</strong></td><td>0.0133</td><td>84.7%</td><td>45.0%</td><td>54.2%</td><td>0.492</td><td>0.670</td></tr>
-        <tr><td>Fast Food</td><td><strong>0.9357</strong></td><td>0.0083</td><td>87.5%</td><td>55.8%</td><td>61.7%</td><td>0.586</td><td>0.746</td></tr>
-        <tr style="background:rgba(248,113,113,0.08);"><td>Gym / Fitness <span style="color:var(--orange);">*</span></td><td><strong>0.7752</strong></td><td>0.0344</td><td>85.3%</td><td>24.5%</td><td>40.1%</td><td>0.304</td><td>0.683</td></tr>
-        <tr><td>Bakery</td><td><strong>0.9233</strong></td><td>0.0228</td><td>94.9%</td><td>30.9%</td><td>57.7%</td><td>0.402</td><td>0.810</td></tr>
+        <tr><td>Coffee Shop / Cafe</td><td><strong>0.9123</strong></td><td>0.0065</td><td>85.1%</td><td>59.6%</td><td>56.4%</td><td>0.580</td><td>0.728</td></tr>
+        <tr><td>Restaurant</td><td><strong>0.9344</strong></td><td>0.0090</td><td>86.3%</td><td>57.7%</td><td>65.0%</td><td>0.611</td><td>0.741</td></tr>
+        <tr><td>Pub / Bar</td><td><strong>0.8916</strong></td><td>0.0133</td><td>84.7%</td><td>45.0%</td><td>54.2%</td><td>0.492</td><td>0.722</td></tr>
+        <tr><td>Fast Food</td><td><strong>0.9357</strong></td><td>0.0083</td><td>87.5%</td><td>55.8%</td><td>61.7%</td><td>0.586</td><td>0.788</td></tr>
+        <tr style="background:rgba(248,113,113,0.08);"><td>Gym / Fitness <span style="color:var(--orange);">*</span></td><td><strong>0.7752</strong></td><td>0.0344</td><td>85.3%</td><td>24.5%</td><td>40.1%</td><td>0.304</td><td>0.723</td></tr>
+        <tr><td>Bakery</td><td><strong>0.9233</strong></td><td>0.0228</td><td>94.9%</td><td>30.9%</td><td>57.7%</td><td>0.402</td><td>0.822</td></tr>
     </table>
     <p style="font-size:0.85rem; color:var(--text-muted);">
         <span style="color:var(--orange);">*</span> Gym model has degraded AUC due to data sparsity (6.6% prevalence, only 1,014 positive hexes).
@@ -1793,11 +1793,11 @@
     <table>
         <tr><th>Business Type</th><th>30-Feat AUC</th><th>33-Feat AUC</th><th>Delta</th><th>Key New Feature</th></tr>
         <tr><td>Coffee Shop / Cafe</td><td>0.9113</td><td>0.9123</td><td style="color:var(--green);">+0.10pp</td><td>&mdash; (no crime/transport in top-5)</td></tr>
-        <tr><td>Restaurant</td><td>0.9182</td><td>0.9344</td><td style="color:var(--green);font-weight:bold;">+1.62pp</td><td>property_crime (#3, 6.3%)</td></tr>
-        <tr><td>Pub / Bar</td><td>0.9220</td><td>0.8916</td><td style="color:var(--red);font-weight:bold;">&minus;3.04pp</td><td>bus_stops (#4, 4.8%), property_crime (#5, 4.2%)</td></tr>
-        <tr><td>Fast Food</td><td>0.8923</td><td>0.9357</td><td style="color:var(--green);font-weight:bold;">+4.34pp</td><td>property_crime (#3, 7.0%), violent_crime (#4, 5.5%)</td></tr>
-        <tr><td>Gym / Fitness</td><td>0.8765</td><td>0.7752</td><td style="color:var(--red);font-weight:bold;">&minus;10.13pp</td><td>property_crime (#5, 3.2%)</td></tr>
-        <tr><td>Bakery</td><td>0.8635</td><td>0.9233</td><td style="color:var(--green);font-weight:bold;">+5.98pp</td><td>property_crime (#5, 3.2%)</td></tr>
+        <tr><td>Restaurant</td><td>0.9182</td><td>0.9344</td><td style="color:var(--green);font-weight:bold;">+1.62pp</td><td>property_crime (#4, 6.0%)</td></tr>
+        <tr><td>Pub / Bar</td><td>0.9220</td><td>0.8916</td><td style="color:var(--red);font-weight:bold;">&minus;3.04pp</td><td>property_crime (#4, 4.5%), bus_stops (#5, 4.4%)</td></tr>
+        <tr><td>Fast Food</td><td>0.8923</td><td>0.9357</td><td style="color:var(--green);font-weight:bold;">+4.34pp</td><td>property_crime (#3, 7.5%), violent_crime (#4, 5.1%), bus_stops (#5, 4.5%)</td></tr>
+        <tr><td>Gym / Fitness</td><td>0.8765</td><td>0.7752</td><td style="color:var(--red);font-weight:bold;">&minus;10.13pp</td><td>property_crime (#5, 3.5%)</td></tr>
+        <tr><td>Bakery</td><td>0.8635</td><td>0.9233</td><td style="color:var(--green);font-weight:bold;">+5.98pp</td><td>property_crime (#5, 4.0%)</td></tr>
     </table>
     <div class="insight">
         <strong>Verdict:</strong> The 6 new features (3 crime + 3 transport) improve 4/6 types.
@@ -2059,7 +2059,7 @@
         and recommendation rate (False Positives / total hexes per quintile) is
         computed per business type. Spearman &rho; tests whether recommendation
         rate monotonically increases or decreases with deprivation quintile.
-        A positive &rho; indicates the model under-recommends in deprived areas.
+        A positive &rho; indicates the model over-recommends in deprived areas.
     </p>
     <div class="img-grid">
         <div class="img-container">
@@ -2073,15 +2073,158 @@
     </div>
     <div class="insight">
         <strong>Interpretation:</strong> A positive &rho; indicates systematic
-        under-recommendation in deprived areas. This may reflect genuine demand
-        patterns (lower purchasing power) or historical data bias (fewer businesses
-        = model learns &ldquo;no business = unsuitable&rdquo;). Human review of all Q5
-        recommendations is advised before acting on model output.
+        over-recommendation in deprived areas; a negative &rho; indicates
+        under-recommendation. Either direction warrants scrutiny: over-recommendation
+        may reflect genuine unmet demand or model miscalibration; under-recommendation
+        may encode historical inequity. Human review of Q5 recommendations is advised
+        before acting on model output.
     </div>
             </div>
         </div>
 
-        <!-- 7. Limitations -->
+        <!-- 7. Advanced Diagnostics -->
+        <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+                <span class="accordion-icon">+</span>
+                <span>Advanced Diagnostics</span>
+            </button>
+            <div class="accordion-body">
+
+    <h3>Partial Dependence Plots (Cafe Model)</h3>
+    <p>
+        Partial Dependence Plots (PDPs) show the marginal effect of each feature
+        on the predicted probability, holding all other features constant. Unlike
+        SHAP (which explains individual predictions), PDPs reveal the <strong>global
+        shape</strong> of each feature&rsquo;s relationship: is it linear, threshold-based,
+        or saturating? The top 6 features of the Cafe model are plotted below.
+    </p>
+    <div class="img-grid">
+        <div class="img-container">
+            <img src="assets/partial_dependence.png"
+                 alt="Partial Dependence Plots for Cafe model" loading="lazy"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 18 &mdash; Partial Dependence Plots: top 6 features
+            of the Cafe model, showing marginal effect on predicted probability.
+            Rug plots indicate feature value density.</p>
+        </div>
+    </div>
+
+    <h3>Spatial Autocorrelation of Residuals (Moran&rsquo;s I)</h3>
+    <p>
+        If model residuals cluster spatially, the model is missing a spatially
+        structured signal &mdash; a violation of the independence assumption that
+        inflates confidence intervals. <strong>Moran&rsquo;s I</strong> quantifies
+        spatial autocorrelation using H3 k-ring adjacency as the spatial weight
+        matrix. Values near 0 indicate spatial randomness; positive values
+        indicate clustering; negative values indicate dispersion.
+    </p>
+    <div class="img-grid">
+        <div class="img-container">
+            <img src="assets/morans_i.png"
+                 alt="Moran's I spatial autocorrelation of residuals" loading="lazy"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 19 &mdash; Moran&rsquo;s I for model residuals:
+            observed I (red line) vs permutation null distribution (grey histogram).
+            Low I values confirm spatial CV effectively decorrelates residuals.</p>
+        </div>
+    </div>
+    <div class="insight">
+        <strong>Why this matters:</strong> Standard cross-validation on spatial data
+        can be optimistically biased because nearby hexagons leak information.
+        Borough-block spatial CV mitigates this, and Moran&rsquo;s I on the residuals
+        validates that the mitigation worked &mdash; residuals should show no
+        significant spatial clustering if the folds are properly structured.
+    </div>
+
+    <h3>Feature Group Ablation Study</h3>
+    <p>
+        To quantify each feature category&rsquo;s contribution, we perform a
+        <strong>leave-one-group-out ablation</strong>: remove all features from one
+        category (POI, Demographics, Crime, Transport, or Graph centrality),
+        retrain the model, and measure AUC drop. Larger drops indicate higher
+        dependency on that feature group.
+    </p>
+    <div class="img-grid">
+        <div class="img-container">
+            <img src="assets/feature_ablation.png"
+                 alt="Feature group ablation heatmap" loading="lazy"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 20 &mdash; Feature group ablation: AUC change when
+            each feature group is removed. Negative values (red) indicate the model
+            depends on that group; positive values (blue) indicate the features were
+            adding noise.</p>
+        </div>
+    </div>
+
+    <h3>Methodology Flowchart</h3>
+    <p>
+        End-to-end pipeline from raw data sources through H3 spatial indexing,
+        feature engineering, spatial cross-validation, XGBoost classification,
+        evaluation, and final recommendation output.
+    </p>
+    <div class="img-grid">
+        <div class="img-container">
+            <img src="assets/methodology_flowchart.png"
+                 alt="End-to-end methodology flowchart" loading="lazy"
+                 onerror="this.parentElement.innerHTML='<p style=&quot;color:var(--text-muted);padding:2rem;&quot;>Run the notebook to auto-generate this figure.</p>'">
+            <p class="caption">Fig. 21 &mdash; Pipeline architecture: data ingestion
+            &rarr; H3 indexing &rarr; feature engineering &rarr; spatial CV &rarr;
+            XGBoost &rarr; evaluation &rarr; tiered recommendations &rarr; interactive maps.</p>
+        </div>
+    </div>
+
+            </div>
+        </div>
+
+        <!-- 8. Critical Discussion -->
+        <div class="accordion-item">
+            <button class="accordion-header" aria-expanded="false">
+                <span class="accordion-icon">+</span>
+                <span>Critical Discussion &amp; Theoretical Grounding</span>
+            </button>
+            <div class="accordion-body">
+    <h3>Why Does Crime Predict Retail Viability?</h3>
+    <p>
+        At first glance, <code>property_crime_log1p</code> appearing in 5/6 models&rsquo;
+        top-5 features seems counterintuitive. The explanation lies in <strong>routine
+        activity theory</strong> (Cohen &amp; Felson, 1979): crime requires convergence
+        of motivated offenders, suitable targets, and absent guardians. High-footfall
+        commercial areas provide all three &mdash; more people, more targets, more
+        opportunity. Crime is therefore a <strong>proxy for footfall intensity</strong>,
+        not a causal driver of business viability.
+    </p>
+    <h3>Agglomeration Economics</h3>
+    <p>
+        POI co-occurrence dominates the feature importance rankings (e.g., <code>n_restaurant</code>
+        at 38&ndash;42% for Cafe/Fast Food). This reflects <strong>Hotelling&rsquo;s
+        principle of minimum differentiation</strong> (1929): businesses cluster because
+        proximity to competitors signals high demand density. The model captures this
+        agglomeration effect, validating that retail location selection is fundamentally
+        a clustering problem.
+    </p>
+    <h3>Fairness Implications of Training on Presence</h3>
+    <p>
+        A core limitation: the model is trained on <strong>existing business locations</strong>
+        as positive labels. Areas that lack businesses (due to historical disinvestment,
+        planning restrictions, or demographic change) are labelled as negatives. The model
+        may therefore encode a self-fulfilling prophecy: &ldquo;no businesses here &rarr;
+        unsuitable location&rdquo; even when genuine demand exists. The Fairness Audit
+        (Fig. 17) quantifies this risk. Practitioners should supplement model recommendations
+        with local market research in under-served areas.
+    </p>
+    <h3>Spatial CV Effectiveness</h3>
+    <p>
+        Borough-block spatial cross-validation prevents geographic data leakage by ensuring
+        that no hexagons from the same borough appear in both train and test sets. The
+        Moran&rsquo;s I analysis (Fig. 19) validates this design: if residuals show no significant
+        spatial clustering, the spatial CV folds are structured correctly and AUC estimates
+        are unbiased. Borough holdout CV (Fig. 15) provides an even stronger test of
+        external validity by holding out entire boroughs.
+    </p>
+            </div>
+        </div>
+
+        <!-- 9. Limitations -->
         <div class="accordion-item">
             <button class="accordion-header" aria-expanded="false">
                 <span class="accordion-icon">+</span>
@@ -2097,7 +2240,7 @@
         <tr><td>No rental cost data</td><td>Commercial viability depends on rent, which is not modelled</td></tr>
         <tr><td>Gym model degradation</td><td>AUC 0.775 (vs 0.89&ndash;0.94 for other types). Only 6.6% positive prevalence; 33 features cause overfitting on sparse data. Treat gym recommendations as directional only. See Gym Deep-Dive (Fig. 16) for root cause analysis.</td></tr>
         <tr><td>Feature dominance by POI</td><td>POI co-occurrence occupies 67% of top-5 importance slots. Model primarily learns &ldquo;businesses cluster&rdquo; (agglomeration), with crime/transport as secondary discriminators.</td></tr>
-        <tr><td>Fairness / equity bias</td><td>Model trained on OSM business presence inherits historical location patterns. Deprived areas may be systematically under-recommended. See Equity &amp; Fairness Audit (Fig. 17) for quantified evidence.</td></tr>
+        <tr><td>Fairness / equity bias</td><td>Model trained on OSM business presence inherits historical location patterns. Deprived areas may be systematically over- or under-recommended depending on type. See Equity &amp; Fairness Audit (Fig. 17) and Critical Discussion for quantified evidence.</td></tr>
     </table>
             </div>
         </div>

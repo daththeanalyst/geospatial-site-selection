@@ -4,7 +4,7 @@
 **Programme**: MSc Business Analytics (MSIN0097)
 **AI Tool**: Claude (Anthropic) via Claude Code CLI
 **Date Range**: February–March 2026
-**Total Entries**: 110
+**Total Entries**: 116
 **Business Types Modelled**: Cafe, Restaurant, Pub, Fast Food, Gym, Bakery
 
 ---
@@ -1276,3 +1276,26 @@ Updated `docs/index.html` to reflect accurate 33-feature model results and added
 **What changed**: Removed borough filter feature from Cell 63 entirely — dropdown, LONDON_BOROUGHS list, borough_centers_js, CONTROLS_HTML, FILTER_JS, lat/lng centroid columns. Maps now inject only the legend overlay. Print message updated accordingly.
 **Why**: Borough filter was unreliable across multiple fix attempts (#107, #111, #112, #113) due to pydeck's internal deck.gl scope not exposing layer constructors or supporting cross-script-block const access. User requested removal.
 **AI vs Human**: User decision to remove. AI executed the cleanup.
+
+### Entry #115
+**Date**: 2026-03-07
+**What changed**: Added 6 new analysis cells to `camden_synergy_index.ipynb` (Cells 59-64, notebook grew from 67 to 73 cells):
+- **Cell 59 (SECTION 9e)**: Borough Summary Table — top 3 FP recommendations per borough per business type, exported to CSV.
+- **Cell 60 (SECTION 9f)**: Partial Dependence Plots — marginal effect of top 6 Cafe features on predicted probability.
+- **Cell 61 (SECTION 9g)**: Moran's I spatial autocorrelation — validates spatial CV effectiveness by testing for residual clustering using H3 k-ring adjacency weights.
+- **Cell 62 (SECTION 9h)**: Feature Group Ablation — leave-one-group-out AUC comparison across 5 feature categories (POI, Demographics, Crime, Transport, Graph).
+- **Cell 63 (SECTION 9i)**: Methodology Flowchart — end-to-end pipeline diagram generated with matplotlib.
+- **Cell 64**: Critical Discussion markdown — theoretical grounding covering routine activity theory, agglomeration economics, fairness implications, and spatial CV effectiveness.
+**Why**: User requested all 6 analytical improvements to strengthen the portfolio's academic rigour and provide deeper model diagnostics.
+**AI vs Human**: AI designed and implemented all 6 cells. User selected which improvements to include.
+
+### Entry #116
+**Date**: 2026-03-07
+**What changed**: Updated portfolio (`docs/index.html`):
+1. Updated feature value-add table (lines 1795-1800) with latest feature importance percentages from model report (e.g., Restaurant property_crime #3→#4, Fast Food added bus_stops #5, Gym/Bakery property_crime percentages updated).
+2. Fixed Spearman rho interpretation — positive rho now correctly described as over-recommendation (not under-recommendation) in deprived areas, matching the corrected Cell 58 logic.
+3. Added "Advanced Diagnostics" accordion section with: Partial Dependence Plots (Fig. 18), Moran's I spatial autocorrelation (Fig. 19), Feature Group Ablation (Fig. 20), Methodology Flowchart (Fig. 21).
+4. Added "Critical Discussion & Theoretical Grounding" accordion section with: crime as footfall proxy (Cohen & Felson, 1979), agglomeration economics (Hotelling, 1929), fairness implications of presence-based training, and spatial CV effectiveness validation.
+5. Updated Limitations table to reference new figures and corrected fairness language.
+**Why**: Portfolio must reflect the 6 new notebook analyses and corrected metrics from the latest model report.
+**AI vs Human**: AI implemented all updates. User requested the portfolio match the newest report version.
