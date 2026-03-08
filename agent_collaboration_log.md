@@ -1315,3 +1315,14 @@ Updated `docs/index.html` to reflect accurate 33-feature model results and added
 10. **Log count**: 72 → 116 entries in Appendix A references.
 **Why**: Report metrics were stale (from an earlier model run with F₀.₃ thresholds and 27 features). After adding crime + transport features and switching to F₁-optimal thresholds, all hardcoded values in the report diverged from the notebook outputs. Brief requires alignment between report and code.
 **AI vs Human**: AI identified all discrepancies by comparing docx content against model_report_data.json and portfolio. User requested the update.
+
+### Entry #118
+**Date**: 2026-03-08
+**What changed**: Rubric-optimised comprehensive update to `MSIN0097_Report.docx` (5-phase plan):
+1. **Phase 1 — Stale content fixes**: Corrected AUC values (Cafe 0.911→0.913, Restaurant 0.929→0.932, Pub 0.881→0.893, Fast Food 0.924→0.935). Fixed captions (P35 F-beta→F₁, P71 27→33 features, P95 F0.3→F₁-optimal). Updated log entry count 68→117. Fixed Decision Register row 11 (40.4%→38.4%). Fixed Model Card (borough blocks→H3 Res-7, cafe→business presence). Filled repo link placeholder.
+2. **Phase 2 — Embedded 4 new figures**: Fig 4 (borough holdout CV), Fig 6 (permutation significance tests), Fig 12 (learning curves/overfitting diagnostics), Fig 13 (fairness audit). Total embedded images: 9→13.
+3. **Phase 3 — Text strengthening (1991/2000 words)**: Merged Sec 3.3 into 3.2 and Sec 4.1 into 4.2 (saved ~15 words). Added statistical significance clause ("permutation test p < 0.001, Figure 6"). Added SMOTE rationale and Moran's I validation sentences. Trimmed thresholds (rounded) and Next Steps. Added (Figure 13) fairness cross-reference in limitations.
+4. **Phase 4 — Generated 4 missing figure PNGs**: `partial_dependence.png`, `morans_i.png`, `feature_ablation.png`, `methodology_flowchart.png` from saved parquet data.
+5. **Phase 5 — Final polish**: Renumbered all 13 figures sequentially (two-pass temp-name approach). Filled word count placeholder (1991). Fixed last F0.3 reference in P154 (Appendix).
+**Why**: User requested rubric-perfect report aligned with assignment brief (4 criteria × 25%: Visualisation, Methodology, Narrative, Code). Targeted specific rubric exemplars: training curves, statistical significance, ablation, fairness audit.
+**AI vs Human**: AI designed 5-phase plan, audited rubric gaps, implemented all changes. User approved plan and requested maximum-mark alignment.
