@@ -4,7 +4,7 @@
 **Programme**: MSc Business Analytics (MSIN0097)
 **AI Tool**: Claude (Anthropic) via Claude Code CLI
 **Date Range**: February–March 2026
-**Total Entries**: 116
+**Total Entries**: 117
 **Business Types Modelled**: Cafe, Restaurant, Pub, Fast Food, Gym, Bakery
 
 ---
@@ -1299,3 +1299,19 @@ Updated `docs/index.html` to reflect accurate 33-feature model results and added
 5. Updated Limitations table to reference new figures and corrected fairness language.
 **Why**: Portfolio must reflect the 6 new notebook analyses and corrected metrics from the latest model report.
 **AI vs Human**: AI implemented all updates. User requested the portfolio match the newest report version.
+
+### Entry #117
+**Date**: 2026-03-08
+**What changed**: Comprehensive update to `MSIN0097_Report.docx` to align with latest model outputs and project brief:
+1. **Feature count**: 27 → 33 features, 5 → 6 modalities (added crime + transport descriptions in Sections 1.2, 3.1, 6.1).
+2. **Threshold method**: F₀.₃ → F₁-optimal throughout (Sections 1.3, 5.1, 5.2, 5.3, 6.1; Model Card table; Decision Register row 5).
+3. **Threshold values**: Updated to current values (Cafe 0.728, Restaurant 0.741, Pub 0.722, Fast Food 0.788, Gym 0.723, Bakery 0.822).
+4. **Precision/Recall/F1**: Updated all metrics to match latest overfitting diagnostics (e.g., Cafe 59.6%/56.4%/0.58, not 72.4%/71.9%/0.72).
+5. **Feature importance**: Updated n_restaurant from 40.4% to 38.4% for cafe; added crime feature insight (property_crime in 5/6 top-5).
+6. **Limitations**: Added crime fairness concern and POI dominance limitation; removed crime as "missing" future work.
+7. **Next Steps**: Removed crime data (now included); added fairness-aware training as future work.
+8. **Model Card**: Updated purpose (all 6 types), data sources (added crime + transport), evaluation (F1-optimal).
+9. **References**: Fixed P124-129 formatting (Normal → List Bullet); added Cohen & Felson (1979) routine activity theory citation.
+10. **Log count**: 72 → 116 entries in Appendix A references.
+**Why**: Report metrics were stale (from an earlier model run with F₀.₃ thresholds and 27 features). After adding crime + transport features and switching to F₁-optimal thresholds, all hardcoded values in the report diverged from the notebook outputs. Brief requires alignment between report and code.
+**AI vs Human**: AI identified all discrepancies by comparing docx content against model_report_data.json and portfolio. User requested the update.
