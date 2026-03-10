@@ -1,0 +1,589 @@
+Borough,Business Type,Rank,Confidence,Tier,Population
+Barking and Dagenham,Coffee Shop / Cafe,1,96.6,Prime Location,439
+Barking and Dagenham,Coffee Shop / Cafe,2,93.6,Strong Recommend,526
+Barking and Dagenham,Coffee Shop / Cafe,3,91.4,Competitive,518
+Barnet,Coffee Shop / Cafe,1,98.2,Competitive,615
+Barnet,Coffee Shop / Cafe,2,98.0,Competitive,692
+Barnet,Coffee Shop / Cafe,3,93.2,Strong Recommend,971
+Bexley,Coffee Shop / Cafe,1,92.8,Strong Recommend,344
+Bexley,Coffee Shop / Cafe,2,88.3,Strong Recommend,323
+Bexley,Coffee Shop / Cafe,3,88.2,Strong Recommend,350
+Brent,Coffee Shop / Cafe,1,96.8,Viable,936
+Brent,Coffee Shop / Cafe,2,94.0,Competitive,828
+Brent,Coffee Shop / Cafe,3,89.6,Competitive,1016
+Bromley,Coffee Shop / Cafe,1,97.8,Prime Location,617
+Bromley,Coffee Shop / Cafe,2,96.5,Competitive,803
+Bromley,Coffee Shop / Cafe,3,91.1,Competitive,554
+Camden,Coffee Shop / Cafe,1,98.3,Competitive,1232
+Camden,Coffee Shop / Cafe,2,96.3,Competitive,684
+Camden,Coffee Shop / Cafe,3,94.8,Competitive,653
+City of London,Coffee Shop / Cafe,1,97.0,Competitive,1894
+City of London,Coffee Shop / Cafe,2,95.8,Competitive,3220
+City of London,Coffee Shop / Cafe,3,90.9,Competitive,1595
+City of Westminster,Coffee Shop / Cafe,1,96.4,Competitive,3239
+City of Westminster,Coffee Shop / Cafe,2,96.2,Competitive,1336
+City of Westminster,Coffee Shop / Cafe,3,96.1,Competitive,2837
+Croydon,Coffee Shop / Cafe,1,98.9,Competitive,1357
+Croydon,Coffee Shop / Cafe,2,98.0,Competitive,1234
+Croydon,Coffee Shop / Cafe,3,96.4,Prime Location,476
+Ealing,Coffee Shop / Cafe,1,95.9,Prime Location,808
+Ealing,Coffee Shop / Cafe,2,95.1,Competitive,747
+Ealing,Coffee Shop / Cafe,3,92.9,Competitive,561
+Enfield,Coffee Shop / Cafe,1,96.2,Strong Recommend,511
+Enfield,Coffee Shop / Cafe,2,93.1,Competitive,633
+Enfield,Coffee Shop / Cafe,3,89.5,Viable,711
+Greenwich,Coffee Shop / Cafe,1,97.7,Competitive,1540
+Greenwich,Coffee Shop / Cafe,2,97.6,Competitive,2352
+Greenwich,Coffee Shop / Cafe,3,95.9,Competitive,1648
+Hackney,Coffee Shop / Cafe,1,97.7,Competitive,864
+Hackney,Coffee Shop / Cafe,2,95.7,Competitive,871
+Hackney,Coffee Shop / Cafe,3,95.0,Competitive,851
+Hammersmith and Fulham,Coffee Shop / Cafe,1,95.9,Competitive,879
+Hammersmith and Fulham,Coffee Shop / Cafe,2,95.8,Competitive,980
+Hammersmith and Fulham,Coffee Shop / Cafe,3,95.6,Competitive,1038
+Haringey,Coffee Shop / Cafe,1,95.7,Competitive,825
+Haringey,Coffee Shop / Cafe,2,91.4,Competitive,854
+Haringey,Coffee Shop / Cafe,3,90.7,Competitive,617
+Harrow,Coffee Shop / Cafe,1,96.0,Prime Location,641
+Harrow,Coffee Shop / Cafe,2,95.1,Prime Location,519
+Harrow,Coffee Shop / Cafe,3,93.9,Strong Recommend,367
+Havering,Coffee Shop / Cafe,1,95.2,Prime Location,329
+Havering,Coffee Shop / Cafe,2,95.2,Prime Location,470
+Havering,Coffee Shop / Cafe,3,85.5,Strong Recommend,409
+Hillingdon,Coffee Shop / Cafe,1,94.0,Viable,530
+Hillingdon,Coffee Shop / Cafe,2,93.1,Strong Recommend,415
+Hillingdon,Coffee Shop / Cafe,3,93.1,Competitive,654
+Hounslow,Coffee Shop / Cafe,1,98.0,Competitive,768
+Hounslow,Coffee Shop / Cafe,2,93.3,Competitive,1145
+Hounslow,Coffee Shop / Cafe,3,93.1,Competitive,926
+Islington,Coffee Shop / Cafe,1,98.6,Competitive,1233
+Islington,Coffee Shop / Cafe,2,98.2,Competitive,1037
+Islington,Coffee Shop / Cafe,3,94.8,Competitive,1471
+Kensington and Chelsea,Coffee Shop / Cafe,1,97.7,Competitive,1871
+Kensington and Chelsea,Coffee Shop / Cafe,2,96.0,Competitive,1938
+Kensington and Chelsea,Coffee Shop / Cafe,3,95.7,Competitive,984
+Kingston upon Thames,Coffee Shop / Cafe,1,96.5,Competitive,620
+Kingston upon Thames,Coffee Shop / Cafe,2,95.7,Competitive,496
+Kingston upon Thames,Coffee Shop / Cafe,3,92.6,Competitive,451
+Lambeth,Coffee Shop / Cafe,1,97.5,Competitive,1857
+Lambeth,Coffee Shop / Cafe,2,96.4,Competitive,821
+Lambeth,Coffee Shop / Cafe,3,95.7,Competitive,1588
+Lewisham,Coffee Shop / Cafe,1,99.0,Competitive,749
+Lewisham,Coffee Shop / Cafe,2,97.7,Competitive,1110
+Lewisham,Coffee Shop / Cafe,3,96.3,Competitive,641
+Merton,Coffee Shop / Cafe,1,95.9,Competitive,627
+Merton,Coffee Shop / Cafe,2,92.6,Competitive,786
+Merton,Coffee Shop / Cafe,3,91.5,Strong Recommend,873
+Newham,Coffee Shop / Cafe,1,94.9,Competitive,1042
+Newham,Coffee Shop / Cafe,2,92.4,Competitive,1135
+Newham,Coffee Shop / Cafe,3,91.9,Competitive,1094
+Redbridge,Coffee Shop / Cafe,1,94.9,Competitive,713
+Redbridge,Coffee Shop / Cafe,2,90.4,Strong Recommend,605
+Redbridge,Coffee Shop / Cafe,3,84.6,Viable,613
+Richmond upon Thames,Coffee Shop / Cafe,1,96.0,Competitive,512
+Richmond upon Thames,Coffee Shop / Cafe,2,92.9,Competitive,678
+Richmond upon Thames,Coffee Shop / Cafe,3,89.4,Competitive,556
+Southwark,Coffee Shop / Cafe,1,97.4,Competitive,1412
+Southwark,Coffee Shop / Cafe,2,95.3,Competitive,1644
+Southwark,Coffee Shop / Cafe,3,94.9,Competitive,2429
+Sutton,Coffee Shop / Cafe,1,94.7,Competitive,614
+Sutton,Coffee Shop / Cafe,2,94.7,Strong Recommend,540
+Sutton,Coffee Shop / Cafe,3,88.3,Strong Recommend,527
+Tower Hamlets,Coffee Shop / Cafe,1,97.9,Competitive,2379
+Tower Hamlets,Coffee Shop / Cafe,2,96.7,Competitive,2115
+Tower Hamlets,Coffee Shop / Cafe,3,96.0,Competitive,1202
+Waltham Forest,Coffee Shop / Cafe,1,97.0,Competitive,1276
+Waltham Forest,Coffee Shop / Cafe,2,92.4,Competitive,766
+Waltham Forest,Coffee Shop / Cafe,3,88.4,Competitive,687
+Wandsworth,Coffee Shop / Cafe,1,97.5,Competitive,1243
+Wandsworth,Coffee Shop / Cafe,2,92.8,Competitive,1116
+Wandsworth,Coffee Shop / Cafe,3,89.9,Competitive,1130
+Barking and Dagenham,Restaurant,1,93.2,Competitive,706
+Barking and Dagenham,Restaurant,2,86.3,Strong Recommend,567
+Barking and Dagenham,Restaurant,3,84.5,Viable,502
+Barnet,Restaurant,1,96.5,Competitive,729
+Barnet,Restaurant,2,95.7,Strong Recommend,693
+Barnet,Restaurant,3,94.0,Strong Recommend,805
+Bexley,Restaurant,1,87.2,Competitive,636
+Bexley,Restaurant,2,83.0,Viable,620
+Bexley,Restaurant,3,81.3,Viable,452
+Brent,Restaurant,1,95.3,Competitive,1740
+Brent,Restaurant,2,91.3,Strong Recommend,362
+Brent,Restaurant,3,91.2,Strong Recommend,613
+Bromley,Restaurant,1,95.3,Competitive,921
+Bromley,Restaurant,2,93.5,Competitive,563
+Bromley,Restaurant,3,90.0,Competitive,535
+Camden,Restaurant,1,98.3,Competitive,4164
+Camden,Restaurant,2,96.1,Competitive,1139
+Camden,Restaurant,3,94.2,Competitive,1177
+City of London,Restaurant,1,96.4,Competitive,1894
+City of London,Restaurant,2,87.7,Competitive,1029
+City of London,Restaurant,3,82.3,Competitive,1595
+City of Westminster,Restaurant,1,97.3,Competitive,1706
+City of Westminster,Restaurant,2,96.1,Competitive,1665
+City of Westminster,Restaurant,3,94.4,Competitive,1345
+Croydon,Restaurant,1,97.7,Competitive,1522
+Croydon,Restaurant,2,97.2,Competitive,684
+Croydon,Restaurant,3,94.5,Strong Recommend,309
+Ealing,Restaurant,1,98.0,Prime Location,466
+Ealing,Restaurant,2,96.8,Competitive,1037
+Ealing,Restaurant,3,94.1,Competitive,415
+Enfield,Restaurant,1,98.8,Competitive,779
+Enfield,Restaurant,2,98.2,Competitive,773
+Enfield,Restaurant,3,94.9,Strong Recommend,1083
+Greenwich,Restaurant,1,92.6,Viable,1303
+Greenwich,Restaurant,2,92.3,Strong Recommend,403
+Greenwich,Restaurant,3,91.1,Competitive,1512
+Hackney,Restaurant,1,98.3,Competitive,1143
+Hackney,Restaurant,2,95.5,Competitive,1188
+Hackney,Restaurant,3,94.9,Competitive,284
+Hammersmith and Fulham,Restaurant,1,95.6,Competitive,1444
+Hammersmith and Fulham,Restaurant,2,95.2,Competitive,1135
+Hammersmith and Fulham,Restaurant,3,94.5,Competitive,868
+Haringey,Restaurant,1,97.8,Competitive,496
+Haringey,Restaurant,2,96.6,Viable,496
+Haringey,Restaurant,3,93.1,Viable,931
+Harrow,Restaurant,1,96.0,Competitive,554
+Harrow,Restaurant,2,94.7,Competitive,461
+Harrow,Restaurant,3,94.5,Competitive,669
+Havering,Restaurant,1,96.4,Competitive,433
+Havering,Restaurant,2,94.8,Competitive,639
+Havering,Restaurant,3,94.0,Competitive,770
+Hillingdon,Restaurant,1,97.5,Strong Recommend,1128
+Hillingdon,Restaurant,2,92.9,Competitive,1152
+Hillingdon,Restaurant,3,91.0,Strong Recommend,335
+Hounslow,Restaurant,1,96.0,Viable,764
+Hounslow,Restaurant,2,94.2,Competitive,1000
+Hounslow,Restaurant,3,94.0,Competitive,623
+Islington,Restaurant,1,97.1,Competitive,1116
+Islington,Restaurant,2,94.1,Competitive,1642
+Islington,Restaurant,3,92.9,Competitive,1579
+Kensington and Chelsea,Restaurant,1,97.1,Competitive,1996
+Kensington and Chelsea,Restaurant,2,96.5,Competitive,1403
+Kensington and Chelsea,Restaurant,3,95.1,Competitive,1164
+Kingston upon Thames,Restaurant,1,97.2,Competitive,1364
+Kingston upon Thames,Restaurant,2,93.7,Strong Recommend,563
+Kingston upon Thames,Restaurant,3,92.6,Strong Recommend,364
+Lambeth,Restaurant,1,98.7,Viable,758
+Lambeth,Restaurant,2,97.3,Competitive,1070
+Lambeth,Restaurant,3,97.1,Competitive,996
+Lewisham,Restaurant,1,97.4,Competitive,629
+Lewisham,Restaurant,2,97.2,Competitive,1059
+Lewisham,Restaurant,3,96.6,Competitive,500
+Merton,Restaurant,1,93.9,Competitive,627
+Merton,Restaurant,2,92.6,Strong Recommend,462
+Merton,Restaurant,3,90.4,Competitive,1314
+Newham,Restaurant,1,94.2,Competitive,1131
+Newham,Restaurant,2,92.4,Viable,841
+Newham,Restaurant,3,91.3,Competitive,538
+Redbridge,Restaurant,1,93.3,Strong Recommend,497
+Redbridge,Restaurant,2,92.1,Competitive,551
+Redbridge,Restaurant,3,91.7,Competitive,915
+Richmond upon Thames,Restaurant,1,95.2,Competitive,617
+Richmond upon Thames,Restaurant,2,93.1,Competitive,815
+Richmond upon Thames,Restaurant,3,91.8,Competitive,731
+Southwark,Restaurant,1,98.9,Competitive,1826
+Southwark,Restaurant,2,98.2,Competitive,3733
+Southwark,Restaurant,3,95.9,Competitive,1368
+Sutton,Restaurant,1,98.1,Competitive,599
+Sutton,Restaurant,2,94.4,Competitive,494
+Sutton,Restaurant,3,94.2,Competitive,340
+Tower Hamlets,Restaurant,1,97.3,Competitive,1713
+Tower Hamlets,Restaurant,2,97.0,Competitive,1988
+Tower Hamlets,Restaurant,3,96.3,Competitive,1341
+Waltham Forest,Restaurant,1,96.2,Competitive,1143
+Waltham Forest,Restaurant,2,91.0,Competitive,850
+Waltham Forest,Restaurant,3,90.6,Viable,848
+Wandsworth,Restaurant,1,99.2,Competitive,1247
+Wandsworth,Restaurant,2,96.8,Competitive,798
+Wandsworth,Restaurant,3,95.3,Competitive,1772
+Barking and Dagenham,Pub / Bar,1,89.9,Strong Recommend,720
+Barking and Dagenham,Pub / Bar,2,83.5,Viable,658
+Barking and Dagenham,Pub / Bar,3,81.3,Viable,439
+Barnet,Pub / Bar,1,95.9,Prime Location,648
+Barnet,Pub / Bar,2,95.6,Prime Location,816
+Barnet,Pub / Bar,3,91.5,Strong Recommend,753
+Bexley,Pub / Bar,1,95.0,Viable,654
+Bexley,Pub / Bar,2,84.0,Competitive,601
+Bexley,Pub / Bar,3,75.2,Competitive,471
+Brent,Pub / Bar,1,95.7,Competitive,961
+Brent,Pub / Bar,2,92.1,Viable,516
+Brent,Pub / Bar,3,90.8,Competitive,936
+Bromley,Pub / Bar,1,98.0,Competitive,2056
+Bromley,Pub / Bar,2,96.3,Competitive,1021
+Bromley,Pub / Bar,3,94.9,Competitive,457
+Camden,Pub / Bar,1,97.6,Competitive,850
+Camden,Pub / Bar,2,96.8,Competitive,2010
+Camden,Pub / Bar,3,96.3,Competitive,1119
+City of London,Pub / Bar,1,81.5,Competitive,639
+City of Westminster,Pub / Bar,1,97.6,Competitive,2483
+City of Westminster,Pub / Bar,2,97.2,Competitive,978
+City of Westminster,Pub / Bar,3,96.9,Competitive,3728
+Croydon,Pub / Bar,1,95.0,Competitive,2812
+Croydon,Pub / Bar,2,94.4,Strong Recommend,608
+Croydon,Pub / Bar,3,93.2,Viable,815
+Ealing,Pub / Bar,1,95.1,Competitive,954
+Ealing,Pub / Bar,2,94.0,Competitive,846
+Ealing,Pub / Bar,3,92.8,Strong Recommend,744
+Enfield,Pub / Bar,1,97.3,Viable,861
+Enfield,Pub / Bar,2,90.5,Competitive,467
+Enfield,Pub / Bar,3,89.2,Competitive,593
+Greenwich,Pub / Bar,1,95.7,Competitive,1335
+Greenwich,Pub / Bar,2,93.6,Competitive,1242
+Greenwich,Pub / Bar,3,90.9,Strong Recommend,562
+Hackney,Pub / Bar,1,97.2,Competitive,1062
+Hackney,Pub / Bar,2,96.7,Competitive,1576
+Hackney,Pub / Bar,3,96.2,Competitive,1199
+Hammersmith and Fulham,Pub / Bar,1,96.2,Competitive,734
+Hammersmith and Fulham,Pub / Bar,2,95.5,Competitive,1179
+Hammersmith and Fulham,Pub / Bar,3,95.0,Competitive,1055
+Haringey,Pub / Bar,1,97.0,Competitive,967
+Haringey,Pub / Bar,2,92.5,Competitive,968
+Haringey,Pub / Bar,3,89.3,Competitive,756
+Harrow,Pub / Bar,1,93.8,Strong Recommend,622
+Harrow,Pub / Bar,2,90.6,Strong Recommend,607
+Harrow,Pub / Bar,3,87.2,Competitive,608
+Havering,Pub / Bar,1,93.4,Strong Recommend,447
+Havering,Pub / Bar,2,91.5,Competitive,942
+Havering,Pub / Bar,3,88.2,Competitive,752
+Hillingdon,Pub / Bar,1,95.4,Viable,838
+Hillingdon,Pub / Bar,2,91.0,Strong Recommend,491
+Hillingdon,Pub / Bar,3,88.2,Strong Recommend,549
+Hounslow,Pub / Bar,1,96.4,Competitive,895
+Hounslow,Pub / Bar,2,93.8,Competitive,1067
+Hounslow,Pub / Bar,3,90.0,Strong Recommend,574
+Islington,Pub / Bar,1,95.1,Competitive,1471
+Islington,Pub / Bar,2,94.7,Competitive,1386
+Islington,Pub / Bar,3,93.3,Competitive,877
+Kensington and Chelsea,Pub / Bar,1,98.3,Competitive,2444
+Kensington and Chelsea,Pub / Bar,2,96.4,Competitive,2563
+Kensington and Chelsea,Pub / Bar,3,95.7,Competitive,2873
+Kingston upon Thames,Pub / Bar,1,95.4,Competitive,2255
+Kingston upon Thames,Pub / Bar,2,95.1,Viable,598
+Kingston upon Thames,Pub / Bar,3,94.4,Competitive,674
+Lambeth,Pub / Bar,1,95.6,Competitive,928
+Lambeth,Pub / Bar,2,93.6,Competitive,1176
+Lambeth,Pub / Bar,3,93.4,Competitive,1121
+Lewisham,Pub / Bar,1,94.7,Viable,450
+Lewisham,Pub / Bar,2,94.1,Strong Recommend,670
+Lewisham,Pub / Bar,3,93.5,Competitive,564
+Merton,Pub / Bar,1,93.7,Competitive,816
+Merton,Pub / Bar,2,93.1,Competitive,653
+Merton,Pub / Bar,3,91.6,Viable,535
+Newham,Pub / Bar,1,95.1,Competitive,967
+Newham,Pub / Bar,2,93.4,Strong Recommend,1541
+Newham,Pub / Bar,3,91.7,Competitive,767
+Redbridge,Pub / Bar,1,95.9,Prime Location,612
+Redbridge,Pub / Bar,2,94.1,Strong Recommend,845
+Redbridge,Pub / Bar,3,92.4,Strong Recommend,577
+Richmond upon Thames,Pub / Bar,1,96.7,Competitive,589
+Richmond upon Thames,Pub / Bar,2,94.6,Competitive,649
+Richmond upon Thames,Pub / Bar,3,94.1,Competitive,774
+Southwark,Pub / Bar,1,96.8,Competitive,2138
+Southwark,Pub / Bar,2,95.3,Competitive,1725
+Southwark,Pub / Bar,3,94.9,Competitive,1084
+Sutton,Pub / Bar,1,95.2,Prime Location,1275
+Sutton,Pub / Bar,2,91.9,Competitive,1060
+Sutton,Pub / Bar,3,91.2,Strong Recommend,622
+Tower Hamlets,Pub / Bar,1,97.5,Competitive,1351
+Tower Hamlets,Pub / Bar,2,96.9,Competitive,2299
+Tower Hamlets,Pub / Bar,3,95.7,Competitive,1585
+Waltham Forest,Pub / Bar,1,93.8,Competitive,963
+Waltham Forest,Pub / Bar,2,92.2,Competitive,867
+Waltham Forest,Pub / Bar,3,92.1,Viable,512
+Wandsworth,Pub / Bar,1,97.2,Competitive,1179
+Wandsworth,Pub / Bar,2,96.1,Competitive,1070
+Wandsworth,Pub / Bar,3,94.9,Competitive,1998
+Barking and Dagenham,Fast Food,1,96.2,Competitive,777
+Barking and Dagenham,Fast Food,2,93.8,Competitive,426
+Barking and Dagenham,Fast Food,3,87.7,Competitive,672
+Barnet,Fast Food,1,98.9,Prime Location,812
+Barnet,Fast Food,2,96.1,Viable,621
+Barnet,Fast Food,3,94.5,Strong Recommend,1335
+Bexley,Fast Food,1,96.0,Strong Recommend,257
+Bexley,Fast Food,2,95.2,Viable,516
+Bexley,Fast Food,3,92.7,Strong Recommend,520
+Brent,Fast Food,1,93.4,Viable,847
+Brent,Fast Food,2,92.4,Competitive,481
+Brent,Fast Food,3,91.2,Viable,1030
+Bromley,Fast Food,1,95.8,Prime Location,649
+Bromley,Fast Food,2,93.0,Competitive,519
+Bromley,Fast Food,3,92.9,Viable,375
+Camden,Fast Food,1,95.5,Competitive,988
+Camden,Fast Food,2,94.3,Competitive,2177
+Camden,Fast Food,3,94.0,Competitive,993
+City of London,Fast Food,1,93.5,Competitive,2634
+City of Westminster,Fast Food,1,98.5,Competitive,2402
+City of Westminster,Fast Food,2,97.2,Competitive,2576
+City of Westminster,Fast Food,3,97.0,Competitive,2190
+Croydon,Fast Food,1,96.9,Prime Location,865
+Croydon,Fast Food,2,96.2,Strong Recommend,473
+Croydon,Fast Food,3,96.1,Competitive,1239
+Ealing,Fast Food,1,94.7,Competitive,719
+Ealing,Fast Food,2,94.4,Viable,1174
+Ealing,Fast Food,3,93.9,Competitive,672
+Enfield,Fast Food,1,94.9,Competitive,406
+Enfield,Fast Food,2,94.9,Strong Recommend,711
+Enfield,Fast Food,3,94.7,Strong Recommend,816
+Greenwich,Fast Food,1,96.6,Competitive,1233
+Greenwich,Fast Food,2,95.2,Competitive,893
+Greenwich,Fast Food,3,94.6,Strong Recommend,802
+Hackney,Fast Food,1,98.2,Competitive,2050
+Hackney,Fast Food,2,96.1,Competitive,1654
+Hackney,Fast Food,3,95.6,Competitive,990
+Hammersmith and Fulham,Fast Food,1,96.5,Competitive,1346
+Hammersmith and Fulham,Fast Food,2,95.6,Competitive,266
+Hammersmith and Fulham,Fast Food,3,94.9,Competitive,903
+Haringey,Fast Food,1,97.8,Competitive,931
+Haringey,Fast Food,2,96.1,Competitive,722
+Haringey,Fast Food,3,95.5,Competitive,814
+Harrow,Fast Food,1,96.7,Strong Recommend,452
+Harrow,Fast Food,2,95.8,Viable,743
+Harrow,Fast Food,3,92.4,Competitive,660
+Havering,Fast Food,1,98.7,Competitive,1007
+Havering,Fast Food,2,92.3,Competitive,737
+Havering,Fast Food,3,92.0,Competitive,434
+Hillingdon,Fast Food,1,95.4,Viable,831
+Hillingdon,Fast Food,2,94.7,Strong Recommend,1152
+Hillingdon,Fast Food,3,94.4,Strong Recommend,468
+Hounslow,Fast Food,1,95.3,Competitive,926
+Hounslow,Fast Food,2,93.2,Competitive,366
+Hounslow,Fast Food,3,92.8,Strong Recommend,1119
+Islington,Fast Food,1,96.0,Competitive,1435
+Islington,Fast Food,2,93.3,Competitive,1307
+Islington,Fast Food,3,92.7,Competitive,1313
+Kensington and Chelsea,Fast Food,1,97.1,Competitive,819
+Kensington and Chelsea,Fast Food,2,96.5,Competitive,1763
+Kensington and Chelsea,Fast Food,3,95.9,Competitive,1590
+Kingston upon Thames,Fast Food,1,96.3,Prime Location,416
+Kingston upon Thames,Fast Food,2,95.5,Competitive,869
+Kingston upon Thames,Fast Food,3,95.4,Prime Location,517
+Lambeth,Fast Food,1,98.4,Competitive,3542
+Lambeth,Fast Food,2,98.3,Competitive,887
+Lambeth,Fast Food,3,97.3,Competitive,970
+Lewisham,Fast Food,1,97.7,Competitive,827
+Lewisham,Fast Food,2,93.0,Competitive,706
+Lewisham,Fast Food,3,92.9,Strong Recommend,676
+Merton,Fast Food,1,97.1,Prime Location,621
+Merton,Fast Food,2,93.1,Competitive,1735
+Merton,Fast Food,3,93.0,Competitive,349
+Newham,Fast Food,1,97.7,Competitive,1340
+Newham,Fast Food,2,97.4,Competitive,1083
+Newham,Fast Food,3,97.0,Competitive,817
+Redbridge,Fast Food,1,95.4,Competitive,872
+Redbridge,Fast Food,2,91.2,Strong Recommend,441
+Redbridge,Fast Food,3,89.2,Strong Recommend,683
+Richmond upon Thames,Fast Food,1,97.9,Competitive,842
+Richmond upon Thames,Fast Food,2,96.5,Prime Location,567
+Richmond upon Thames,Fast Food,3,96.4,Competitive,797
+Southwark,Fast Food,1,98.6,Competitive,1054
+Southwark,Fast Food,2,97.2,Competitive,1782
+Southwark,Fast Food,3,96.9,Competitive,1534
+Sutton,Fast Food,1,93.9,Viable,501
+Sutton,Fast Food,2,90.9,Competitive,310
+Sutton,Fast Food,3,87.3,Strong Recommend,409
+Tower Hamlets,Fast Food,1,97.1,Competitive,849
+Tower Hamlets,Fast Food,2,96.0,Competitive,1916
+Tower Hamlets,Fast Food,3,95.5,Competitive,1195
+Waltham Forest,Fast Food,1,96.9,Competitive,1081
+Waltham Forest,Fast Food,2,95.0,Competitive,663
+Waltham Forest,Fast Food,3,94.7,Competitive,768
+Wandsworth,Fast Food,1,97.2,Competitive,991
+Wandsworth,Fast Food,2,95.8,Competitive,877
+Wandsworth,Fast Food,3,95.4,Competitive,1452
+Barking and Dagenham,Gym / Fitness,1,91.8,Viable,1693
+Barking and Dagenham,Gym / Fitness,2,87.3,Strong Recommend,2002
+Barking and Dagenham,Gym / Fitness,3,80.0,Viable,720
+Barnet,Gym / Fitness,1,91.9,Strong Recommend,812
+Barnet,Gym / Fitness,2,89.8,Strong Recommend,1335
+Barnet,Gym / Fitness,3,84.1,Viable,816
+Bexley,Gym / Fitness,1,82.2,Viable,720
+Bexley,Gym / Fitness,2,77.6,Viable,834
+Bexley,Gym / Fitness,3,74.7,Viable,745
+Brent,Gym / Fitness,1,92.1,Competitive,951
+Brent,Gym / Fitness,2,91.0,Competitive,1158
+Brent,Gym / Fitness,3,90.8,Strong Recommend,1254
+Bromley,Gym / Fitness,1,87.7,Strong Recommend,950
+Bromley,Gym / Fitness,2,84.0,Viable,1021
+Bromley,Gym / Fitness,3,83.1,Viable,740
+Camden,Gym / Fitness,1,93.8,Competitive,2536
+Camden,Gym / Fitness,2,92.8,Competitive,2776
+Camden,Gym / Fitness,3,91.9,Viable,1181
+City of London,Gym / Fitness,1,95.6,Competitive,6013
+City of London,Gym / Fitness,2,93.7,Competitive,2897
+City of London,Gym / Fitness,3,92.7,Competitive,3130
+City of Westminster,Gym / Fitness,1,95.1,Competitive,3527
+City of Westminster,Gym / Fitness,2,93.6,Competitive,2334
+City of Westminster,Gym / Fitness,3,92.9,Competitive,3140
+Croydon,Gym / Fitness,1,89.0,Strong Recommend,930
+Croydon,Gym / Fitness,2,85.4,Competitive,1239
+Croydon,Gym / Fitness,3,84.4,Viable,846
+Ealing,Gym / Fitness,1,92.3,Competitive,809
+Ealing,Gym / Fitness,2,86.7,Viable,954
+Ealing,Gym / Fitness,3,86.3,Strong Recommend,1065
+Enfield,Gym / Fitness,1,87.6,Viable,885
+Enfield,Gym / Fitness,2,85.8,Viable,878
+Enfield,Gym / Fitness,3,85.1,Strong Recommend,1083
+Greenwich,Gym / Fitness,1,92.7,Viable,845
+Greenwich,Gym / Fitness,2,89.8,Strong Recommend,800
+Greenwich,Gym / Fitness,3,89.7,Competitive,1233
+Hackney,Gym / Fitness,1,95.5,Competitive,1781
+Hackney,Gym / Fitness,2,95.2,Competitive,3129
+Hackney,Gym / Fitness,3,91.1,Competitive,1587
+Hammersmith and Fulham,Gym / Fitness,1,94.2,Strong Recommend,855
+Hammersmith and Fulham,Gym / Fitness,2,94.0,Viable,1108
+Hammersmith and Fulham,Gym / Fitness,3,91.7,Viable,1262
+Haringey,Gym / Fitness,1,90.4,Competitive,907
+Haringey,Gym / Fitness,2,89.9,Strong Recommend,967
+Haringey,Gym / Fitness,3,89.8,Viable,1112
+Harrow,Gym / Fitness,1,82.3,Viable,572
+Harrow,Gym / Fitness,2,79.7,Viable,547
+Harrow,Gym / Fitness,3,75.9,Viable,638
+Havering,Gym / Fitness,1,87.7,Viable,1964
+Havering,Gym / Fitness,2,87.3,Viable,942
+Havering,Gym / Fitness,3,77.7,Viable,759
+Hillingdon,Gym / Fitness,1,87.0,Strong Recommend,1433
+Hillingdon,Gym / Fitness,2,81.7,Viable,773
+Hillingdon,Gym / Fitness,3,79.9,Viable,657
+Hounslow,Gym / Fitness,1,92.9,Strong Recommend,986
+Hounslow,Gym / Fitness,2,91.0,Strong Recommend,907
+Hounslow,Gym / Fitness,3,87.1,Strong Recommend,1171
+Islington,Gym / Fitness,1,95.1,Competitive,2873
+Islington,Gym / Fitness,2,95.0,Competitive,3097
+Islington,Gym / Fitness,3,93.2,Competitive,2794
+Kensington and Chelsea,Gym / Fitness,1,92.0,Viable,1055
+Kensington and Chelsea,Gym / Fitness,2,91.9,Strong Recommend,2720
+Kensington and Chelsea,Gym / Fitness,3,90.8,Competitive,1339
+Kingston upon Thames,Gym / Fitness,1,93.0,Viable,1697
+Kingston upon Thames,Gym / Fitness,2,92.6,Viable,2255
+Kingston upon Thames,Gym / Fitness,3,88.8,Viable,1672
+Lambeth,Gym / Fitness,1,94.8,Viable,3474
+Lambeth,Gym / Fitness,2,93.1,Competitive,2563
+Lambeth,Gym / Fitness,3,91.0,Competitive,1583
+Lewisham,Gym / Fitness,1,94.8,Viable,764
+Lewisham,Gym / Fitness,2,93.4,Competitive,1349
+Lewisham,Gym / Fitness,3,92.4,Viable,1253
+Merton,Gym / Fitness,1,89.6,Viable,900
+Merton,Gym / Fitness,2,87.0,Strong Recommend,338
+Merton,Gym / Fitness,3,80.9,Viable,621
+Newham,Gym / Fitness,1,95.1,Competitive,1313
+Newham,Gym / Fitness,2,92.6,Viable,962
+Newham,Gym / Fitness,3,92.5,Competitive,1937
+Redbridge,Gym / Fitness,1,92.2,Strong Recommend,1542
+Redbridge,Gym / Fitness,2,91.3,Strong Recommend,2998
+Redbridge,Gym / Fitness,3,87.5,Strong Recommend,577
+Richmond upon Thames,Gym / Fitness,1,84.9,Competitive,825
+Richmond upon Thames,Gym / Fitness,2,84.1,Competitive,730
+Richmond upon Thames,Gym / Fitness,3,83.9,Viable,571
+Southwark,Gym / Fitness,1,95.6,Competitive,1699
+Southwark,Gym / Fitness,2,93.5,Competitive,2343
+Southwark,Gym / Fitness,3,92.4,Competitive,1439
+Sutton,Gym / Fitness,1,92.8,Strong Recommend,2123
+Sutton,Gym / Fitness,2,90.7,Viable,1819
+Sutton,Gym / Fitness,3,90.3,Strong Recommend,1118
+Tower Hamlets,Gym / Fitness,1,96.9,Competitive,12822
+Tower Hamlets,Gym / Fitness,2,95.6,Competitive,4320
+Tower Hamlets,Gym / Fitness,3,95.4,Competitive,3017
+Waltham Forest,Gym / Fitness,1,88.8,Strong Recommend,1765
+Waltham Forest,Gym / Fitness,2,86.5,Strong Recommend,1081
+Waltham Forest,Gym / Fitness,3,85.7,Strong Recommend,991
+Wandsworth,Gym / Fitness,1,95.6,Competitive,1368
+Wandsworth,Gym / Fitness,2,94.2,Viable,1605
+Wandsworth,Gym / Fitness,3,93.5,Competitive,1629
+Barking and Dagenham,Bakery,1,89.3,Strong Recommend,1362
+Barnet,Bakery,1,95.3,Prime Location,938
+Barnet,Bakery,2,92.1,Strong Recommend,812
+Barnet,Bakery,3,91.8,Strong Recommend,431
+Bexley,Bakery,1,93.4,Strong Recommend,773
+Bexley,Bakery,2,93.2,Strong Recommend,654
+Bexley,Bakery,3,91.6,Strong Recommend,787
+Brent,Bakery,1,96.3,Prime Location,858
+Brent,Bakery,2,95.5,Strong Recommend,1158
+Brent,Bakery,3,95.4,Prime Location,842
+Bromley,Bakery,1,95.0,Prime Location,488
+Bromley,Bakery,2,94.6,Strong Recommend,358
+Bromley,Bakery,3,94.2,Viable,1579
+Camden,Bakery,1,97.3,Competitive,1126
+Camden,Bakery,2,96.0,Prime Location,1059
+Camden,Bakery,3,95.1,Competitive,2468
+City of London,Bakery,1,95.4,Competitive,3955
+City of London,Bakery,2,95.3,Competitive,3201
+City of London,Bakery,3,93.9,Competitive,2734
+City of Westminster,Bakery,1,96.6,Strong Recommend,3639
+City of Westminster,Bakery,2,96.3,Competitive,3402
+City of Westminster,Bakery,3,96.1,Competitive,4750
+Croydon,Bakery,1,95.6,Viable,2367
+Croydon,Bakery,2,95.5,Prime Location,711
+Croydon,Bakery,3,94.2,Strong Recommend,846
+Ealing,Bakery,1,96.6,Prime Location,809
+Ealing,Bakery,2,95.6,Prime Location,988
+Ealing,Bakery,3,95.0,Strong Recommend,808
+Enfield,Bakery,1,95.5,Prime Location,529
+Enfield,Bakery,2,89.8,Strong Recommend,687
+Enfield,Bakery,3,88.9,Strong Recommend,782
+Greenwich,Bakery,1,93.0,Strong Recommend,1110
+Greenwich,Bakery,2,92.4,Viable,1035
+Greenwich,Bakery,3,91.6,Strong Recommend,811
+Hackney,Bakery,1,96.7,Competitive,2205
+Hackney,Bakery,2,95.3,Prime Location,1923
+Hackney,Bakery,3,95.3,Prime Location,1587
+Hammersmith and Fulham,Bakery,1,96.6,Strong Recommend,1088
+Hammersmith and Fulham,Bakery,2,96.0,Prime Location,2028
+Hammersmith and Fulham,Bakery,3,95.4,Viable,1244
+Haringey,Bakery,1,96.2,Competitive,1044
+Haringey,Bakery,2,95.7,Competitive,1312
+Haringey,Bakery,3,95.6,Prime Location,907
+Harrow,Bakery,1,90.6,Strong Recommend,607
+Harrow,Bakery,2,90.4,Strong Recommend,638
+Harrow,Bakery,3,89.5,Strong Recommend,743
+Havering,Bakery,1,92.8,Strong Recommend,759
+Havering,Bakery,2,89.9,Strong Recommend,1065
+Havering,Bakery,3,88.6,Strong Recommend,447
+Hillingdon,Bakery,1,95.4,Prime Location,666
+Hillingdon,Bakery,2,92.9,Strong Recommend,657
+Hillingdon,Bakery,3,89.4,Strong Recommend,465
+Hounslow,Bakery,1,96.0,Prime Location,986
+Hounslow,Bakery,2,93.8,Viable,1286
+Hounslow,Bakery,3,91.6,Strong Recommend,471
+Islington,Bakery,1,95.7,Prime Location,2689
+Islington,Bakery,2,95.7,Prime Location,1133
+Islington,Bakery,3,95.7,Competitive,1682
+Kensington and Chelsea,Bakery,1,96.4,Viable,2072
+Kensington and Chelsea,Bakery,2,96.2,Competitive,993
+Kensington and Chelsea,Bakery,3,93.4,Competitive,1647
+Kingston upon Thames,Bakery,1,94.8,Strong Recommend,1697
+Kingston upon Thames,Bakery,2,90.1,Strong Recommend,2255
+Kingston upon Thames,Bakery,3,89.8,Strong Recommend,830
+Lambeth,Bakery,1,96.9,Prime Location,1889
+Lambeth,Bakery,2,95.3,Competitive,1752
+Lambeth,Bakery,3,92.5,Strong Recommend,1364
+Lewisham,Bakery,1,95.7,Prime Location,623
+Lewisham,Bakery,2,95.3,Prime Location,816
+Lewisham,Bakery,3,95.1,Viable,764
+Merton,Bakery,1,93.6,Strong Recommend,957
+Merton,Bakery,2,91.4,Strong Recommend,1115
+Merton,Bakery,3,89.2,Strong Recommend,685
+Newham,Bakery,1,97.1,Strong Recommend,1060
+Newham,Bakery,2,95.9,Competitive,1522
+Newham,Bakery,3,95.1,Prime Location,1541
+Redbridge,Bakery,1,95.9,Prime Location,612
+Redbridge,Bakery,2,94.0,Strong Recommend,858
+Redbridge,Bakery,3,93.7,Strong Recommend,1280
+Richmond upon Thames,Bakery,1,95.9,Prime Location,991
+Richmond upon Thames,Bakery,2,95.6,Prime Location,426
+Richmond upon Thames,Bakery,3,94.4,Viable,752
+Southwark,Bakery,1,95.0,Prime Location,1439
+Southwark,Bakery,2,94.9,Strong Recommend,951
+Southwark,Bakery,3,94.3,Competitive,806
+Sutton,Bakery,1,92.9,Strong Recommend,2123
+Sutton,Bakery,2,90.8,Strong Recommend,439
+Sutton,Bakery,3,90.5,Strong Recommend,719
+Tower Hamlets,Bakery,1,96.2,Strong Recommend,2980
+Tower Hamlets,Bakery,2,95.3,Viable,2553
+Tower Hamlets,Bakery,3,93.2,Strong Recommend,1351
+Waltham Forest,Bakery,1,98.2,Viable,1696
+Waltham Forest,Bakery,2,96.1,Prime Location,991
+Waltham Forest,Bakery,3,95.6,Prime Location,541
+Wandsworth,Bakery,1,93.0,Strong Recommend,1778
+Wandsworth,Bakery,2,92.9,Strong Recommend,1138
+Wandsworth,Bakery,3,90.7,Strong Recommend,611

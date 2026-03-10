@@ -45,12 +45,13 @@ Each type has its own XGBoost model trained with spatial cross-validation. The d
 
 ## Data Access
 
-The pipeline requires three external datasets. OSM data is fetched programmatically; the other two must be downloaded manually.
+The pipeline requires four external datasets. OSM data is fetched programmatically; the others must be downloaded manually.
 
 | Dataset | Source | Access | Expected Location |
 |---------|--------|--------|-------------------|
 | **LandScan Global Population** | Oak Ridge National Laboratory (ORNL) | [landscan.ornl.gov](https://landscan.ornl.gov/) — free registration required | `landscan-mosaic-unitedkingdom-v1.tif` (project root) |
 | **ONS Census 2021** (3 tables) | EDINA Digimap / ONS Nomis | [digimap.edina.ac.uk](https://digimap.edina.ac.uk/) or [nomis.co.uk](https://www.nomisweb.co.uk/) | `ons-age-ew-2021_*/`, `ons-economic-ew-2021_*/`, `ons-qualifications-ew-2021_*/` |
+| **Police.uk Crime Data** (2021) | data.police.uk | [data.police.uk](https://data.police.uk/data/) — download Greater London, all months 2021 | `House price data 2021 and Crime 2021/Crime data 2021/` |
 | **OpenStreetMap POIs** | OSMnx (programmatic) | Auto-fetched borough-by-borough via `ox.features_from_place()` | No manual download needed |
 
 **Census tables required** (Output Area level, Greater London extent):

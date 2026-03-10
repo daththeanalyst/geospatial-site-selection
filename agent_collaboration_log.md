@@ -1326,3 +1326,56 @@ Updated `docs/index.html` to reflect accurate 33-feature model results and added
 5. **Phase 5 — Final polish**: Renumbered all 13 figures sequentially (two-pass temp-name approach). Filled word count placeholder (1991). Fixed last F0.3 reference in P154 (Appendix).
 **Why**: User requested rubric-perfect report aligned with assignment brief (4 criteria × 25%: Visualisation, Methodology, Narrative, Code). Targeted specific rubric exemplars: training curves, statistical significance, ablation, fairness audit.
 **AI vs Human**: AI designed 5-phase plan, audited rubric gaps, implemented all changes. User approved plan and requested maximum-mark alignment.
+
+### Entry #119
+**Date**: 2026-03-08
+**What changed**: Fixed 3 bugs in notebook cells 60, 62, 65 that prevented full top-to-bottom execution:
+1. **Cell 60 (PDPs)**: `pd_result['values'][0]` → `pd_result['grid_values'][0]` — sklearn 1.8.0 renamed the key, causing `KeyError`.
+2. **Cell 62 (Ablation)**: Replaced undefined `folds` variable and `GroupKFold` with `spatial_cv.split()` to match the rest of the notebook's spatial block CV approach.
+3. **Cell 65 (Demographics)**: Added explicit `fp = h3_grid[h3_grid['outcome_cafe'] == 'False Positive (Recommendation)'].copy()` — previously `fp` was silently overwritten by Cell 59's loop (contained bakery FPs instead of cafe).
+**Why**: User attempted to run cells 60+ and hit `NameError: name 'feature_names' is not defined`. Audit revealed 2 additional bugs (sklearn API change, undefined `folds`) that would also crash.
+**AI vs Human**: AI identified all 3 bugs via systematic audit. User reported the initial error.
+
+### Entry #120
+**Date**: 2026-03-08
+**What changed**: Embedded 4 newly generated figures into `MSIN0097_Report.docx` (13→17 figures total):
+1. **Figure 4**: Methodology pipeline flowchart (after Section 3 heading).
+2. **Figure 6**: Moran's I spatial autocorrelation of residuals (after borough holdout CV).
+3. **Figure 12**: Partial dependence plots for top 6 cafe features (after SHAP importance).
+4. **Figure 16**: Feature group ablation heatmap (after learning curves).
+Renumbered all 17 figures sequentially. Fixed cross-references: Moran's I ref (5→6), calibration ref (17→13), cleaned FIGTEMP_ artifacts from prior broken renumber.
+**Why**: User ran full notebook, generating all cell 60-63 figures. These 4 figures strengthen Visualisation and Methodology rubric criteria.
+**AI vs Human**: AI selected insertion points and handled renumbering/cross-references. User requested embedding after running notebook.
+
+### Entry #121
+**Date**: 2026-03-08
+**Cell(s)**: 63 (flowchart), 26 (correlation heatmap)
+**What changed**:
+1. **Cell 63 (Methodology Flowchart)**: Redesigned from scratch. Replaced dark-theme 8-box layout with a white-background, 9-stage pipeline. Stages are colour-coded by phase (blue=data prep, green=modelling, orange=interpretation, red=output), numbered 1-9 with circles, and arranged in 4 rows. Added phase labels and colour legend. Better for print/Word embedding.
+2. **Cell 26 (Correlation Heatmap)**: Split single 33x33 matrix into two side-by-side panels: (a) Socioeconomic & Infrastructure (13x13: demographics + crime + transport + target), (b) Network & POI Co-occurrence (22x22: centrality + community + node2vec + POI counts + competition + target). Same RdBu_r colormap and annotation style in both.
+**Why**: User requested improvements — the flowchart needed a cleaner design and the 33-row correlation matrix was too large to read.
+**AI vs Human**: AI redesigned both cells. User will re-run to regenerate PNGs.
+
+### Entry #122
+**Date**: 2026-03-09
+**File(s)**: MSIN0097_Report.docx
+**What changed**:
+1. **Section 4.1 Baseline Model**: Added missing subsection with LR baseline AUC results (cafe 0.84, restaurant 0.87). Removed duplicate LR sentence from 4.2 opening.
+2. **Log entry count**: Standardised all references from 116/117 to 121 (actual current count).
+3. **Calibration claim**: Softened "confirm well-calibrated" to "indicate reasonably calibrated" (no ECE/Brier score reported).
+4. **Figure 3 caption**: Updated to reflect new split two-panel layout (Socioeconomic & Infrastructure / Network & POI Co-occurrence).
+**Why**: Pre-submission quality pass — Section 4.1 was empty (missing rubric requirement), log counts were inconsistent, calibration claim was unsupported.
+**AI vs Human**: AI identified gaps and applied fixes. User will review prose for natural voice.
+
+### Entry #99
+**Date**: 2026-03-09
+**What changed**: Comprehensive pre-submission quality audit and fixes across multiple files.
+**Changes**:
+1. **Report (MSIN0097_Report.docx)**: Fixed log entry count from "121" to "98" (actual count) in 4 locations. Added sentence in Section 6.3 mentioning README.md and requirements.txt (Code/Markup criterion).
+2. **CLAUDE.md**: Rewrote to reference unified notebook (`camden_synergy_index.ipynb`) instead of outdated 3-notebook pipeline. Added leakage guard rule.
+3. **requirements.txt**: Added Python version constraint comment (`# Requires Python >= 3.9`). Updated project name from "Coffee" to "Retail".
+4. **README.md**: Added Police.uk crime data to data access table (was undocumented).
+5. **data/outputs/**: Deleted 6 duplicate HTML files with old naming convention (`london_recommendations_{type}.html`).
+6. **Cell 44 (SHAP figure)**: Fixed overlapping subplot titles by increasing hspace (0.3→0.5) and moving suptitle (y=0.98→1.02).
+**Why**: Full rubric audit against assignment brief identified factual errors (log count), missing documentation (crime data, README mention), outdated files (CLAUDE.md), and visual issues (SHAP overlaps).
+**AI vs Human**: AI conducted comprehensive audit and applied fixes. User approved plan and will re-run Cell 44 for updated SHAP figure.

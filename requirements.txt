@@ -1,5 +1,6 @@
-# London Specialty Coffee Site Selection — Dependencies
+# London Retail Site Selection — Dependencies
 # =====================================================
+# Requires Python >= 3.9
 # Install: pip install -r requirements.txt
 
 # Notebook pipeline (camden_synergy_index.ipynb)
