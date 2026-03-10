@@ -1401,3 +1401,26 @@ Renumbered all 17 figures sequentially. Fixed cross-references: Moran's I ref (5
 4. **Outdated text**: Fixed Cell 0 title ("Specialty Coffee" -> "Retail Site Selection"), Cell 3 ("Notebooks 01-03" -> "single pipeline"), Cell 66 ("Notebook 01" -> "Section 1"), Cell 70 model card ("specialty coffee" -> "6 retail business types").
 **Why**: User requested better code commenting for readability and an easily readable header color scheme.
 **AI vs Human**: AI audited all 73 cells, identified 2 under-commented cells, and applied targeted improvements. Color scheme designed by AI based on pipeline stage logic.
+
+### Entry #102
+**Date**: 2026-03-10
+**What changed**: Trimmed body word count from 2,054 to 1,992 (under 2,000 limit).
+**Changes**:
+1. **Para [95]** (spatial CV): Tightened 5 sentences, 178w -> 148w. Removed redundant phrasing ("assigns adjacent hexagons to different folds" -> "leaks spatial signal between adjacent hexagons").
+2. **Para [127]** (results): Tightened 3 sentences, 152w -> 136w. Compressed failure mode and calibration descriptions.
+3. **Para [152]** (final solution): Tightened 2 sentences, 127w -> 111w. Removed parenthetical feature list in characteristics sentence.
+4. **Cover page**: Updated "Word Count: 1991 / 2000" to "Word Count: 1992 / 2000".
+**Why**: Assignment brief specifies 2,000 word max with "standard UCL penalties" for exceeding. Body was 54 words over.
+**AI vs Human**: AI identified trim candidates from the 3 wordiest paragraphs and tightened phrasing without removing content. All factual claims preserved.
+
+### Entry #103
+**Date**: 2026-03-10
+**What changed**: Final pre-submission audit and 5 fixes to MSIN0097_Report_Final.docx.
+**Changes**:
+1. **Missing heading**: Added "3.3 Data Validation Checks" (Heading 2) by splitting para [95] — spatial CV content stays in 3.2, validation assertions (CRS checks, hexagon count, Moran's I) moved to new 3.3. Fixes ToC-to-body mismatch.
+2. **Decision Register Row 14**: Updated "72-entry collaboration log" to "101-entry collaboration log".
+3. **Decision Register Row 15**: Updated "Report prose (1,908 words)" to "Report prose (~1,992 words)".
+4. **Em dash removed**: Para [127] "0.30) — gyms" changed to "0.30), as gyms".
+5. **Semicolon removed**: Para [127] "sparse signal; False" changed to "sparse signal. False".
+**Why**: Full audit against assignment brief before submission. ToC listed section 3.3 but no matching heading existed; decision register had stale values from earlier versions.
+**AI vs Human**: AI conducted systematic audit (structure, citations, word count, figures, anonymity, stale values) and implemented 5 targeted fixes.
