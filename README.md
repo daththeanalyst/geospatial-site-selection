@@ -97,7 +97,7 @@ GeoSpatial Project/
  │       ▼                                              │
  │  Section 1.1: H3 Grid ─── ~55K hexagons + borough   │
  │       │           + individual POI counts per type    │
- │       │           + competition density (k=1 ring)    │
+ │       │           + competition density (k=2 ring)    │
  │       ▼                                              │
  │  Section 1.6: Graph Analytics ─── 6 centrality       │
  │       │         metrics (betweenness approx. k=500)   │
