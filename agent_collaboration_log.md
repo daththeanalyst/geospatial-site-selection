@@ -1379,3 +1379,25 @@ Renumbered all 17 figures sequentially. Fixed cross-references: Moran's I ref (5
 6. **Cell 44 (SHAP figure)**: Fixed overlapping subplot titles by increasing hspace (0.3→0.5) and moving suptitle (y=0.98→1.02).
 **Why**: Full rubric audit against assignment brief identified factual errors (log count), missing documentation (crime data, README mention), outdated files (CLAUDE.md), and visual issues (SHAP overlaps).
 **AI vs Human**: AI conducted comprehensive audit and applied fixes. User approved plan and will re-run Cell 44 for updated SHAP figure.
+
+### Entry #100
+**Date**: 2026-03-10
+**What changed**: Upgraded reference section from 12 to 17 references with DOI/access links and added in-text citations.
+**Changes**:
+1. **Reference list**: Replaced 12 references (paras 161-172) with 17 alphabetically-ordered Harvard-style references, each with DOI or URL links.
+2. **5 new references added**: Ploton et al. (2020) spatial validation, Roberts et al. (2017) spatial CV, Li (2022) SHAP+XGBoost spatial, Zhao et al. (2023) coffee shop ML site selection, Taecharungroj & Ntounis (2024) OSM footfall UK.
+3. **In-text citations added**: Para 61 (Zhao), para 64 (Uber/H3, Boeing/OSMnx, Taecharungroj/footfall), para 93 (Roberts, Ploton for spatial CV), para 108 (Chen/XGBoost, Li/SHAP), model card table (Mitchell).
+4. All 17 references now cited in text; all have DOI or URL access links.
+**Why**: User identified reference section as weak — too many old books without links, no recent articles. Upgraded to include modern (2020+) open-access articles with direct DOI links for deep reading.
+**AI vs Human**: AI researched and verified all DOIs via web search, wrote python-docx script to update report. User requested the improvement.
+
+### Entry #101
+**Date**: 2026-03-10
+**What changed**: Improved notebook code comments and applied stage-based color scheme to section headers.
+**Changes**:
+1. **Cell 39 (diagnostics)**: Added 9 inline comments to per-fold AUC, ablation, and learning curve code blocks (comment ratio 8% -> 14%).
+2. **Cell 52 (significance)**: Added 8 inline comments to bootstrap CI, permutation test, and accuracy summary blocks (comment ratio 9% -> 14%).
+3. **Section headers**: Applied 5-stage color coding — Blue (data prep), Green (EDA/target), Purple (modelling), Orange (evaluation), Coral (business insight), Dark grey (concepts).
+4. **Outdated text**: Fixed Cell 0 title ("Specialty Coffee" -> "Retail Site Selection"), Cell 3 ("Notebooks 01-03" -> "single pipeline"), Cell 66 ("Notebook 01" -> "Section 1"), Cell 70 model card ("specialty coffee" -> "6 retail business types").
+**Why**: User requested better code commenting for readability and an easily readable header color scheme.
+**AI vs Human**: AI audited all 73 cells, identified 2 under-commented cells, and applied targeted improvements. Color scheme designed by AI based on pipeline stage logic.
